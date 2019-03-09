@@ -9,18 +9,33 @@ public class TriviaGame {
 
 	private List<Question> questionsList;
 	private List<Player> playersList;
-	private boolean isDone;
+	private Question currentQuestion;
 	private Connection connection;
 	private int nQuestions;
+	private boolean gameDone;
 
 	public TriviaGame (int nQuestions) {
 
 		this.nQuestions = nQuestions;
 		playersList = new ArrayList<>();
-		isDone = false;
 
 		dbConnection connector = new dbConnection();
 		connection = connector.getConnection();
+	}
+
+	public GameState getGameState(Player player) {
+
+		GameState state = new GameState();
+		List<Player> otherplayers = new ArrayList<>();
+		otherplayers.remove(player);
+
+		state.setCurrentQuestion(currentQuestion);
+		state.setCurrentPlayer(player);
+		state.setPlayersList(otherplayers);
+		state.setDone(gameDone);
+		state.setQuestionNumber(getQuestionNumber());
+
+		return state;
 	}
 
 	private List<Question> buildQuestions (List selectedNums) {
@@ -67,7 +82,7 @@ public class TriviaGame {
 	}
 
 	public boolean startGame () {
-
+		gameDone = false;
 		System.out.println("\n\nWELCOME TO TRIVIA GAME\n\n");
 		questionsList = buildQuestions(getSelectedQuestionIDs(nQuestions));
 		return true;
@@ -88,8 +103,11 @@ public class TriviaGame {
 	public boolean askQuestion () {
 
 		if(questionsList.isEmpty()) {
+			gameDone = true;
 			return false;
 		}
+
+		currentQuestion = questionsList.get(0);
 
 		System.out.println(questionsList.get(0).getQuestion() + "(" + questionsList.get(0).getPoints() + " Points)");
 		System.out.println("--------CHOICES--------");
@@ -103,11 +121,10 @@ public class TriviaGame {
 
 	public boolean checkAnswer (String answer, Player dude) {
 
-		Question q = questionsList.get(0);
 
-		for (Answer a: q.getAnswersList()) {
+		for (Answer a: currentQuestion.getAnswersList()) {
 			if (answer.equals(a.getAnswer()) && a.isCorrect()) {
-				addPoints(dude, q.getPoints());
+				addPoints(dude, currentQuestion.getPoints());
 				questionsList.remove(0);
 				return true;
 			}
@@ -126,5 +143,11 @@ public class TriviaGame {
 	public List<Player> getPlayersList () {
 		return playersList;
 	}
+
+	public int getQuestionNumber () {
+		return nQuestions - questionsList.size() + 1;
+	}
+
+
 
 }

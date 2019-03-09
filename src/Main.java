@@ -11,13 +11,26 @@ public class Main {
         game.startGame();
 
         while (game.askQuestion()) {
+
+
             Scanner sc = new Scanner(System.in);
             String myanswer = sc.nextLine();
+
+
+            GameState state = game.getGameState(me);
+            System.out.println("////////////////////////////");
+            System.out.println(state.getCurrentPlayer().getName() + "Points: " + state.getCurrentPlayer().getScore());
+            System.out.println("Question " + state.getQuestionNumber()+ state.getCurrentQuestion().getQuestion());
+            System.out.println("Done State: " + state.isDone());
+            System.out.println("Player Quitting " + state.isQuitting());
+            System.out.println("////////////////////////////");
+
 
             if (game.checkAnswer(myanswer, me)) {
                 System.out.println("correct!");
             } else
                 System.out.println("wrong!");
+
         }
 
         for(Player p: game.getPlayersList()) {
