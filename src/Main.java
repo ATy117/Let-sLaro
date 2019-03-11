@@ -16,7 +16,6 @@ public class Main {
             Scanner sc = new Scanner(System.in);
             String myanswer = sc.nextLine();
 
-
             GameState state = game.getGameState(me);
             System.out.println("////////////////////////////");
             System.out.println(state.getCurrentPlayer().getName() + "Points: " + state.getCurrentPlayer().getScore());
