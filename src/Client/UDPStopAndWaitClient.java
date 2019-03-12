@@ -6,15 +6,23 @@ import java.util.Scanner;
 
 public class UDPStopAndWaitClient {
 	private static final int BUFFER_SIZE = 1024;
-	private static final int PORT = 6789;
-	private static final String HOSTNAME = "localhost";
+	private static int PORT;
+	private static String HOSTNAME;
 	private static final int BASE_SEQUENCE_NUMBER = 1;
 
 	public static void main(String args[]) throws Exception{
 
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter a username: ");
+
+		System.out.print("Enter server ip: ");
+		HOSTNAME = sc.nextLine();
+
+		System.out.print("Enter server port: ");
+		PORT = sc.nextInt();
+
+		System.out.print("Enter a username: ");
 		String msg = sc.nextLine();
+		msg = sc.nextLine();
 
 		// Create a socket
 		DatagramSocket socket = new DatagramSocket();
@@ -23,6 +31,7 @@ public class UDPStopAndWaitClient {
 		// The message we're going to send converted to bytes
 		Integer sequenceNumber = BASE_SEQUENCE_NUMBER;
 
+		//retry if packet not received
 		for (int counter = 0; counter < 1; counter++) {
 			boolean timedOut = true;
 
@@ -43,7 +52,7 @@ public class UDPStopAndWaitClient {
 
 				try{
 					// Send the UDP Packet to the server
-					DatagramPacket packet = new DatagramPacket(sendData, sendData.length, IPAddress, 6789);
+					DatagramPacket packet = new DatagramPacket(sendData, sendData.length, IPAddress, PORT);
 					socket.send( packet );
 
 					// Receive the server's packet
@@ -64,7 +73,6 @@ public class UDPStopAndWaitClient {
 				}
 			}
 		}
-
 		socket.close();
 	}
 }
