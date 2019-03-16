@@ -1,4 +1,4 @@
-package Client;
+package NetworkClasses;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -15,7 +15,13 @@ import NetworkClasses.*;
  *
  */
 public class ThreadedUDPClient implements Runnable {
-	
+
+
+	private static final int BUFFER_SIZE = 1024;
+	private static int PORT;
+	private static String HOSTNAME;
+	private static final int BASE_SEQUENCE_NUMBER = 42;
+
 	private Connection connection;
 	private boolean running;
 	
@@ -23,6 +29,11 @@ public class ThreadedUDPClient implements Runnable {
 	private Thread process, send, receive;
 	
 	public ThreadedUDPClient(String addr, int port) {
+
+		this.HOSTNAME = addr;
+		this.PORT = port;
+		Integer sequenceNumber = BASE_SEQUENCE_NUMBER;
+
 		try {
 			socket = new DatagramSocket();
 			connection = new Connection(socket, InetAddress.getByName(addr), port, 0);

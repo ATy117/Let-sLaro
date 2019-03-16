@@ -10,7 +10,7 @@ import java.util.Collections;
  */
 public class UID {
 	
-	public static int RANGE = 10000;									/* How many ids to generate */
+	public static int RANGE = 4;									/* How many ids to generate */
 	public static ArrayList<Integer> ids = new ArrayList<Integer>();	/* The list of ids */
 	public static int index = 0;										/* The current index in the list */
 	

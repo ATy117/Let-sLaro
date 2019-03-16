@@ -1,9 +1,9 @@
-package GameModel;
+package Model;
 
-import Client.*;
 import NetworkClasses.Packet;
 import NetworkClasses.PacketHandler;
-import Server.*;
+import NetworkClasses.ThreadedUDPClient;
+import NetworkClasses.ThreadedUDPServer;
 
 public class Test {
 

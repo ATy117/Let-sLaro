@@ -1,4 +1,4 @@
-package Server;
+package NetworkClasses;
 
 import NetworkClasses.Connection;
 import NetworkClasses.Packet;
@@ -18,7 +18,8 @@ import java.util.ArrayList;
  */
 public class ThreadedUDPServer implements Runnable {
 	
-	/* Server information */
+	/* ClientPack information */
+	private static final int BUFFER_SIZE = 1024;
 	private int port;
 	private DatagramSocket socket;
 	private boolean running;
@@ -26,7 +27,7 @@ public class ThreadedUDPServer implements Runnable {
 	/* Threads */
 	private Thread send, receive, process;
 	
-	/* Client relevant */
+	/* ServerPack relevant */
 	public static ArrayList<Connection> CLIENTS = new ArrayList<Connection>();
 	
 	
@@ -35,6 +36,7 @@ public class ThreadedUDPServer implements Runnable {
 	 * @param port
 	 */
 	public ThreadedUDPServer(int port) {
+
 		this.port = port;
 		
 		try {
@@ -129,6 +131,6 @@ public class ThreadedUDPServer implements Runnable {
 	 */
 	public void run() {
 		running = true;
-		System.out.println("Server started on port " + port);
+		System.out.println("ClientPack started on port " + port);
 	}
 }

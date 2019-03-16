@@ -1,4 +1,4 @@
-package GameModel;
+package Model;
 
 public class Answer {
 

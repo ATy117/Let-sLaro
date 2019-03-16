@@ -1,6 +1,4 @@
-package GameModel;
-
-import GameModel.*;
+package Model;
 
 import java.sql.Connection;
 import java.util.ArrayList;
