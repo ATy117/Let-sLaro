@@ -1,3 +1,5 @@
+package GameModel;
+
 import java.util.Scanner;
 
 public class Main {
@@ -20,9 +22,9 @@ public class Main {
 
             System.out.println("////////////////////////////");
             System.out.println(state.getCurrentPlayer().getName() + "Points: " + state.getCurrentPlayer().getScore());
-            System.out.println("Question " + state.getQuestionNumber()+ state.getCurrentQuestion().getQuestion());
+            System.out.println("GameModel.Question " + state.getQuestionNumber()+ state.getCurrentQuestion().getQuestion());
             System.out.println("Done State: " + state.isDone());
-            System.out.println("Player Quitting " + state.isQuitting());
+            System.out.println("GameModel.Player Quitting " + state.isQuitting());
             System.out.println("////////////////////////////");
 
 

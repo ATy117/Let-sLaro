@@ -1,4 +1,4 @@
-import java.sql.SQLException;
+package GameModel;
 
 public interface QuestionDAO {
 

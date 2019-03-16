@@ -1,3 +1,5 @@
+package GameModel;
+
 import java.sql.*;
 
 public class dbConnection {

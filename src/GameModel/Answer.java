@@ -1,3 +1,5 @@
+package GameModel;
+
 public class Answer {
 
 	private String answer;
