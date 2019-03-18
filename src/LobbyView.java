@@ -1,3 +1,4 @@
+import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 
 import java.util.Scanner;
@@ -8,6 +9,9 @@ public class LobbyView extends View {
 		super(controller);
 		this.primaryStage = primaryStage;
 		System.out.println("You are in lobby view");
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("lobbyTemplate.fxml"));
+		loader.setController(this);
+
 		joinGame();
 	}
 

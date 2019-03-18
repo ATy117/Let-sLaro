@@ -1,3 +1,5 @@
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 
 import java.util.Scanner;
@@ -8,6 +10,9 @@ public class GameView extends View{
 		super(controller);
 		this.primaryStage = primaryStage;
 		System.out.println("You are in game view");
+
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("gameTemplate.fxml"));
+		loader.setController(this);
 
 	}
 

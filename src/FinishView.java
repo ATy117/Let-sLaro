@@ -1,4 +1,5 @@
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 
 import java.util.Scanner;
@@ -9,6 +10,9 @@ public class FinishView extends View {
 		super(controller);
 		this.primaryStage = primaryStage;
 		System.out.println("You are in finish view");
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("finishTemplate.fxml"));
+		loader.setController(this);
+
 		Update();
 		Platform.exit();
 	}
