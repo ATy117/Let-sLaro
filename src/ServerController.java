@@ -7,41 +7,44 @@ import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Scanner;
 
 
-public class Server {
+public class ServerController {
 
+	// Maximum Segment Size - Quantity of data from the application layer in the segment
 	public static final int MSS = 4;
-
 	// Window size - Number of packets sent without acking
 	public static final int WINDOW_SIZE = 2;
-	
-
 	// Time (ms) before REsending all the non-acked packets
 	public static final int TIMER = 30;
-
 	public final static int PORT = 7331;
-	private final static int MAXPLAYER = 2;
+	private int MAXPLAYER;
 	private final static int BUFFER = 1024;
 
-	private static DatagramSocket socket;
-	private static ArrayList<InetAddress> clientAddresses;
-	private static ArrayList<Integer> clientPorts;
-	private static ArrayList<Player> playerList;
-	private static HashSet<String> existingClients;
-	private static TriviaGame game;
+	private DatagramSocket socket;
+	private ArrayList<InetAddress> clientAddresses;
+	private ArrayList<Integer> clientPorts;
+	private ArrayList<Player> playerList;
+	private HashSet<String> existingClients;
+	private TriviaGame game;
 
-	public static void main(String[] args) throws Exception {
+	public ServerController(int max) throws Exception {
 
+		MAXPLAYER = max;
 		socket = new DatagramSocket(PORT);
 		clientAddresses = new ArrayList();
 		clientPorts = new ArrayList();
 		existingClients = new HashSet();
 		playerList = new ArrayList<>();
 
-		game = new TriviaGame(2);
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Enter number of questions: ");
+		int n = sc.nextInt();
+		game = new TriviaGame(n);
 
 
+		System.out.println("Waiting for enough players to connect.");
 		while (existingClients.size() < MAXPLAYER) {
 
 			byte[] buf = new byte[BUFFER];
@@ -88,12 +91,9 @@ public class Server {
 		}
 
 		castGameEnd();
-
-
-
 	}
 
-	private static void castGameEnd () throws  Exception{
+	private void castGameEnd () throws  Exception{
 		game.endGame();
 		for (int i = 0; i < playerList.size(); i++) {
 			GameState playerstate = game.getGameState(playerList.get(i));
@@ -102,25 +102,25 @@ public class Server {
 		}
 	}
 
-	public static PlayerResponse convertToResponse (byte[] answer) throws IOException, ClassNotFoundException {
+	public PlayerResponse convertToResponse (byte[] answer) throws IOException, ClassNotFoundException {
 		PlayerResponse response = (PlayerResponse) Serializer.toObject(answer);
 		return response;
 	}
 
-	private static void recordScore(PlayerResponse response) {
+	private void recordScore(PlayerResponse response) {
 		game.checkAnswer(response.getAnswer(), response.getPlayer());
 	}
 
-	public static void sendConnectConfirmation (InetAddress address, int port) throws Exception {
-		String msg = "Connected to Game Server. Please wait until all players connect";
+	public void sendConnectConfirmation (InetAddress address, int port) throws Exception {
+		String msg = "Connected to Game ServerController. Please wait until all players connect";
 		byte buf[] = msg.getBytes();
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, address, port);
 		socket.send(packet);
 	}
 
-	private static byte[] receivePacket () throws Exception{
+	private byte[] receivePacket () throws Exception{
 
-		byte[] receivedData = new byte[Client.MSS + 83];
+		byte[] receivedData = new byte[ClientController.MSS + 83];
 
 		int waitingFor = 0;
 
@@ -187,7 +187,7 @@ public class Server {
 
 	}
 
-	public static void castGameStart() throws Exception {
+	public void castGameStart() throws Exception {
 
 		System.out.println("Game will begin\n\n");
 
@@ -202,7 +202,7 @@ public class Server {
 
 	}
 
-	public static void sendPacket (InetAddress address, int port, byte[] object) throws Exception {
+	public void sendPacket (InetAddress address, int port, byte[] object) throws Exception {
 
 		// Sequence number of the last packet sent (rcvbase)
 		int lastSent = 0;
@@ -219,7 +219,7 @@ public class Server {
 
 		DatagramSocket toReceiver = new DatagramSocket();
 
-		// Server address
+		// ServerController address
 		InetAddress receiverAddress = InetAddress.getByName("localhost");
 
 		// List of all the packets sent
