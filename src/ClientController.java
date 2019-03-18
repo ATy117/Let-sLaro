@@ -1,3 +1,5 @@
+
+
 import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -31,16 +33,25 @@ public class ClientController {
 		System.out.print("Enter a username: ");
 		Scanner sc = new Scanner (System.in);
 		username = sc.nextLine();
-		username.trim();
+		username = username.trim();
 
 		if (connectServer(username)) {
+
+			boolean error = false;
+
 			while (waiting) {
+
 				byte[] receive = new byte[BUFFER];
 				DatagramPacket packet = new DatagramPacket(receive, receive.length);
 				socket.receive(packet);
 				String msg = new String(receive);
+				msg = msg.trim();
 
-				if (msg.startsWith("START")) {
+				if (msg.equals("START")) {
+					waiting = false;
+				}
+				else if (msg.equals("ERROR")) {
+					error = true;
 					waiting = false;
 				}
 				System.out.println(msg);
@@ -48,11 +59,12 @@ public class ClientController {
 
 			boolean gameOnGoing = true;
 
-			while (gameOnGoing) {
+			while (gameOnGoing && !error) {
 
 				mystate = convertToGameState(receivePacket());
 
 				if (mystate.isDone()) {
+					printScores(mystate);
 					break;
 				}
 				printQuestion(mystate);
@@ -66,8 +78,6 @@ public class ClientController {
 				byte[] state = Serializer.toBytes(response);
 				sendPacket(address, PORT, state);
 			}
-
-			printScores(mystate);
 		}
 	}
 

@@ -43,7 +43,6 @@ public class ServerController {
 		int n = sc.nextInt();
 		game = new TriviaGame(n);
 
-
 		System.out.println("Waiting for enough players to connect.");
 		while (existingClients.size() < MAXPLAYER) {
 
@@ -53,21 +52,24 @@ public class ServerController {
 				DatagramPacket packet = new DatagramPacket(buf, buf.length);
 				socket.receive(packet);
 
-				String content = new String(buf);
-				content = content.trim();
-				Player noob = new Player(content);
+				Player noob = registerPlayer(buf);
 
 				InetAddress clientAddress = packet.getAddress();
 				int clientPort = packet.getPort();
 
-				String id = clientAddress.toString() + "," + clientPort;
-				if (!existingClients.contains(id) && !playerList.contains(noob)) {
-					existingClients.add(id);
-					clientPorts.add(clientPort);
-					clientAddresses.add(clientAddress);
-					playerList.add(noob);
-					game.connectPlayer(noob);
-					sendConnectConfirmation(clientAddress, clientPort);
+				if (noob != null) {
+					String id = clientAddress.toString() + "," + clientPort;
+					if (!existingClients.contains(id)) {
+						existingClients.add(id);
+						clientPorts.add(clientPort);
+						clientAddresses.add(clientAddress);
+						playerList.add(noob);
+						game.connectPlayer(noob);
+						sendConnectConfirmation(clientAddress, clientPort);
+					}
+				}
+				else {
+					sendConnectionError(clientAddress, clientPort);
 				}
 
 			} catch (Exception e) {
@@ -93,6 +95,22 @@ public class ServerController {
 		castGameEnd();
 	}
 
+	private Player registerPlayer(byte[] buf) {
+		String content = new String(buf);
+		content = content.trim();
+
+		// verify if new player
+		for (Player p: playerList) {
+			if (p.getName().equals(content)) {
+				return null;
+			}
+		}
+
+		Player noob = new Player(content);
+
+		return noob;
+	}
+
 	private void castGameEnd () throws  Exception{
 		game.endGame();
 		for (int i = 0; i < playerList.size(); i++) {
@@ -112,7 +130,14 @@ public class ServerController {
 	}
 
 	public void sendConnectConfirmation (InetAddress address, int port) throws Exception {
-		String msg = "Connected to Game ServerController. Please wait until all players connect";
+		String msg = "Connected to Game. Please wait until all players connect";
+		byte buf[] = msg.getBytes();
+		DatagramPacket packet = new DatagramPacket(buf, buf.length, address, port);
+		socket.send(packet);
+	}
+
+	public void sendConnectionError (InetAddress address, int port) throws Exception {
+		String msg = "ERROR";
 		byte buf[] = msg.getBytes();
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, address, port);
 		socket.send(packet);
