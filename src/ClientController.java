@@ -22,7 +22,6 @@ public class ClientController {
 
 	private DatagramSocket socket;
 	private String hostname;
-	private String username;
 	private GameState mystate;
 	private InetAddress address;
 
@@ -40,29 +39,23 @@ public class ClientController {
 		currentView.Update();
 	}
 
-	private void gameEnd() {
-		currentView = new FinishView(this);
-		printScores(mystate);
-	}
-
 	private void gameProper() throws Exception {
 		while (!error) {
 
-			mystate = convertToGameState(receivePacket());
+			mystate = (GameState) Serializer.toObject(receivePacket());
 
 			if (mystate.isDone()) {
 				break;
 			}
 
-			printQuestion(mystate);
+			Notify();
 
 			Scanner sc = new Scanner (System.in);
 			int answer = sc.nextInt();
 
 			Answer myans = mystate.getCurrentQuestion().getAnswersList().get(answer-1);
-			System.out.println("My ans : " + myans.getAnswer());
 
-			PlayerResponse response = formulateResponse(myans);
+			PlayerResponse response = new PlayerResponse(mystate.getCurrentPlayer(), myans);
 			byte[] state = Serializer.toBytes(response);
 			sendPacket(address, PORT, state);
 		}
@@ -93,40 +86,8 @@ public class ClientController {
 		gameProper();
 	}
 
-	private void printScores(GameState state) {
-
-		System.out.println("SCORES");
-		System.out.println(mystate.getCurrentPlayer().getName() + ": " + mystate.getCurrentPlayer().getScore());
-
-		System.out.println("Other Players\n");
-
-		for (Player p: state.getPlayersList()) {
-			System.out.println(p.getName() + ": " + p.getScore());
-		}
-	}
-
-
-	private PlayerResponse formulateResponse (Answer sagot) {
-		PlayerResponse response = new PlayerResponse(mystate.getCurrentPlayer(), sagot);
-
-		return response;
-	}
-
-	private void printQuestion (GameState state) {
-
-		System.out.println("Player: " + state.getCurrentPlayer().getName() + " - " + state.getCurrentPlayer().getScore());
-		System.out.println(state.getQuestionNumber() + ": " + state.getCurrentQuestion().getQuestion());
-
-		for (Answer a: state.getCurrentQuestion().getAnswersList()) {
-			System.out.println(a.getAnswer());
-		}
-
-	}
-
-	private GameState convertToGameState (byte[] gameBytes) throws IOException, ClassNotFoundException {
-		GameState gameState = (GameState) Serializer.toObject(gameBytes);
-
-		return gameState;
+	private void gameEnd() {
+		currentView = new FinishView(this);
 	}
 
 	private boolean connectServer(String username) throws Exception {
@@ -143,13 +104,6 @@ public class ClientController {
 		}
 
 		return true;
-	}
-
-	private void sendMessage(String s) throws Exception {
-		byte buf[] = s.getBytes();
-		InetAddress address = InetAddress.getByName(hostname);
-		DatagramPacket packet = new DatagramPacket(buf, buf.length, address, PORT);
-		socket.send(packet);
 	}
 
 	private byte[] receivePacket () throws Exception{
@@ -333,5 +287,9 @@ public class ClientController {
 		else {
 			System.out.println("Unable to connect to ip");
 		}
+	}
+
+	public GameState getMystate() {
+		return mystate;
 	}
 }

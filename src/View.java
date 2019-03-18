@@ -4,6 +4,7 @@ public abstract class View {
 
 	public abstract void Update();
 	public Stage primaryStage;
+	public GameState state;
 	public ClientController controller;
 
 	public View () {
