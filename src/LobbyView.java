@@ -31,19 +31,16 @@ public class LobbyView extends View {
 	}
 
 
-	@Override
-	public void Update() {
+	public void joinGame (ActionEvent actionEvent) throws Exception {
+		//System.out.print("Enter server ip: ");
+		//Scanner sc = new Scanner (System.in);
+		//String hostname = sc.nextLine();
+		String hostname = IPField.getText();
 
-	}
-
-	public void joinGame(ActionEvent actionEvent) throws Exception {
-		System.out.print("Enter server ip: ");
-		Scanner sc = new Scanner (System.in);
-		String hostname = sc.nextLine();
-
-		System.out.print("Enter a username: ");
-		sc = new Scanner (System.in);
-		String username = sc.nextLine();
+		//System.out.print("Enter a username: ");
+		//sc = new Scanner (System.in);
+		//String username = sc.nextLine();
+		String username = usernameField.getText();
 		username = username.trim();
 
 		controller.submitUsername(hostname ,username);
@@ -57,9 +54,6 @@ public class LobbyView extends View {
 		enterBtn.setGraphic(enterView);
 	}
 
-	public void changePane(){
-		///controller.submitUsername(IPField.getText(), usernameField.getText());
-	}
 
 	@Override
 	public void Update() {
