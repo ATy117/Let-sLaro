@@ -12,9 +12,22 @@ public class GameView extends View{
 	}
 
 	@Override
-	public void Update() {
+	public void Update()  {
 		this.state = controller.getMystate();
 		printQuestion(this.state);
+
+
+		try {
+			selectAnswer(0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void selectAnswer(int n) throws Exception {
+		Scanner sc = new Scanner (System.in);
+		int answer = sc.nextInt();
+		controller.selectAnswer(answer);
 	}
 
 	private void printQuestion (GameState state) {

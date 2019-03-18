@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import java.util.Scanner;
@@ -8,8 +9,8 @@ public class FinishView extends View {
 		super(controller);
 		this.primaryStage = primaryStage;
 		System.out.println("You are in finish view");
-		this.state = controller.getMystate();
-		printScores(this.state);
+		Update();
+		Platform.exit();
 	}
 
 
@@ -28,6 +29,7 @@ public class FinishView extends View {
 
 	@Override
 	public void Update() {
-
+		this.state = controller.getMystate();
+		printScores(this.state);
 	}
 }

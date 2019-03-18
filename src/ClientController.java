@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-
 public class ClientController {
 
 	// Maximum Segment Size - Quantity of data from the application layer in the segment
@@ -28,6 +27,7 @@ public class ClientController {
 
 	private boolean waiting=true;
 	private boolean error=false;
+	private volatile boolean answered=false;
 
 	private View currentView;
 
@@ -41,7 +41,7 @@ public class ClientController {
 	}
 
 	private void gameProper() throws Exception {
-		while (!error) {
+		while (!error ) {
 
 			mystate = (GameState) Serializer.toObject(receivePacket());
 
@@ -51,17 +51,22 @@ public class ClientController {
 
 			Notify();
 
-			Scanner sc = new Scanner (System.in);
-			int answer = sc.nextInt();
-
-			Answer myans = mystate.getCurrentQuestion().getAnswersList().get(answer-1);
-
-			PlayerResponse response = new PlayerResponse(mystate.getCurrentPlayer(), myans);
-			byte[] state = Serializer.toBytes(response);
-			sendPacket(address, PORT, state);
+			while (!answered) {
+				Thread.sleep(100);
+				// wait until view sends an answer
+			}
 		}
 		gameEnd();
 	}
+
+	public void selectAnswer(int answer) throws Exception{
+		Answer myans = mystate.getCurrentQuestion().getAnswersList().get(answer);
+		PlayerResponse response = new PlayerResponse(mystate.getCurrentPlayer(), myans);
+		byte[] state = Serializer.toBytes(response);
+		sendPacket(address, PORT, state);
+		answered = true;
+	}
+
 
 	private void gameLobby () throws  Exception {
 

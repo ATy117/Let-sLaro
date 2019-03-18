@@ -2,7 +2,7 @@ import javafx.stage.Stage;
 
 public abstract class View {
 
-	public abstract void Update();
+	public abstract void Update() ;
 	public Stage primaryStage;
 	public GameState state;
 	public ClientController controller;
