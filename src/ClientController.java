@@ -29,24 +29,18 @@ public class ClientController {
 	private boolean waiting=true;
 	private boolean error=false;
 
+	private View currentView;
+
 	public ClientController (String hostname) throws Exception {
 
 		this.hostname = hostname;
 
-		System.out.print("Enter a username: ");
-		Scanner sc = new Scanner (System.in);
-		username = sc.nextLine();
-		username = username.trim();
+		currentView = new LobbyView(this);
 
-		if (connectServer(username)) {
-			gameLobby();
-			gameProper();
-			gameEnd();
-		}
-		else {
-			System.out.println("Unable to connect to ip");
-		}
+	}
 
+	private void Notify() {
+		currentView.Update();
 	}
 
 	private void gameEnd() {
@@ -330,4 +324,15 @@ public class ClientController {
 
 	}
 
+	public void submitUsername(String username) throws Exception {
+
+		if (connectServer(username)) {
+			gameLobby();
+			gameProper();
+			gameEnd();
+		}
+		else {
+			System.out.println("Unable to connect to ip");
+		}
+	}
 }
