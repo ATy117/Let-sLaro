@@ -13,8 +13,11 @@ public class FinishView extends View {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("finishTemplate.fxml"));
 		loader.setController(this);
 
+		sm = new StageManager(primaryStage);
+		sm.loadScene(loader);
+		sm.setWindowName("Game Finished");
+
 		Update();
-		Platform.exit();
 	}
 
 

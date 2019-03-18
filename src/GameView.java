@@ -14,6 +14,9 @@ public class GameView extends View{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("gameTemplate.fxml"));
 		loader.setController(this);
 
+		sm = new StageManager(primaryStage);
+		sm.loadScene(loader);
+		sm.setWindowName("Trivia");
 	}
 
 	@Override
