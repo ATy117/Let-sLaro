@@ -88,6 +88,9 @@ public class TriviaGame {
 		gameDone = false;
 		System.out.println("\n\nWELCOME TO TRIVIA GAME\n\n");
 		questionsList = buildQuestions(getSelectedQuestionIDs(nQuestions));
+		for (Question q: questionsList) {
+			System.out.println(q.getQuestion());
+		}
 		return true;
 	}
 
@@ -104,8 +107,6 @@ public class TriviaGame {
 	}
 
 	public boolean askQuestion () {
-
-		questionsList.remove(0);
 
 		for (Player p: playersList) {
 			p.setAnswered(false);
@@ -125,27 +126,40 @@ public class TriviaGame {
 			System.out.println(a.getAnswer());
 		}
 
+		questionsList.remove(0);
+
 		return true;
 	}
 
 	public boolean checkAnswer (Answer answer, Player dude) {
 
-		for (Answer a: currentQuestion.getAnswersList()) {
-			if (answer == a && a.isCorrect()) {
-				addPoints(dude, currentQuestion.getPoints());
-				return true;
+		for (Player p: playersList) {
+			if (p.getName().equals(dude.getName())) {
+				p.setAnswered(true);
+			}
+
+			for (Answer a: currentQuestion.getAnswersList()) {
+				if (answer == a && a.isCorrect()) {
+					int score = p.getScore();
+					p.setScore(score+currentQuestion.getPoints());
+					return true;
+				}
 			}
 		}
-
 
 		return false;
 	}
 
-	public void addPoints (Player dude, int points) {
-		int i = playersList.indexOf(dude);
-		System.out.println(i);
-		int score = playersList.get(i).getScore();
-		playersList.get(i).setScore(score+points);
+	public boolean questionDone() {
+
+		for (Player p: playersList) {
+			if (!p.isAnswered()) {
+				System.out.println("not all finish");
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	public List<Player> getPlayersList () {

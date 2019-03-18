@@ -41,6 +41,7 @@ public class Server {
 
 		game = new TriviaGame(2);
 
+
 		while (existingClients.size() < MAXPLAYER) {
 
 			byte[] buf = new byte[BUFFER];
@@ -51,16 +52,16 @@ public class Server {
 
 				String content = new String(buf);
 				content = content.trim();
+				Player noob = new Player(content);
 
 				InetAddress clientAddress = packet.getAddress();
 				int clientPort = packet.getPort();
 
 				String id = clientAddress.toString() + "," + clientPort;
-				if (!existingClients.contains(id)) {
+				if (!existingClients.contains(id) && !playerList.contains(noob)) {
 					existingClients.add(id);
 					clientPorts.add(clientPort);
 					clientAddresses.add(clientAddress);
-					Player noob = new Player(content);
 					playerList.add(noob);
 					game.connectPlayer(noob);
 					sendConnectConfirmation(clientAddress, clientPort);
@@ -71,25 +72,24 @@ public class Server {
 			}
 		}
 
+
+
 		castGameStart();
 
-		while (!game.isGameDone()) {
 
-			game.askQuestion();
-			boolean allPlayersDone = false;
-
+		while (game.askQuestion()) {
 			for (int i = 0; i < playerList.size(); i++) {
 				GameState playerstate = game.getGameState(playerList.get(i));
 				byte[] state = Serializer.toBytes(playerstate);
 				sendPacket(clientAddresses.get(i), clientPorts.get(i), state);
 			}
 
-			while (!allPlayersDone) {
+			while (!game.questionDone()) {
 				PlayerResponse response = convertToResponse(receivePacket());
 				recordScore(response);
-				allPlayersDone = false;
 			}
 		}
+
 	}
 
 	public static PlayerResponse convertToResponse (byte[] answer) throws IOException, ClassNotFoundException {
@@ -98,7 +98,6 @@ public class Server {
 	}
 
 	private static void recordScore(PlayerResponse response) {
-
 		game.checkAnswer(response.getAnswer(), response.getPlayer());
 	}
 

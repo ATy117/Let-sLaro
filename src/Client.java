@@ -55,31 +55,35 @@ public class Client {
 
 				mystate = convertToGameState(receivePacket());
 				printQuestion(mystate);
+
 				String answer = sc.nextLine();
 
 				if (answer.equals("EXIT")) {
 					gameOnGoing = false;
 				}
 
-				PlayerResponse response = formulateResponse(answer);
+				PlayerResponse response = formulateResponse(toAnswer(answer));
 				byte[] state = Serializer.toBytes(response);
 				sendPacket(address, PORT, state);
-
 			}
 		}
 
 	}
 
-	private static PlayerResponse formulateResponse (String answer) {
+	private static Answer toAnswer(String answer) {
 
-		Answer sagot = null;
+		Answer ans = new Answer();
 
 		for (Answer a: mystate.getCurrentQuestion().getAnswersList())  {
-			if (a.getAnswer().equals(answer)) {
-				sagot = a;
+			if (a.getAnswer().equalsIgnoreCase(answer)) {
+				ans = a;
 			}
 		}
 
+		return ans;
+	}
+
+	private static PlayerResponse formulateResponse (Answer sagot) {
 		PlayerResponse response = new PlayerResponse(mystate.getCurrentPlayer(), sagot);
 
 		return response;
