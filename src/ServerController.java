@@ -18,9 +18,12 @@ public class ServerController {
 	public static final int WINDOW_SIZE = 2;
 	// Time (ms) before REsending all the non-acked packets
 	public static final int TIMER = 30;
+	// PORT
 	public final static int PORT = 7331;
-	private int MAXPLAYER;
+	// Buffer size
 	private final static int BUFFER = 1024;
+	// MAX players
+	private int MAXPLAYER;
 
 	private DatagramSocket socket;
 	private ArrayList<InetAddress> clientAddresses;
@@ -30,8 +33,12 @@ public class ServerController {
 	private TriviaGame game;
 
 	public ServerController(int max) throws Exception {
-
 		MAXPLAYER = max;
+		initServer();
+	}
+
+	private void initServer () throws Exception {
+
 		socket = new DatagramSocket(PORT);
 		clientAddresses = new ArrayList();
 		clientPorts = new ArrayList();
@@ -43,6 +50,30 @@ public class ServerController {
 		int n = sc.nextInt();
 		game = new TriviaGame(n);
 
+		initLobby();
+		castGameStart();
+		castGameProper();
+		castGameEnd();
+	}
+
+	private void castGameProper() throws Exception {
+
+		while (game.askQuestion()) {
+			for (int i = 0; i < playerList.size(); i++) {
+				GameState playerstate = game.getGameState(playerList.get(i));
+				byte[] state = Serializer.toBytes(playerstate);
+				sendPacket(clientAddresses.get(i), clientPorts.get(i), state);
+			}
+
+			while (!game.questionDone()) {
+				PlayerResponse response = convertToResponse(receivePacket());
+				recordScore(response);
+			}
+		}
+
+	}
+
+	private void initLobby() {
 		System.out.println("Waiting for enough players to connect.");
 		while (existingClients.size() < MAXPLAYER) {
 
@@ -76,23 +107,6 @@ public class ServerController {
 				System.err.println(e);
 			}
 		}
-
-		castGameStart();
-
-		while (game.askQuestion()) {
-			for (int i = 0; i < playerList.size(); i++) {
-				GameState playerstate = game.getGameState(playerList.get(i));
-				byte[] state = Serializer.toBytes(playerstate);
-				sendPacket(clientAddresses.get(i), clientPorts.get(i), state);
-			}
-
-			while (!game.questionDone()) {
-				PlayerResponse response = convertToResponse(receivePacket());
-				recordScore(response);
-			}
-		}
-
-		castGameEnd();
 	}
 
 	private Player registerPlayer(byte[] buf) {
@@ -120,7 +134,7 @@ public class ServerController {
 		}
 	}
 
-	public PlayerResponse convertToResponse (byte[] answer) throws IOException, ClassNotFoundException {
+	private PlayerResponse convertToResponse (byte[] answer) throws IOException, ClassNotFoundException {
 		PlayerResponse response = (PlayerResponse) Serializer.toObject(answer);
 		return response;
 	}
@@ -129,14 +143,14 @@ public class ServerController {
 		game.checkAnswer(response.getAnswer(), response.getPlayer());
 	}
 
-	public void sendConnectConfirmation (InetAddress address, int port) throws Exception {
+	private void sendConnectConfirmation (InetAddress address, int port) throws Exception {
 		String msg = "Connected to Game. Please wait until all players connect";
 		byte buf[] = msg.getBytes();
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, address, port);
 		socket.send(packet);
 	}
 
-	public void sendConnectionError (InetAddress address, int port) throws Exception {
+	private void sendConnectionError (InetAddress address, int port) throws Exception {
 		String msg = "ERROR";
 		byte buf[] = msg.getBytes();
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, address, port);
@@ -212,7 +226,7 @@ public class ServerController {
 
 	}
 
-	public void castGameStart() throws Exception {
+	private void castGameStart() throws Exception {
 
 		System.out.println("Game will begin\n\n");
 
@@ -227,7 +241,7 @@ public class ServerController {
 
 	}
 
-	public void sendPacket (InetAddress address, int port, byte[] object) throws Exception {
+	private void sendPacket (InetAddress address, int port, byte[] object) throws Exception {
 
 		// Sequence number of the last packet sent (rcvbase)
 		int lastSent = 0;
@@ -328,7 +342,6 @@ public class ServerController {
 
 
 		}
-
 		System.out.println("Finished transmission");
 
 	}

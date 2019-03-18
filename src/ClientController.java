@@ -1,10 +1,7 @@
 
 
 import java.io.*;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketTimeoutException;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -16,68 +13,86 @@ public class ClientController {
 	public static final int MSS = 4;
 	// Window size - Number of packets sent without acking
 	public static final int WINDOW_SIZE = 2;
+	//Buffer size
 	private final static int BUFFER = 1024;
 	// Time (ms) before REsending all the non-acked packets
 	public static final int TIMER = 30;
+	// PORT
 	public final static int PORT = 7331;
 
-
 	private DatagramSocket socket;
-	private String hostname ="localhost";
-	private boolean waiting=true;
+	private String hostname;
 	private String username;
 	private GameState mystate;
 	private InetAddress address;
 
-	public ClientController () throws Exception {
+	private boolean waiting=true;
+	private boolean error=false;
+
+	public ClientController (String hostname) throws Exception {
+
+		this.hostname = hostname;
+
 		System.out.print("Enter a username: ");
 		Scanner sc = new Scanner (System.in);
 		username = sc.nextLine();
 		username = username.trim();
 
 		if (connectServer(username)) {
+			gameLobby();
+			gameProper();
+			gameEnd();
+		}
+		else {
+			System.out.println("Unable to connect to ip");
+		}
 
-			boolean error = false;
+	}
 
-			while (waiting) {
+	private void gameEnd() {
+		printScores(mystate);
+	}
 
-				byte[] receive = new byte[BUFFER];
-				DatagramPacket packet = new DatagramPacket(receive, receive.length);
-				socket.receive(packet);
-				String msg = new String(receive);
-				msg = msg.trim();
+	private void gameProper() throws Exception {
+		while (!error) {
 
-				if (msg.equals("START")) {
-					waiting = false;
-				}
-				else if (msg.equals("ERROR")) {
-					error = true;
-					waiting = false;
-				}
-				System.out.println(msg);
+			mystate = convertToGameState(receivePacket());
+
+			if (mystate.isDone()) {
+				break;
 			}
 
-			boolean gameOnGoing = true;
+			printQuestion(mystate);
 
-			while (gameOnGoing && !error) {
+			Scanner sc = new Scanner (System.in);
+			int answer = sc.nextInt();
 
-				mystate = convertToGameState(receivePacket());
+			Answer myans = mystate.getCurrentQuestion().getAnswersList().get(answer-1);
+			System.out.println("My ans : " + myans.getAnswer());
 
-				if (mystate.isDone()) {
-					printScores(mystate);
-					break;
-				}
-				printQuestion(mystate);
+			PlayerResponse response = formulateResponse(myans);
+			byte[] state = Serializer.toBytes(response);
+			sendPacket(address, PORT, state);
+		}
+	}
 
-				int answer = sc.nextInt();
+	private void gameLobby () throws  Exception {
+		while (waiting) {
 
-				Answer myans = mystate.getCurrentQuestion().getAnswersList().get(answer-1);
-				System.out.println("My ans : " + myans.getAnswer());
+			byte[] receive = new byte[BUFFER];
+			DatagramPacket packet = new DatagramPacket(receive, receive.length);
+			socket.receive(packet);
+			String msg = new String(receive);
+			msg = msg.trim();
 
-				PlayerResponse response = formulateResponse(myans);
-				byte[] state = Serializer.toBytes(response);
-				sendPacket(address, PORT, state);
+			if (msg.equals("START")) {
+				waiting = false;
 			}
+			else if (msg.equals("ERROR")) {
+				error = true;
+				waiting = false;
+			}
+			System.out.println(msg);
 		}
 	}
 
@@ -119,11 +134,16 @@ public class ClientController {
 
 	private boolean connectServer(String username) throws Exception {
 
-		byte buf[] = username.getBytes();
-		socket = new DatagramSocket();
-		address = InetAddress.getByName(hostname);
-		DatagramPacket packet = new DatagramPacket(buf, buf.length, address, PORT);
-		socket.send(packet);
+		try {
+			byte buf[] = username.getBytes();
+			socket = new DatagramSocket();
+			address = InetAddress.getByName(hostname);
+			DatagramPacket packet = new DatagramPacket(buf, buf.length, address, PORT);
+			socket.send(packet);
+		}
+		catch (UnknownHostException e) {
+			return false;
+		}
 
 		return true;
 	}
