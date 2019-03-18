@@ -1,3 +1,5 @@
+import javafx.stage.Stage;
+
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
@@ -22,15 +24,16 @@ public class ClientController {
 	private String hostname;
 	private GameState mystate;
 	private InetAddress address;
+	private Stage primaryStage;
 
 	private boolean waiting=true;
 	private boolean error=false;
 
 	private View currentView;
 
-	public ClientController (String hostname) throws Exception {
-		this.hostname = hostname;
-		currentView = new LobbyView(this);
+	public ClientController (Stage primaryStage) throws Exception {
+		this.primaryStage = primaryStage;
+		currentView = new LobbyView(this, primaryStage);
 	}
 
 	private void Notify() {
@@ -80,15 +83,15 @@ public class ClientController {
 			System.out.println(msg);
 		}
 
-		currentView = new GameView(this);
+		currentView = new GameView(this, primaryStage);
 		gameProper();
 	}
 
 	private void gameEnd() {
-		currentView = new FinishView(this);
+		currentView = new FinishView(this, primaryStage);
 	}
 
-	private boolean connectServer(String username) throws Exception {
+	private boolean connectServer(String hostname, String username) throws Exception {
 
 		try {
 			byte buf[] = username.getBytes();
@@ -277,9 +280,9 @@ public class ClientController {
 
 	}
 
-	public void submitUsername(String username) throws Exception {
+	public void submitUsername(String hostname, String username) throws Exception {
 
-		if (connectServer(username) ) {
+		if (connectServer(hostname, username) ) {
 			gameLobby();
 		}
 		else {

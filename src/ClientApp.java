@@ -7,10 +7,7 @@ public class ClientApp extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception{
-		System.out.print("Enter server ip: ");
-		Scanner sc = new Scanner (System.in);
-		String hostname = sc.nextLine();
-		ClientController controller = new ClientController(hostname);
+		ClientController controller = new ClientController(primaryStage);
 	}
 
 	public static void main(String[] args) {

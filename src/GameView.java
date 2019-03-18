@@ -1,9 +1,12 @@
+import javafx.stage.Stage;
+
 import java.util.Scanner;
 
 public class GameView extends View{
 
-	public GameView(ClientController controller) throws Exception{
+	public GameView(ClientController controller, Stage primaryStage) throws Exception{
 		super(controller);
+		this.primaryStage = primaryStage;
 		System.out.println("You are in game view");
 
 	}

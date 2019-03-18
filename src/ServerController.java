@@ -32,8 +32,12 @@ public class ServerController {
 	private HashSet<String> existingClients;
 	private TriviaGame game;
 
-	public ServerController(int max) throws Exception {
-		MAXPLAYER = max;
+	public ServerController() throws Exception {
+
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Enter player count: ");
+		MAXPLAYER = sc.nextInt();
+
 		initServer();
 	}
 
