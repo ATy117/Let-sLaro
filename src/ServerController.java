@@ -132,6 +132,7 @@ public class ServerController {
 			byte[] state = Serializer.toBytes(playerstate);
 			sendPacket(clientAddresses.get(i), clientPorts.get(i), state);
 		}
+		System.out.println("Game has ended");
 	}
 
 	private PlayerResponse convertToResponse (byte[] answer) throws IOException, ClassNotFoundException {
