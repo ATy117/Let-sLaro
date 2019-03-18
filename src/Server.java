@@ -73,9 +73,7 @@ public class Server {
 		}
 
 
-
 		castGameStart();
-
 
 		while (game.askQuestion()) {
 			for (int i = 0; i < playerList.size(); i++) {
