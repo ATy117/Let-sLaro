@@ -1,10 +1,16 @@
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.Scanner;
 
 public class FinishView extends View {
+
+	@FXML Label remarksLabel;
 
 	public FinishView(ClientController controller, Stage primaryStage){
 		super(controller);
@@ -12,6 +18,12 @@ public class FinishView extends View {
 		System.out.println("You are in finish view");
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("finishTemplate.fxml"));
 		loader.setController(this);
+
+		StageManager sm = new StageManager(primaryStage);
+		sm.loadScene(loader);
+		sm.setWindowName("Game Over");
+
+		init();
 
 		Update();
 		Platform.exit();
@@ -30,6 +42,12 @@ public class FinishView extends View {
 		}
 	}
 
+	public void init(){
+		DropShadow dropShadow = new DropShadow();
+		dropShadow.setRadius(7.0);
+		dropShadow.setColor(Color.color(0, 0, 0.10));
+		remarksLabel.setEffect(dropShadow);
+	}
 
 	@Override
 	public void Update() {
