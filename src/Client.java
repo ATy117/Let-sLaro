@@ -54,6 +54,10 @@ public class Client {
 			while (gameOnGoing) {
 
 				mystate = convertToGameState(receivePacket());
+
+				if (mystate.isDone()) {
+					break;
+				}
 				printQuestion(mystate);
 
 				int answer = sc.nextInt();
@@ -65,9 +69,23 @@ public class Client {
 				byte[] state = Serializer.toBytes(response);
 				sendPacket(address, PORT, state);
 			}
-		}
 
+			printScores(mystate);
+		}
 	}
+
+	private static void printScores(GameState state) {
+
+		System.out.println("SCORES");
+		System.out.println(mystate.getCurrentPlayer().getName() + ": " + mystate.getCurrentPlayer().getScore());
+
+		System.out.println("Other Players\n");
+
+		for (Player p: state.getPlayersList()) {
+			System.out.println(p.getName() + ": " + p.getScore());
+		}
+	}
+
 
 	private static PlayerResponse formulateResponse (Answer sagot) {
 		PlayerResponse response = new PlayerResponse(mystate.getCurrentPlayer(), sagot);

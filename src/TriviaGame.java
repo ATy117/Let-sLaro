@@ -26,7 +26,7 @@ public class TriviaGame {
 	public GameState getGameState(Player player) {
 
 		GameState state = new GameState();
-		List<Player> otherplayers = new ArrayList<>();
+		List<Player> otherplayers = new ArrayList<>(playersList);
 		otherplayers.remove(player);
 
 		state.setCurrentQuestion(currentQuestion);
