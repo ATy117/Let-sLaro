@@ -134,16 +134,16 @@ public class TriviaGame {
 	public boolean checkAnswer (Answer answer, Player dude) {
 
 		for (Player p: playersList) {
+
 			if (p.getName().equals(dude.getName())) {
 				p.setAnswered(true);
-			}
 
-			for (Answer a: currentQuestion.getAnswersList()) {
-				if (answer == a && a.isCorrect()) {
+				if (answer.isCorrect()) {
 					int score = p.getScore();
-					p.setScore(score+currentQuestion.getPoints());
+					p.setScore(score + currentQuestion.getPoints());
 					return true;
 				}
+				break;
 			}
 		}
 

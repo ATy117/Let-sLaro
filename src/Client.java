@@ -59,6 +59,7 @@ public class Client {
 				int answer = sc.nextInt();
 
 				Answer myans = mystate.getCurrentQuestion().getAnswersList().get(answer-1);
+				System.out.println("My ans : " + myans.getAnswer());
 
 				PlayerResponse response = formulateResponse(myans);
 				byte[] state = Serializer.toBytes(response);

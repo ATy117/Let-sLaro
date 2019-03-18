@@ -72,7 +72,6 @@ public class Server {
 			}
 		}
 
-
 		castGameStart();
 
 		while (game.askQuestion()) {
