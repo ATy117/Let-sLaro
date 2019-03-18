@@ -176,8 +176,6 @@ public class TriviaGame {
 
 	public void endGame () {
 		gameDone =true;
-		questionsList.clear();
-		playersList.clear();
 		connection = null;
 	}
 

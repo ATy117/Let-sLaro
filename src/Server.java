@@ -87,6 +87,19 @@ public class Server {
 			}
 		}
 
+		castGameEnd();
+
+
+
+	}
+
+	private static void castGameEnd () throws  Exception{
+		game.endGame();
+		for (int i = 0; i < playerList.size(); i++) {
+			GameState playerstate = game.getGameState(playerList.get(i));
+			byte[] state = Serializer.toBytes(playerstate);
+			sendPacket(clientAddresses.get(i), clientPorts.get(i), state);
+		}
 	}
 
 	public static PlayerResponse convertToResponse (byte[] answer) throws IOException, ClassNotFoundException {
