@@ -31,7 +31,7 @@ public class GameView extends View{
 
 		StageManager sm = new StageManager(primaryStage);
 		sm.loadScene(loader);
-		sm.setWindowName("Game");
+		sm.setWindowName("Trivia");
 
 		init();
 

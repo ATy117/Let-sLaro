@@ -97,7 +97,7 @@
         <JFXButton fx:id="ansBtn1" layoutX="276.0" layoutY="502.0" />
         <JFXButton fx:id="ansBtn2" layoutX="453.0" layoutY="502.0" />
         <JFXButton fx:id="ansBtn3" layoutX="623.0" layoutY="501.0" />
-        <JFXButton fx:id="ansBtn4" onAction="#changePane" layoutX="788.0" layoutY="499.0" />
+        <JFXButton fx:id="ansBtn4" layoutX="788.0" layoutY="499.0" />
         <Label fx:id="ans3Label" layoutX="570.0" layoutY="465.0" text="Answer 3" textFill="#cccccc">
             <font>
                 <Font name="Cartoonist Kooky" size="18.0" />

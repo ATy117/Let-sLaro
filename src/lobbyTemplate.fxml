@@ -25,7 +25,8 @@
                 <Font name="Cartoonist Kooky" size="20.0" />
             </font>
         </JFXTextField>
-        <JFXButton fx:id="enterBtn" layoutX="481.0" layoutY="337.0" onAction="#changePane" />
+
+        <JFXButton fx:id="enterBtn" layoutX="494.0" layoutY="337.0" onAction="#joinGame" />
         <Label layoutX="137.0" layoutY="282.0" text="enter IP address:" textFill="#f78bc9">
             <font>
                 <Font name="Cartoonist Kooky" size="20.0" />

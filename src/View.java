@@ -6,6 +6,8 @@ public abstract class View {
 	public Stage primaryStage;
 	public GameState state;
 	public ClientController controller;
+	public StageManager sm;
+
 
 	public View () {
 

@@ -1,6 +1,8 @@
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,21 +17,26 @@ public class LobbyView extends View {
 	public LobbyView(ClientController controller, Stage primaryStage) throws Exception {
 		super(controller);
 		this.primaryStage = primaryStage;
+
 		System.out.println("You are in lobby view");
+
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("lobbyTemplate.fxml"));
 		loader.setController(this);
-
+		
 		StageManager sm = new StageManager(primaryStage);
 		sm.loadScene(loader);
 		sm.setWindowName("Lobby");
 
 		init();
-
-		//joinGame();
 	}
 
-	public void joinGame() throws Exception {
 
+	@Override
+	public void Update() {
+
+	}
+
+	public void joinGame(ActionEvent actionEvent) throws Exception {
 		System.out.print("Enter server ip: ");
 		Scanner sc = new Scanner (System.in);
 		String hostname = sc.nextLine();
