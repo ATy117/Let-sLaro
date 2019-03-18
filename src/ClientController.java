@@ -32,11 +32,8 @@ public class ClientController {
 	private View currentView;
 
 	public ClientController (String hostname) throws Exception {
-
 		this.hostname = hostname;
-
 		currentView = new LobbyView(this);
-
 	}
 
 	private void Notify() {
@@ -44,6 +41,7 @@ public class ClientController {
 	}
 
 	private void gameEnd() {
+		currentView = new FinishView(this);
 		printScores(mystate);
 	}
 
@@ -68,9 +66,11 @@ public class ClientController {
 			byte[] state = Serializer.toBytes(response);
 			sendPacket(address, PORT, state);
 		}
+		gameEnd();
 	}
 
 	private void gameLobby () throws  Exception {
+
 		while (waiting) {
 
 			byte[] receive = new byte[BUFFER];
@@ -88,6 +88,9 @@ public class ClientController {
 			}
 			System.out.println(msg);
 		}
+
+		currentView = new GameView(this);
+		gameProper();
 	}
 
 	private void printScores(GameState state) {
@@ -316,8 +319,6 @@ public class ClientController {
 
 				}
 			}
-
-
 		}
 
 		System.out.println("Finished transmission");
@@ -326,10 +327,8 @@ public class ClientController {
 
 	public void submitUsername(String username) throws Exception {
 
-		if (connectServer(username)) {
+		if (connectServer(username) ) {
 			gameLobby();
-			gameProper();
-			gameEnd();
 		}
 		else {
 			System.out.println("Unable to connect to ip");

@@ -2,9 +2,13 @@ import java.util.Scanner;
 
 public class LobbyView extends View {
 
-	public LobbyView(ClientController controller) throws Exception{
+	public LobbyView(ClientController controller) throws Exception {
 		super(controller);
+		System.out.println("You are in lobby view");
+		joinGame();
+	}
 
+	public void joinGame() throws Exception {
 		System.out.print("Enter a username: ");
 		Scanner sc = new Scanner (System.in);
 		String username = sc.nextLine();
@@ -12,7 +16,6 @@ public class LobbyView extends View {
 
 		controller.submitUsername(username);
 	}
-
 
 
 	@Override
