@@ -18,12 +18,11 @@ public class GameView extends View{
 	@FXML Label scoreLabel;
 	@FXML Label ans1Label, ans2Label, ans3Label, ans4Label;
 	@FXML JFXButton ansBtn1, ansBtn2, ansBtn3, ansBtn4;
-	@FXML Label username1, username2, username3, score1, score2, score3;
 
-
-	public GameView(ClientController controller, Stage primaryStage) throws Exception{
+	public GameView(ClientController controller, Stage primaryStage) {
 		super(controller);
 		this.primaryStage = primaryStage;
+
 		System.out.println("You are in game view");
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("gameTemplate.fxml"));
@@ -34,10 +33,15 @@ public class GameView extends View{
 		sm.setWindowName("Trivia");
 
 		init();
-
 	}
 
 	public void init(){
+		questionLabel.setText("Waiting for enough players to connect.");
+		ans1Label.setText("");
+		ans2Label.setText("");
+		ans3Label.setText("");
+		ans4Label.setText("");
+
 		DropShadow dropShadow = new DropShadow();
 		dropShadow.setRadius(7.0);
 		dropShadow.setColor(Color.color(0, 0, 0.10));
@@ -73,19 +77,60 @@ public class GameView extends View{
 	public void Update()  {
 		this.state = controller.getMystate();
 		printQuestion(this.state);
+		updateButtons();
+		questionLabel.setText(state.getCurrentQuestion().getQuestion());
+	}
 
+	private void updateButtons() {
 
-		try {
-			selectAnswer(0);
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (state.getCurrentQuestion().getAnswersList().size() > 0) {
+			ans1Label.setText(state.getCurrentQuestion().getAnswersList().get(0).getAnswer());
+			ans1Label.setOnMouseClicked(e -> {
+				try {
+					selectAnswer(0);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			});
+		}
+
+		if (state.getCurrentQuestion().getAnswersList().size() > 1) {
+			ans2Label.setText(state.getCurrentQuestion().getAnswersList().get(1).getAnswer());
+			ans2Label.setOnMouseClicked(e -> {
+				try {
+					selectAnswer(1);
+
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			});
+		}
+
+		if (state.getCurrentQuestion().getAnswersList().size() > 2) {
+			ans3Label.setText(state.getCurrentQuestion().getAnswersList().get(2).getAnswer());
+			ans3Label.setOnMouseClicked(e -> {
+				try {
+					selectAnswer(2);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			});
+		}
+
+		if (state.getCurrentQuestion().getAnswersList().size() > 3) {
+			ans4Label.setText(state.getCurrentQuestion().getAnswersList().get(3).getAnswer());
+			ans4Label.setOnMouseClicked(e -> {
+				try {
+					selectAnswer(3);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			});
 		}
 	}
 
 	public void selectAnswer(int n) throws Exception {
-		Scanner sc = new Scanner (System.in);
-		int answer = sc.nextInt();
-		controller.selectAnswer(answer);
+		controller.selectAnswer(n);
 	}
 
 	private void printQuestion (GameState state) {

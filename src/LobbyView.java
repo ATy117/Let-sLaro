@@ -41,9 +41,11 @@ public class LobbyView extends View {
 		//sc = new Scanner (System.in);
 		//String username = sc.nextLine();
 		String username = usernameField.getText();
-		username = username.trim();
 
-		controller.submitUsername(hostname ,username);
+		if (!hostname.isEmpty() && !username.isEmpty()) {
+			controller.submitUsername(hostname, username);
+		}
+
 	}
 
 	public void init(){

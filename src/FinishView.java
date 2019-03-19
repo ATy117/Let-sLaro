@@ -11,6 +11,7 @@ import java.util.Scanner;
 public class FinishView extends View {
 
 	@FXML Label remarksLabel;
+	@FXML Label username1, username2, username3, score1, score2, score3;
 
 	public FinishView(ClientController controller, Stage primaryStage){
 		super(controller);
@@ -23,8 +24,6 @@ public class FinishView extends View {
 		sm = new StageManager(primaryStage);
 		sm.loadScene(loader);
 		sm.setWindowName("Game Finished");
-
-		Update();
 	}
 
 
@@ -41,10 +40,13 @@ public class FinishView extends View {
 	}
 
 	public void init(){
+		/*
 		DropShadow dropShadow = new DropShadow();
 		dropShadow.setRadius(7.0);
 		dropShadow.setColor(Color.color(0, 0, 0.10));
 		remarksLabel.setEffect(dropShadow);
+		*/
+
 	}
 
 	@Override

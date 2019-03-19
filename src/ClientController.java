@@ -28,7 +28,6 @@ public class ClientController {
 	private boolean waiting=true;
 	private boolean error=false;
 	private volatile boolean answered=false;
-
 	private View currentView;
 
 	public ClientController (Stage primaryStage) throws Exception {
@@ -41,22 +40,19 @@ public class ClientController {
 	}
 
 	private void gameProper() throws Exception {
-		while (!error ) {
+		currentView = new GameView(this, primaryStage);
+		waitForQuestion();
+	}
 
-			mystate = (GameState) Serializer.toObject(receivePacket());
+	private void waitForQuestion () throws Exception{
+		mystate = (GameState) Serializer.toObject(receivePacket());
 
-			if (mystate.isDone()) {
-				break;
-			}
-
-			Notify();
-
-			while (!answered) {
-				Thread.sleep(100);
-				// wait until view sends an answer
-			}
+		if (mystate.isDone()) {
+			gameEnd();
 		}
-		gameEnd();
+		else {
+			Notify();
+		}
 	}
 
 	public void selectAnswer(int answer) throws Exception{
@@ -65,16 +61,18 @@ public class ClientController {
 		byte[] state = Serializer.toBytes(response);
 		sendPacket(address, PORT, state);
 		answered = true;
+		waitForQuestion();
 	}
 
 
-	private void gameLobby () throws  Exception {
+	private void gameLobby ()  throws Exception{
 
 		while (waiting) {
-
 			byte[] receive = new byte[BUFFER];
 			DatagramPacket packet = new DatagramPacket(receive, receive.length);
+
 			socket.receive(packet);
+
 			String msg = new String(receive);
 			msg = msg.trim();
 
@@ -85,10 +83,10 @@ public class ClientController {
 				error = true;
 				waiting = false;
 			}
+
 			System.out.println(msg);
 		}
 
-		currentView = new GameView(this, primaryStage);
 		gameProper();
 	}
 
@@ -106,6 +104,7 @@ public class ClientController {
 			socket.send(packet);
 		}
 		catch (UnknownHostException e) {
+			e.printStackTrace();
 			return false;
 		}
 
@@ -298,4 +297,6 @@ public class ClientController {
 	public GameState getMystate() {
 		return mystate;
 	}
+
+
 }
