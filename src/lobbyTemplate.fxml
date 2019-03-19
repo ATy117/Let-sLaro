@@ -32,7 +32,7 @@
                 <Font name="Cartoonist Kooky" size="20.0" />
             </font>
         </Label>
-        <JFXTextField fx:id="IPField" focusColor="#c891f3" layoutX="196.0" layoutY="305.0" promptText="username" unFocusColor="#f78bc9">
+        <JFXTextField fx:id="IPField" focusColor="#c891f3" layoutX="196.0" layoutY="305.0" promptText="IP Address" unFocusColor="#f78bc9">
             <font>
                 <Font name="Cartoonist Kooky" size="20.0" />
             </font>
