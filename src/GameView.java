@@ -22,6 +22,7 @@ public class GameView extends View{
 
 	private final int COUNTDOWN = 10;
 	private int seconds;
+	private Timer timer;
 
 	@FXML Text playersText;
 	@FXML Label questionLabel;
@@ -32,8 +33,10 @@ public class GameView extends View{
 	@FXML ImageView ansImageView1, ansImageView2, ansImageView3, ansImageView4, ansGreenView, ansRedView;
 	@FXML JFXListView playersListView;
 	@FXML Label scoreLabel;
+	@FXML Label timerLabel;
 	Image ansGreenTri, ansRedTri, ansGreenButton, ansRedButton, ansBack1, ansBack2;
 	ImageView ansView, ansView2, ansView3, ansView4;
+
 
 	public GameView(ClientController controller, Stage primaryStage) {
 		super(controller);
@@ -59,6 +62,7 @@ public class GameView extends View{
 		ans3Label.setText("");
 		ans4Label.setText("");
 		questionNumLabel.setText("");
+		timerLabel.setText("Timer: " + COUNTDOWN);
 		usernameLabel.setText("Username: " + controller.getUsername());
 		scoreLabel.setText("Score: 0");
 
@@ -118,9 +122,9 @@ public class GameView extends View{
 
 	private void startTimer () {
 
-		Timer timer = new Timer();
-
+		timer = new Timer();
 		seconds = COUNTDOWN;
+		timerLabel.setText("Timer: " + seconds);
 
 		timer.schedule(new TimerTask() {
 			public void run() {
@@ -128,15 +132,16 @@ public class GameView extends View{
 					public void run() {
 						if (seconds == 0) {
 							try {
-								controller.selectAnswer(getWrongAnswer());
 								timer.cancel();
 								timer.purge();
+								controller.selectAnswer(getWrongAnswer());
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
 						}
 						else {
 							System.out.println(decSeconds());
+							timerLabel.setText("Timer: " + seconds);
 						}
 					}
 				});
@@ -172,6 +177,8 @@ public class GameView extends View{
 			ans1Label.setText(state.getCurrentQuestion().getAnswersList().get(0).getAnswer());
 			ansBtn1.setOnMouseClicked(e -> {
 				try {
+					timer.cancel();
+					timer.purge();
 					controller.selectAnswer(0);
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -183,6 +190,8 @@ public class GameView extends View{
 			ans2Label.setText(state.getCurrentQuestion().getAnswersList().get(1).getAnswer());
 			ansBtn2.setOnMouseClicked(e -> {
 				try {
+					timer.cancel();
+					timer.purge();
 					controller.selectAnswer(1);
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -194,6 +203,8 @@ public class GameView extends View{
 			ans3Label.setText(state.getCurrentQuestion().getAnswersList().get(2).getAnswer());
 			ansBtn3.setOnMouseClicked(e -> {
 				try {
+					timer.cancel();
+					timer.purge();
 					controller.selectAnswer(2);
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -205,6 +216,8 @@ public class GameView extends View{
 			ans4Label.setText(state.getCurrentQuestion().getAnswersList().get(3).getAnswer());
 			ansBtn4.setOnMouseClicked(e -> {
 				try {
+					timer.cancel();
+					timer.purge();
 					controller.selectAnswer(3);
 				} catch (Exception e1) {
 					e1.printStackTrace();

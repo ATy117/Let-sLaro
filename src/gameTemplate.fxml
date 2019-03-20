@@ -105,5 +105,10 @@
                 <Font name="Cartoonist Kooky" size="18.0" />
             </font>
         </Label>
+      <Label fx:id="timerLabel" layoutX="722.0" layoutY="27.0" text="TIME:" textFill="#cccccc">
+         <font>
+            <Font name="Cartoonist Kooky" size="33.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>
