@@ -1,13 +1,18 @@
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPopup;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -64,6 +69,36 @@ public class LobbyView extends View {
 		usernameField.getStyleClass().add("text-field-username");
 		IPField.getStyleClass().add("text-field-address");
 
+	}
+
+	public void popUp(){
+		JFXPopup popup = new JFXPopup();
+		AnchorPane anchorPane = new AnchorPane();
+		Image loading = new Image("resources/loading.gif");
+		ImageView viewLoading = new ImageView(loading);
+		Label words = new Label("Waiting for Others");
+
+		lobbyAnchor.getStylesheets().add("theme.css");
+		anchorPane.getStyleClass().add("anchorpane-Pop");
+		words.getStyleClass().add("label-players");
+
+		viewLoading.setFitHeight(130);
+		viewLoading.setFitWidth(300);
+
+		anchorPane.setMinSize(300,300);
+		anchorPane.setMaxSize(300, 300);
+
+		words.setMaxWidth(Double.MAX_VALUE);
+		words.setAlignment(Pos.CENTER);
+
+		AnchorPane.setTopAnchor(words, 50.0);
+		AnchorPane.setTopAnchor(viewLoading, 150.0);
+		AnchorPane.setLeftAnchor(words, 40.0);
+
+		anchorPane.getChildren().add(words);
+		anchorPane.getChildren().add(viewLoading);
+		popup.setPopupContent(anchorPane);
+		popup.show(lobbyAnchor, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 145.0, 40.0);
 	}
 
 
