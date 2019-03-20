@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -27,6 +28,7 @@
                         </Text>
                     </children>
                 </AnchorPane>
+            <JFXListView fx:id="playersListView" prefHeight="510.0" prefWidth="199.0" style="-fx-background-color: #040916" />
             </children>
         </VBox>
         <Label fx:id="usernameLabel" layoutX="228.0" layoutY="29.0" text="username" textFill="#f78bc9">

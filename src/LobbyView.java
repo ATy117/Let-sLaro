@@ -4,15 +4,20 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.util.Scanner;
 
 public class LobbyView extends View {
 	@FXML JFXButton enterBtn;
 	@FXML JFXTextField usernameField, IPField;
+	@FXML AnchorPane lobbyAnchor;
+	@FXML Label enterNameLabel;
 
 	public LobbyView(ClientController controller, Stage primaryStage) throws Exception {
 		super(controller);
@@ -54,6 +59,11 @@ public class LobbyView extends View {
 		enterView.setFitHeight(35);
 		enterView.setFitWidth(85);
 		enterBtn.setGraphic(enterView);
+
+		lobbyAnchor.getStylesheets().add("theme.css");
+		usernameField.getStyleClass().add("text-field-username");
+		IPField.getStyleClass().add("text-field-address");
+
 	}
 
 

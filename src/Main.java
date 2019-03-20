@@ -34,7 +34,7 @@ public class Main extends Application {
             System.out.println("////////////////////////////");
 
 
-            if (game.checkAnswer(myanswer, me)) {
+            if (game.checkAnswer(new Answer(), me)) {
                 System.out.println("correct!");
             } else
                 System.out.println("wrong!");

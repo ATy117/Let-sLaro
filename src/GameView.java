@@ -1,14 +1,18 @@
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXListView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class GameView extends View{
@@ -18,6 +22,7 @@ public class GameView extends View{
 	@FXML Label scoreLabel;
 	@FXML Label ans1Label, ans2Label, ans3Label, ans4Label;
 	@FXML JFXButton ansBtn1, ansBtn2, ansBtn3, ansBtn4;
+	@FXML JFXListView playersListView;
 
 	public GameView(ClientController controller, Stage primaryStage) {
 		super(controller);
@@ -85,7 +90,7 @@ public class GameView extends View{
 
 		if (state.getCurrentQuestion().getAnswersList().size() > 0) {
 			ans1Label.setText(state.getCurrentQuestion().getAnswersList().get(0).getAnswer());
-			ans1Label.setOnMouseClicked(e -> {
+			ansBtn1.setOnMouseClicked(e -> {
 				try {
 					selectAnswer(0);
 				} catch (Exception e1) {
@@ -96,7 +101,7 @@ public class GameView extends View{
 
 		if (state.getCurrentQuestion().getAnswersList().size() > 1) {
 			ans2Label.setText(state.getCurrentQuestion().getAnswersList().get(1).getAnswer());
-			ans2Label.setOnMouseClicked(e -> {
+			ansBtn2.setOnMouseClicked(e -> {
 				try {
 					selectAnswer(1);
 
@@ -108,7 +113,7 @@ public class GameView extends View{
 
 		if (state.getCurrentQuestion().getAnswersList().size() > 2) {
 			ans3Label.setText(state.getCurrentQuestion().getAnswersList().get(2).getAnswer());
-			ans3Label.setOnMouseClicked(e -> {
+			ansBtn3.setOnMouseClicked(e -> {
 				try {
 					selectAnswer(2);
 				} catch (Exception e1) {
@@ -119,7 +124,7 @@ public class GameView extends View{
 
 		if (state.getCurrentQuestion().getAnswersList().size() > 3) {
 			ans4Label.setText(state.getCurrentQuestion().getAnswersList().get(3).getAnswer());
-			ans4Label.setOnMouseClicked(e -> {
+			ansBtn4.setOnMouseClicked(e -> {
 				try {
 					selectAnswer(3);
 				} catch (Exception e1) {
@@ -142,5 +147,25 @@ public class GameView extends View{
 			System.out.println(a.getAnswer());
 		}
 
+	}
+
+	public void populatePlayers(List<Player> players){
+		playersListView.getStylesheets().add("theme.css");
+		playersListView.getStyleClass().add("jfx-list-cell");
+		for(Player p: players){
+			AnchorPane playerAnchor = new AnchorPane();
+			Label playerName = new Label("Player");
+			Label playerScore = new Label("20");
+
+			playerName.getStyleClass().add("label-players");
+			playerScore.getStyleClass().add("label-players");
+
+			AnchorPane.setLeftAnchor(playerScore, 130.0);
+
+			playerAnchor.getChildren().add(playerName);
+			playerAnchor.getChildren().add(playerScore);
+
+			playersListView.getItems().add(playerAnchor);
+		}
 	}
 }

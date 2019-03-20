@@ -1,0 +1,18 @@
+.text-field-username{
+    -fx-text-fill: #CB91F3;
+}
+
+.text-field-address{
+    -fx-text-fill: #F78BC9;
+}
+
+.jfx-list-cell{
+    -fx-background-color: #040916;
+    -fx-control-inner-background:#040916;
+}
+
+.label-players{
+    -fx-text-fill: #cccccc;
+    -fx-font-family: Cartoonist;
+    -fx-font-size: 21;
+}
