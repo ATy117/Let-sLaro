@@ -87,10 +87,9 @@ public class GameView extends View{
 	@Override
 	public void Update()  {
 		this.state = controller.getMystate();
-		printQuestion(this.state);
 		updateButtons();
 		questionLabel.setText(state.getCurrentQuestion().getQuestion());
-		questionNumLabel.setText("Question " + state.getQuestionNumber());
+		questionNumLabel.setText("Question " + state.getQuestionNumber() + " of " + state.getnQuestions());
 		scoreLabel.setText("Score: " + state.getCurrentPlayer().getScore());
 		populatePlayers(state.getPlayersList());
 	}
@@ -156,16 +155,6 @@ public class GameView extends View{
 		controller.selectAnswer(n);
 	}
 
-	private void printQuestion (GameState state) {
-
-		System.out.println("Player: " + state.getCurrentPlayer().getName() + " - " + state.getCurrentPlayer().getScore());
-		System.out.println(state.getQuestionNumber() + ": " + state.getCurrentQuestion().getQuestion());
-
-		for (Answer a: state.getCurrentQuestion().getAnswersList()) {
-			System.out.println(a.getAnswer());
-		}
-
-	}
 
 	public void populatePlayers(List<Player> players){
 		playersListView.getItems().clear();
