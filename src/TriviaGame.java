@@ -100,9 +100,16 @@ public class TriviaGame {
 		return true;
 	}
 
-	public boolean disconnectPlayer(Player dude) {
-		playersList.remove(dude);
-		System.out.println(dude.getName() + " has left the game");
+	public boolean disconnectPlayer(String username) {
+
+		for (Player p: playersList) {
+			if (p.getName().equals(username)){
+				playersList.remove(p);
+				System.out.println(p.getName() + " has left the game");
+				break;
+			}
+		}
+
 		return true;
 	}
 

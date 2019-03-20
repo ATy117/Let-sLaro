@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -41,6 +42,13 @@ public class ClientController {
 
 	private void gameProper() throws Exception {
 		currentView = new GameView(this, primaryStage);
+		primaryStage.setOnCloseRequest(e -> {
+			try {
+				disconnect();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		});
 		waitForQuestion();
 	}
 
@@ -53,6 +61,15 @@ public class ClientController {
 		else {
 			Notify();
 		}
+	}
+
+	public void disconnect () throws  Exception{
+		Answer myans = new Answer();
+		myans.setAnswer(null);
+		PlayerResponse response = new PlayerResponse(mystate.getCurrentPlayer(), myans);
+		byte[] state = Serializer.toBytes(response);
+		sendPacket(address, PORT, state);
+		answered = true;
 	}
 
 	public void selectAnswer(int answer) throws Exception{
@@ -79,9 +96,9 @@ public class ClientController {
 			if (msg.equals("START")) {
 				waiting = false;
 			}
+
 			else if (msg.equals("ERROR")) {
-				error = true;
-				waiting = false;
+				System.exit(0);
 			}
 
 			System.out.println(msg);
