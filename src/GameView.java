@@ -19,10 +19,12 @@ public class GameView extends View{
 
 	@FXML Text playersText;
 	@FXML Label questionLabel;
-	@FXML Label scoreLabel;
+	@FXML Label questionNumLabel;
+	@FXML Label usernameLabel;
 	@FXML Label ans1Label, ans2Label, ans3Label, ans4Label;
 	@FXML JFXButton ansBtn1, ansBtn2, ansBtn3, ansBtn4;
 	@FXML JFXListView playersListView;
+	@FXML Label scoreLabel;
 
 	public GameView(ClientController controller, Stage primaryStage) {
 		super(controller);
@@ -41,11 +43,15 @@ public class GameView extends View{
 	}
 
 	public void init(){
+		this.state = controller.getMystate();
 		questionLabel.setText("Waiting for enough players to connect.");
 		ans1Label.setText("");
 		ans2Label.setText("");
 		ans3Label.setText("");
 		ans4Label.setText("");
+		questionNumLabel.setText("");
+		usernameLabel.setText("Username: " + controller.getUsername());
+		scoreLabel.setText("Score: 0");
 
 		DropShadow dropShadow = new DropShadow();
 		dropShadow.setRadius(7.0);
@@ -84,9 +90,21 @@ public class GameView extends View{
 		printQuestion(this.state);
 		updateButtons();
 		questionLabel.setText(state.getCurrentQuestion().getQuestion());
+		questionNumLabel.setText("Question " + state.getQuestionNumber());
+		scoreLabel.setText("Score: " + state.getCurrentPlayer().getScore());
+
 	}
 
 	private void updateButtons() {
+
+		ans1Label.setText("");
+		ans2Label.setText("");
+		ans3Label.setText("");
+		ans4Label.setText("");
+		ans1Label.setOnMouseClicked(e -> {});
+		ans2Label.setOnMouseClicked(e -> {});
+		ans3Label.setOnMouseClicked(e -> {});
+		ans4Label.setOnMouseClicked(e -> {});
 
 		if (state.getCurrentQuestion().getAnswersList().size() > 0) {
 			ans1Label.setText(state.getCurrentQuestion().getAnswersList().get(0).getAnswer());

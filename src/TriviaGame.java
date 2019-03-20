@@ -174,7 +174,7 @@ public class TriviaGame {
 	}
 
 	public int getQuestionNumber () {
-		return nQuestions - questionsList.size() + 1;
+		return nQuestions - questionsList.size();
 	}
 
 	public void setPlayersList(List<Player> playersList) {

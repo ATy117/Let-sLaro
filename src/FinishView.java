@@ -20,10 +20,10 @@ public class FinishView extends View {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("finishTemplate.fxml"));
 		loader.setController(this);
 
-		init();
 		sm = new StageManager(primaryStage);
 		sm.loadScene(loader);
 		sm.setWindowName("Game Finished");
+		init();
 	}
 
 
@@ -33,6 +33,7 @@ public class FinishView extends View {
 		System.out.println(state.getCurrentPlayer().getName() + ": " + state.getCurrentPlayer().getScore());
 
 		System.out.println("Other Players\n");
+
 
 		Collections.sort(state.getPlayersList(), new Comparator<Player>() {
 			@Override
@@ -51,12 +52,26 @@ public class FinishView extends View {
 			top3.add(state.getPlayersList().get(i));
 		}
 
-		for (Player p: top3) {
-			System.out.println(p.getName() + ": " + p.getScore());
+		if (top3.size() > 0) {
+			username1.setText(top3.get(0).getName());
+			score1.setText(top3.get(0).getScore()+"");
 		}
+
+		if (top3.size() > 1) {
+			username2.setText(top3.get(1).getName());
+			score2.setText(top3.get(1).getScore()+"");
+		}
+
+		if (top3.size() > 2) {
+			username3.setText(top3.get(2).getName());
+			score3.setText(top3.get(2).getScore()+"");
+		}
+
+
 	}
 
 	public void init(){
+
 		/*
 		DropShadow dropShadow = new DropShadow();
 		dropShadow.setRadius(7.0);
@@ -64,6 +79,12 @@ public class FinishView extends View {
 		remarksLabel.setEffect(dropShadow);
 		*/
 
+		username1.setText("");
+		username2.setText("");
+		username3.setText("");
+		score1.setText("");
+		score2.setText("");
+		score3.setText("");
 	}
 
 	@Override

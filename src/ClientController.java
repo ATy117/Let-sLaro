@@ -26,6 +26,10 @@ public class ClientController {
 	private InetAddress address;
 	private Stage primaryStage;
 
+
+
+	private String username;
+
 	private boolean waiting=true;
 	private boolean error=false;
 	private volatile boolean answered=false;
@@ -90,12 +94,12 @@ public class ClientController {
 
 			socket.receive(packet);
 
-
 			String msg = new String(receive);
 			msg = msg.trim();
 
 			if (msg.equals("START")) {
 				waiting = false;
+				gameProper();
 			}
 
 			else if (msg.equals("ERROR")) {
@@ -105,11 +109,12 @@ public class ClientController {
 			System.out.println(msg);
 		}
 
-		gameProper();
 	}
 
 	private void gameEnd() {
 		currentView = new FinishView(this, primaryStage);
+		this.mystate.getPlayersList().add(mystate.getCurrentPlayer());
+		Notify();
 	}
 
 	private boolean connectServer(String hostname, String username) throws Exception {
@@ -305,6 +310,7 @@ public class ClientController {
 	public void submitUsername(String hostname, String username) throws Exception {
 
 		if (connectServer(hostname, username) ) {
+			this.username = username;
 			gameLobby();
 		}
 		else {
@@ -314,6 +320,10 @@ public class ClientController {
 
 	public GameState getMystate() {
 		return mystate;
+	}
+
+	public String getUsername() {
+		return username;
 	}
 
 
