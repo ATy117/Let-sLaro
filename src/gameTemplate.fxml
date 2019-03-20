@@ -61,22 +61,22 @@
                 <Font name="Cartoonist Kooky" size="33.0" />
             </font>
         </Label>
-        <ImageView fitHeight="35.0" fitWidth="149.0" layoutX="229.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="ansImageView1" fitHeight="35.0" fitWidth="149.0" layoutX="229.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@resources/Answer1Triangle.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="35.0" fitWidth="149.0" layoutX="559.0" layoutY="461.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="ansImageView3" fitHeight="35.0" fitWidth="149.0" layoutX="559.0" layoutY="461.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@resources/Answer1Triangle.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="35.0" fitWidth="149.0" layoutX="397.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="ansImageView2" fitHeight="35.0" fitWidth="149.0" layoutX="397.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@resources/Answer2Triangle.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="35.0" fitWidth="149.0" layoutX="722.0" layoutY="462.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="ansImageView4" fitHeight="35.0" fitWidth="149.0" layoutX="722.0" layoutY="462.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@resources/Answer2Triangle.png" />
             </image>
@@ -105,5 +105,10 @@
                 <Font name="Cartoonist Kooky" size="18.0" />
             </font>
         </Label>
+      <Label fx:id="timerLabel" layoutX="722.0" layoutY="27.0" text="TIME:" textFill="#cccccc">
+         <font>
+            <Font name="Cartoonist Kooky" size="33.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

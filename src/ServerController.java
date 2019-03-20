@@ -96,9 +96,12 @@ public class ServerController {
 
 	private void castGameStart() throws Exception {
 
+
 		System.out.println("Game will begin\n\n");
 
 		game.startGame();
+
+		System.out.println("Max number of questions: " + game.getnQuestions());
 
 		for (int i = 0; i<existingClients.size(); i++) {
 			String start = "START";

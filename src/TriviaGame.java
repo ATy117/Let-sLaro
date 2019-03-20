@@ -15,7 +15,6 @@ public class TriviaGame {
 	private boolean gameDone;
 
 	public TriviaGame (int nQuestions) {
-
 		this.nQuestions = nQuestions;
 		playersList = new ArrayList<>();
 
@@ -34,8 +33,7 @@ public class TriviaGame {
 		state.setPlayersList(otherplayers);
 		state.setDone(gameDone);
 		state.setQuestionNumber(getQuestionNumber());
-
-		System.out.println(playersList);
+		state.setnQuestions(nQuestions);
 
 		return state;
 	}
@@ -66,6 +64,7 @@ public class TriviaGame {
 
 		if (nSelected > totalQuestions) {
 			nSelected = totalQuestions;
+			this.nQuestions = totalQuestions;
 		}
 
 		// get all songs and shuffle
@@ -88,9 +87,6 @@ public class TriviaGame {
 		gameDone = false;
 		System.out.println("\n\nWELCOME TO TRIVIA GAME\n\n");
 		questionsList = buildQuestions(getSelectedQuestionIDs(nQuestions));
-		for (Question q: questionsList) {
-			System.out.println(q.getQuestion());
-		}
 		return true;
 	}
 
@@ -127,12 +123,6 @@ public class TriviaGame {
 		currentQuestion = questionsList.get(0);
 
 		System.out.println(questionsList.get(0).getQuestion() + "(" + questionsList.get(0).getPoints() + " Points)");
-		System.out.println("--------CHOICES--------");
-
-		for (Answer a: questionsList.get(0).getAnswersList()) {
-			System.out.println(a.getAnswer());
-		}
-
 		questionsList.remove(0);
 
 		return true;
@@ -192,6 +182,14 @@ public class TriviaGame {
 
 	public Question getCurrentQuestion() {
 		return currentQuestion;
+	}
+
+	public int getnQuestions() {
+		return nQuestions;
+	}
+
+	public void setnQuestions(int nQuestions) {
+		this.nQuestions = nQuestions;
 	}
 
 }

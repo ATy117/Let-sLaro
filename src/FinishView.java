@@ -50,11 +50,17 @@ public class FinishView extends View {
 		
 		for (int i = 0; i < n; i++){
 			top3.add(state.getPlayersList().get(i));
+
+			if (state.getPlayersList().get(i).getName().equals(state.getCurrentPlayer().getName())) {
+				remarksLabel.setText("WINNER");
+			}
 		}
+
 
 		if (top3.size() > 0) {
 			username1.setText(top3.get(0).getName());
 			score1.setText(top3.get(0).getScore()+"");
+
 		}
 
 		if (top3.size() > 1) {
@@ -68,6 +74,7 @@ public class FinishView extends View {
 		}
 
 
+
 	}
 
 	public void init(){
@@ -79,6 +86,7 @@ public class FinishView extends View {
 		remarksLabel.setEffect(dropShadow);
 		*/
 
+		remarksLabel.setText("LOSER");
 		username1.setText("");
 		username2.setText("");
 		username3.setText("");
