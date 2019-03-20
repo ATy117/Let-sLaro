@@ -43,7 +43,11 @@ public class FinishView extends View {
 
 		List<Player> top3 = new ArrayList<>();
 
-		for (int i = 0; i < 3; i++){
+		int n = 3;
+		if (state.getPlayersList().size() < 3)
+			n = state.getPlayersList().size();
+		
+		for (int i = 0; i < n; i++){
 			top3.add(state.getPlayersList().get(i));
 		}
 
