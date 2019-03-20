@@ -90,6 +90,7 @@ public class ClientController {
 
 			socket.receive(packet);
 
+
 			String msg = new String(receive);
 			msg = msg.trim();
 
