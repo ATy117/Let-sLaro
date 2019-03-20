@@ -38,7 +38,7 @@ public class FinishView extends View {
 		Collections.sort(state.getPlayersList(), new Comparator<Player>() {
 			@Override
 			public int compare(Player o1, Player o2) {
-				return o1.getScore() - o2.getScore();
+				return o2.getScore() - o1.getScore();
 			}
 		});
 
