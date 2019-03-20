@@ -6,7 +6,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class FinishView extends View {
 
@@ -34,7 +34,20 @@ public class FinishView extends View {
 
 		System.out.println("Other Players\n");
 
-		for (Player p: state.getPlayersList()) {
+		Collections.sort(state.getPlayersList(), new Comparator<Player>() {
+			@Override
+			public int compare(Player o1, Player o2) {
+				return o1.getScore() - o2.getScore();
+			}
+		});
+
+		List<Player> top3 = new ArrayList<>();
+
+		for (int i = 0; i < 3; i++){
+			top3.add(state.getPlayersList().get(i));
+		}
+
+		for (Player p: top3) {
 			System.out.println(p.getName() + ": " + p.getScore());
 		}
 	}
