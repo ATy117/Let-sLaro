@@ -1,5 +1,6 @@
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -14,8 +15,13 @@ import javafx.stage.Stage;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameView extends View{
+
+	private final int COUNTDOWN = 10;
+	private int seconds;
 
 	@FXML Text playersText;
 	@FXML Label questionLabel;
@@ -107,7 +113,41 @@ public class GameView extends View{
 		questionNumLabel.setText("Question " + state.getQuestionNumber() + " of " + state.getnQuestions());
 		scoreLabel.setText("Score: " + state.getCurrentPlayer().getScore());
 		populatePlayers(state.getPlayersList());
+		startTimer();
 	}
+
+	private void startTimer () {
+
+		Timer timer = new Timer();
+
+		seconds = COUNTDOWN;
+
+		timer.schedule(new TimerTask() {
+			public void run() {
+				Platform.runLater(new Runnable() {
+					public void run() {
+						if (seconds == 0) {
+							try {
+								controller.selectAnswer(getWrongAnswer());
+								timer.cancel();
+								timer.purge();
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+						else {
+							System.out.println(decSeconds());
+						}
+					}
+				});
+			}
+		}, 1000, 1000);
+	}
+
+	private int decSeconds () {
+		return --seconds;
+	}
+
 
 	private void updateButtons() {
 
@@ -172,7 +212,17 @@ public class GameView extends View{
 			});
 		}
 	}
-	
+
+	private int getWrongAnswer () {
+
+		for (int i=0; i< state.getCurrentQuestion().getAnswersList().size(); i++) {
+			if (!state.getCurrentQuestion().getAnswersList().get(i).isCorrect()) {
+				return i;
+			}
+		}
+		return 0;
+	}
+
 
 	public void populatePlayers(List<Player> players){
 		playersListView.getItems().clear();
