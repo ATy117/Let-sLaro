@@ -23,8 +23,11 @@ public class GameView extends View{
 	@FXML Label usernameLabel;
 	@FXML Label ans1Label, ans2Label, ans3Label, ans4Label;
 	@FXML JFXButton ansBtn1, ansBtn2, ansBtn3, ansBtn4;
+	@FXML ImageView ansImageView1, ansImageView2, ansImageView3, ansImageView4, ansGreenView, ansRedView;
 	@FXML JFXListView playersListView;
 	@FXML Label scoreLabel;
+	Image ansGreenTri, ansRedTri, ansGreenButton, ansRedButton, ansBack1, ansBack2;
+	ImageView ansView, ansView2, ansView3, ansView4;
 
 	public GameView(ClientController controller, Stage primaryStage) {
 		super(controller);
@@ -64,12 +67,24 @@ public class GameView extends View{
 		ans3Label.setEffect(dropShadow);
 		ans4Label.setEffect(dropShadow);
 
+		ansGreenTri = new Image("resources/greenTriangle.png");
+		ansGreenButton = new Image("resources/greenButton.png");
+
+		ansRedTri = new Image("resources/redTriangle.png");
+		ansRedButton = new Image("resources/redButton.png");
+
+		ansBack1 = new Image("resources/Answer1Triangle.png");
+		ansBack2 = new Image("resources/Answer2Triangle.png");
+
+		ansGreenView = new ImageView(ansGreenButton);
+		ansRedView = new ImageView(ansRedButton);
+
 		Image ansTri = new Image("resources/ansButton.png");
 		Image ansTri2 = new Image("resources/ansButton2.png");
-		ImageView ansView = new ImageView(ansTri);
-		ImageView ansView2 = new ImageView(ansTri2);
-		ImageView ansView3 = new ImageView(ansTri);
-		ImageView ansView4 = new ImageView(ansTri2);
+		ansView = new ImageView(ansTri);
+		ansView2 = new ImageView(ansTri2);
+		ansView3 = new ImageView(ansTri);
+		ansView4 = new ImageView(ansTri2);
 		ansBtn1.setGraphic(ansView2);
 		ansBtn2.setGraphic(ansView);
 		ansBtn3.setGraphic(ansView4);
@@ -96,6 +111,14 @@ public class GameView extends View{
 
 	private void updateButtons() {
 
+		ansView.setImage(ansBack2);
+		ansView2.setImage(ansBack1);
+		ansView3.setImage(ansBack2);
+		ansView4.setImage(ansBack1);
+		ansBtn1.setGraphic(ansView2);
+		ansBtn2.setGraphic(ansView);
+		ansBtn3.setGraphic(ansView4);
+		ansBtn4.setGraphic(ansView3);
 		ans1Label.setText("");
 		ans2Label.setText("");
 		ans3Label.setText("");
@@ -109,7 +132,7 @@ public class GameView extends View{
 			ans1Label.setText(state.getCurrentQuestion().getAnswersList().get(0).getAnswer());
 			ansBtn1.setOnMouseClicked(e -> {
 				try {
-					selectAnswer(0);
+					controller.selectAnswer(0);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -120,8 +143,7 @@ public class GameView extends View{
 			ans2Label.setText(state.getCurrentQuestion().getAnswersList().get(1).getAnswer());
 			ansBtn2.setOnMouseClicked(e -> {
 				try {
-					selectAnswer(1);
-
+					controller.selectAnswer(1);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -132,7 +154,7 @@ public class GameView extends View{
 			ans3Label.setText(state.getCurrentQuestion().getAnswersList().get(2).getAnswer());
 			ansBtn3.setOnMouseClicked(e -> {
 				try {
-					selectAnswer(2);
+					controller.selectAnswer(2);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -143,18 +165,14 @@ public class GameView extends View{
 			ans4Label.setText(state.getCurrentQuestion().getAnswersList().get(3).getAnswer());
 			ansBtn4.setOnMouseClicked(e -> {
 				try {
-					selectAnswer(3);
+					controller.selectAnswer(3);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 			});
 		}
 	}
-
-	public void selectAnswer(int n) throws Exception {
-		controller.selectAnswer(n);
-	}
-
+	
 
 	public void populatePlayers(List<Player> players){
 		playersListView.getItems().clear();
