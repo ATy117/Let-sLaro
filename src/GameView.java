@@ -168,4 +168,6 @@ public class GameView extends View{
 			playersListView.getItems().add(playerAnchor);
 		}
 	}
+
+
 }
