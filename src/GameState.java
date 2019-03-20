@@ -8,14 +8,10 @@ public class GameState implements Serializable {
 
 	private Question currentQuestion;
 	private int questionNumber;
+	private int nQuestions;
 	private List<Player> playersList;
 	private Player currentPlayer;
-	private boolean isQuitting;
 	private boolean isDone;
-
-	public GameState (){
-		isQuitting = false;
-	}
 
 	public Question getCurrentQuestion() {
 		return currentQuestion;
@@ -33,8 +29,12 @@ public class GameState implements Serializable {
 		return currentPlayer;
 	}
 
-	public boolean isQuitting() {
-		return isQuitting;
+	public int getnQuestions() {
+		return nQuestions;
+	}
+
+	public void setnQuestions(int nQuestions) {
+		this.nQuestions = nQuestions;
 	}
 
 	public void setCurrentQuestion(Question currentQuestion) {
@@ -51,10 +51,6 @@ public class GameState implements Serializable {
 
 	public void setCurrentPlayer(Player currentPlayer) {
 		this.currentPlayer = currentPlayer;
-	}
-
-	public void setQuitting(boolean quitting) {
-		isQuitting = quitting;
 	}
 
 	public boolean isDone() {

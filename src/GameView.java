@@ -92,7 +92,7 @@ public class GameView extends View{
 		questionLabel.setText(state.getCurrentQuestion().getQuestion());
 		questionNumLabel.setText("Question " + state.getQuestionNumber());
 		scoreLabel.setText("Score: " + state.getCurrentPlayer().getScore());
-
+		populatePlayers(state.getPlayersList());
 	}
 
 	private void updateButtons() {
@@ -168,12 +168,13 @@ public class GameView extends View{
 	}
 
 	public void populatePlayers(List<Player> players){
+		playersListView.getItems().clear();
 		playersListView.getStylesheets().add("theme.css");
 		playersListView.getStyleClass().add("jfx-list-cell");
 		for(Player p: players){
 			AnchorPane playerAnchor = new AnchorPane();
-			Label playerName = new Label("Player");
-			Label playerScore = new Label("20");
+			Label playerName = new Label(p.getName());
+			Label playerScore = new Label(p.getScore()+"");
 
 			playerName.getStyleClass().add("label-players");
 			playerScore.getStyleClass().add("label-players");
