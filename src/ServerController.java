@@ -4,10 +4,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketTimeoutException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class ServerController {
@@ -28,7 +25,7 @@ public class ServerController {
 	private DatagramSocket socket;
 	private ArrayList<InetAddress> clientAddresses;
 	private ArrayList<Integer> clientPorts;
-	private ArrayList<Player> playerList;
+	private List<Player> playerList;
 	private HashSet<String> existingClients;
 	private TriviaGame game;
 
@@ -62,6 +59,7 @@ public class ServerController {
 
 	private void initLobby() {
 		System.out.println("Waiting for enough players to connect.");
+
 		while (existingClients.size() < MAXPLAYER) {
 
 			byte[] buf = new byte[BUFFER];
@@ -113,14 +111,17 @@ public class ServerController {
 
 	private void castGameProper() throws Exception {
 
-		while (game.askQuestion()) {
+		while (playerList.size() > 0) {
+
+			game.askQuestion();
+
 			for (int i = 0; i < playerList.size(); i++) {
 				GameState playerstate = game.getGameState(playerList.get(i));
 				byte[] state = Serializer.toBytes(playerstate);
 				sendPacket(clientAddresses.get(i), clientPorts.get(i), state);
 			}
 
-			while (!game.questionDone()) {
+			while (playerList.size() > 0 && !game.questionDone()) {
 				PlayerResponse response = (PlayerResponse) Serializer.toObject(receivePacket());
 				recordScore(response);
 			}
@@ -139,12 +140,13 @@ public class ServerController {
 	}
 
 	private Player registerPlayer(byte[] buf) {
+
 		String content = new String(buf);
 		content = content.trim();
 
 		// verify if new player
 		for (Player p: playerList) {
-			if (p.getName().equals(content)) {
+			if (p.getName().equalsIgnoreCase(content)) {
 				return null;
 			}
 		}
@@ -154,8 +156,22 @@ public class ServerController {
 		return noob;
 	}
 
-	private void recordScore(PlayerResponse response) {
-		game.checkAnswer(response.getAnswer(), response.getPlayer());
+	private void recordScore(PlayerResponse response) throws Exception{
+
+		if (response.getAnswer().getAnswer() != null) {
+			game.checkAnswer(response.getAnswer(), response.getPlayer());
+		}
+		else {
+			if (game.disconnectPlayer(response.getPlayer().getName())) {
+
+				playerList = game.getPlayersList();
+
+				if (playerList.size() == 0) {
+					castGameEnd();
+					System.exit(0);
+				}
+			}
+		}
 	}
 
 	private void sendConnectConfirmation (InetAddress address, int port) throws Exception {
