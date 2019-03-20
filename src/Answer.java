@@ -1,4 +1,8 @@
-public class Answer {
+import java.io.Serializable;
+
+public class Answer implements Serializable {
+	// Serial version ID – Just a random number
+	private static final long serialVersionUID = 12312379879798L;
 
 	private String answer;
 	private boolean isCorrect;

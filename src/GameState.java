@@ -1,6 +1,10 @@
+import java.io.Serializable;
 import java.util.List;
 
-public class GameState {
+public class GameState implements Serializable {
+
+	// Serial version ID – Just a random number
+	private static final long serialVersionUID = 5230549922091722630L;
 
 	private Question currentQuestion;
 	private int questionNumber;

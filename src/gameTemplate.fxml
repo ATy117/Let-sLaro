@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #090f1d" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox fx:id="allPlayersVbox" layoutX="6.0" layoutY="4.0" prefHeight="600.0" prefWidth="199.0" style="-fx-background-color: #040916">
+            <children>
+                <AnchorPane fx:id="playersAnchor" prefHeight="81.0" prefWidth="199.0">
+                    <children>
+                        <ImageView fx:id="playersTriView" fitHeight="47.0" fitWidth="129.0" layoutX="38.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@resources/playersTriangle.png" />
+                            </image>
+                        </ImageView>
+                        <Text fx:id="playersText" fill="#cccccc" layoutX="35.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Players">
+                            <font>
+                                <Font name="Cartoonist Kooky" size="28.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </AnchorPane>
+            </children>
+        </VBox>
+        <Label fx:id="usernameLabel" layoutX="228.0" layoutY="29.0" text="username" textFill="#f78bc9">
+            <font>
+                <Font name="Cartoonist Kooky" size="28.0" />
+            </font>
+        </Label>
+        <ImageView fitHeight="280.0" fitWidth="488.0" layoutX="309.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@resources/questionsTriangle.png" />
+            </image>
+        </ImageView>
+        <Label fx:id="questionLabel" layoutX="484.0" layoutY="248.0" text="Question" textFill="#cccccc">
+            <font>
+                <Font name="Cartoonist Kooky" size="32.0" />
+            </font>
+        </Label>
+        <ImageView fitHeight="26.0" fitWidth="92.0" layoutX="268.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@resources/scoreTriangle.png" />
+            </image>
+        </ImageView>
+        <Label fx:id="scoreLabel" layoutX="262.0" layoutY="65.0" text="score:" textFill="#cccccc">
+            <font>
+                <Font name="Cartoonist Kooky" size="28.0" />
+            </font>
+        </Label>
+        <Label fx:id="questionNumLabel" layoutX="484.0" layoutY="135.0" text="question 1" textFill="#cccccc">
+            <font>
+                <Font name="Cartoonist Kooky" size="33.0" />
+            </font>
+        </Label>
+        <ImageView fitHeight="35.0" fitWidth="149.0" layoutX="229.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@resources/Answer1Triangle.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="35.0" fitWidth="149.0" layoutX="559.0" layoutY="461.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@resources/Answer1Triangle.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="35.0" fitWidth="149.0" layoutX="397.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@resources/Answer2Triangle.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="35.0" fitWidth="149.0" layoutX="722.0" layoutY="462.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@resources/Answer2Triangle.png" />
+            </image>
+        </ImageView>
+        <Label fx:id="ans1Label" layoutX="240.0" layoutY="465.0" text="Answer 1" textFill="#cccccc">
+            <font>
+                <Font name="Cartoonist Kooky" size="18.0" />
+            </font>
+        </Label>
+        <Label fx:id="ans2Label" layoutX="406.0" layoutY="465.0" text="Answer 2" textFill="#cccccc">
+            <font>
+                <Font name="Cartoonist Kooky" size="18.0" />
+            </font>
+        </Label>
+        <Label fx:id="ans4Label" layoutX="736.0" layoutY="467.0" text="Answer 4" textFill="#cccccc">
+            <font>
+                <Font name="Cartoonist Kooky" size="18.0" />
+            </font>
+        </Label>
+        <JFXButton fx:id="ansBtn1" layoutX="276.0" layoutY="502.0" />
+        <JFXButton fx:id="ansBtn2" layoutX="453.0" layoutY="502.0" />
+        <JFXButton fx:id="ansBtn3" layoutX="623.0" layoutY="501.0" />
+        <JFXButton fx:id="ansBtn4" layoutX="788.0" layoutY="499.0" />
+        <Label fx:id="ans3Label" layoutX="570.0" layoutY="465.0" text="Answer 3" textFill="#cccccc">
+            <font>
+                <Font name="Cartoonist Kooky" size="18.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>

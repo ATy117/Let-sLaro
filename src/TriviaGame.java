@@ -1,9 +1,9 @@
+
+
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class TriviaGame {
 
@@ -26,7 +26,7 @@ public class TriviaGame {
 	public GameState getGameState(Player player) {
 
 		GameState state = new GameState();
-		List<Player> otherplayers = new ArrayList<>();
+		List<Player> otherplayers = new ArrayList<>(playersList);
 		otherplayers.remove(player);
 
 		state.setCurrentQuestion(currentQuestion);
@@ -35,8 +35,11 @@ public class TriviaGame {
 		state.setDone(gameDone);
 		state.setQuestionNumber(getQuestionNumber());
 
+		System.out.println(playersList);
+
 		return state;
 	}
+
 
 	private List<Question> buildQuestions (List selectedNums) {
 
@@ -85,6 +88,9 @@ public class TriviaGame {
 		gameDone = false;
 		System.out.println("\n\nWELCOME TO TRIVIA GAME\n\n");
 		questionsList = buildQuestions(getSelectedQuestionIDs(nQuestions));
+		for (Question q: questionsList) {
+			System.out.println(q.getQuestion());
+		}
 		return true;
 	}
 
@@ -102,6 +108,10 @@ public class TriviaGame {
 
 	public boolean askQuestion () {
 
+		for (Player p: playersList) {
+			p.setAnswered(false);
+		}
+
 		if(questionsList.isEmpty()) {
 			gameDone = true;
 			return false;
@@ -116,28 +126,40 @@ public class TriviaGame {
 			System.out.println(a.getAnswer());
 		}
 
+		questionsList.remove(0);
+
 		return true;
 	}
 
-	public boolean checkAnswer (String answer, Player dude) {
+	public boolean checkAnswer (Answer answer, Player dude) {
 
+		for (Player p: playersList) {
 
-		for (Answer a: currentQuestion.getAnswersList()) {
-			if (answer.equals(a.getAnswer()) && a.isCorrect()) {
-				addPoints(dude, currentQuestion.getPoints());
-				questionsList.remove(0);
-				return true;
+			if (p.getName().equals(dude.getName())) {
+				p.setAnswered(true);
+
+				if (answer.isCorrect()) {
+					int score = p.getScore();
+					p.setScore(score + currentQuestion.getPoints());
+					return true;
+				}
+				break;
 			}
 		}
 
-		questionsList.remove(0);
 		return false;
 	}
 
-	public void addPoints (Player dude, int points) {
-		int i = playersList.indexOf(dude);
-		int score = playersList.get(i).getScore();
-		playersList.get(i).setScore(score+points);
+	public boolean questionDone() {
+
+		for (Player p: playersList) {
+			if (!p.isAnswered()) {
+				System.out.println("not all finish");
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	public List<Player> getPlayersList () {
@@ -148,6 +170,21 @@ public class TriviaGame {
 		return nQuestions - questionsList.size() + 1;
 	}
 
+	public void setPlayersList(List<Player> playersList) {
+		this.playersList = playersList;
+	}
 
+	public void endGame () {
+		gameDone =true;
+		connection = null;
+	}
+
+	public boolean isGameDone() {
+		return gameDone;
+	}
+
+	public Question getCurrentQuestion() {
+		return currentQuestion;
+	}
 
 }

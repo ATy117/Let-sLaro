@@ -1,6 +1,10 @@
+import java.io.Serializable;
 import java.util.List;
 
-public class Question {
+public class Question implements Serializable {
+
+	// Serial version ID – Just a random number
+	private static final long serialVersionUID = 981379128371923L;
 
 	String question;
 	List<Answer> answersList;

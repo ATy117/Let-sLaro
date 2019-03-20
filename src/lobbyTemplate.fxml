@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #090F1D" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <ImageView fitHeight="160.0" fitWidth="338.0" layoutX="131.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@resources/Title.png" />
+            </image>
+        </ImageView>
+        <Label layoutX="137.0" layoutY="202.0" text="enter username:" textFill="#c891f3">
+            <font>
+                <Font name="Cartoonist Kooky" size="20.0" />
+            </font>
+        </Label>
+        <JFXTextField fx:id="usernameField" focusColor="#f788c9" layoutX="196.0" layoutY="225.0" promptText="username" unFocusColor="#c891f3">
+            <font>
+                <Font name="Cartoonist Kooky" size="20.0" />
+            </font>
+        </JFXTextField>
+
+        <JFXButton fx:id="enterBtn" layoutX="494.0" layoutY="337.0" onAction="#joinGame" />
+        <Label layoutX="137.0" layoutY="282.0" text="enter IP address:" textFill="#f78bc9">
+            <font>
+                <Font name="Cartoonist Kooky" size="20.0" />
+            </font>
+        </Label>
+        <JFXTextField fx:id="IPField" focusColor="#c891f3" layoutX="196.0" layoutY="305.0" promptText="IP Address" unFocusColor="#f78bc9">
+            <font>
+                <Font name="Cartoonist Kooky" size="20.0" />
+            </font>
+        </JFXTextField>
+    </children>
+</AnchorPane>

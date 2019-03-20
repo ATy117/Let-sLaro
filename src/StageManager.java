@@ -8,27 +8,32 @@ import java.io.IOException;
 
 public class StageManager {
 
-    Stage stage;
 
-    public StageManager(Stage stage){
-        this.stage = stage;
-    }
+	Stage stage;
 
-    public boolean loadScene(FXMLLoader loader) {
+	public StageManager(Stage stage){
+		this.stage = stage;
+	}
 
-        Parent root = null;
+	public boolean loadScene(FXMLLoader loader) {
 
-        try {
-            root = (Parent) loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+		Parent root = null;
 
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
+		try {
+			root = (Parent) loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-        return true;
-    }
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.setResizable(false);
+		stage.show();
+
+		return true;
+	}
+
+	public void setWindowName(String title) {
+		stage.setTitle(title);
+	}
 }
