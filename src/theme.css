@@ -17,6 +17,13 @@
     -fx-font-size: 21;
 }
 
+.label-pop{
+    -fx-text-fill: #cccccc;
+    -fx-font-family: BubbleGum;
+    -fx-font-size: 28;
+    -fx-text-alignment: CENTER;
+}
+
 .label-connected{
     -fx-text-fill: #08f570;
     -fx-font-family: BubbleGum;

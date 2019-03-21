@@ -89,7 +89,10 @@ public class LobbyView extends View {
 
 		lobbyAnchor.getStylesheets().add("theme.css");
 		anchorPane.getStyleClass().add("anchorpane-Pop");
-		words.getStyleClass().add("label-players");
+		words.getStyleClass().add("label-pop");
+		words.setMaxWidth(250);
+		words.setWrapText(true);
+
 
 		viewLoading.setFitHeight(130);
 		viewLoading.setFitWidth(300);
