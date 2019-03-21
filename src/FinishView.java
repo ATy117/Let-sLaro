@@ -28,13 +28,7 @@ public class FinishView extends View {
 
 
 	private void printScores(GameState state) {
-
-		System.out.println("SCORES");
-		System.out.println(state.getCurrentPlayer().getName() + ": " + state.getCurrentPlayer().getScore());
-
-		System.out.println("Other Players\n");
-
-
+		
 		Collections.sort(state.getPlayersList(), new Comparator<Player>() {
 			@Override
 			public int compare(Player o1, Player o2) {
@@ -60,17 +54,34 @@ public class FinishView extends View {
 		if (top3.size() > 0) {
 			username1.setText(top3.get(0).getName());
 			score1.setText(top3.get(0).getScore()+"");
-
+			if (top3.get(0).getName().equals(state.getCurrentPlayer().getName())) {
+				username1.getStylesheets().add("theme.css");
+				score1.getStylesheets().add("theme.css");
+				username1.getStyleClass().add("selected-finish-list");
+				score1.getStyleClass().add("selected-finish-list");
+			}
 		}
 
 		if (top3.size() > 1) {
 			username2.setText(top3.get(1).getName());
 			score2.setText(top3.get(1).getScore()+"");
+			if (top3.get(1).getName().equals(state.getCurrentPlayer().getName())) {
+				username2.getStylesheets().add("theme.css");
+				score2.getStylesheets().add("theme.css");
+				username2.getStyleClass().add("selected-finish-list");
+				score2.getStyleClass().add("selected-finish-list");
+			}
 		}
 
 		if (top3.size() > 2) {
 			username3.setText(top3.get(2).getName());
 			score3.setText(top3.get(2).getScore()+"");
+			if (top3.get(2).getName().equals(state.getCurrentPlayer().getName())) {
+				username3.getStylesheets().add("theme.css");
+				score3.getStylesheets().add("theme.css");
+				username3.getStyleClass().add("selected-finish-list");
+				score3.getStyleClass().add("selected-finish-list");
+			}
 		}
 
 

@@ -142,6 +142,9 @@ public class ClientController {
 	private void gameEnd() {
 		Platform.runLater(
 				() -> {
+					if (currentView.popup != null) {
+						currentView.popup.hide();
+					}
 					currentView = new FinishView(this, primaryStage);
 					this.mystate.getPlayersList().add(mystate.getCurrentPlayer());
 					Notify();

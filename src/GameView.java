@@ -39,6 +39,7 @@ public class GameView extends View{
 	ImageView ansView, ansView2, ansView3, ansView4;
 
 
+
 	public GameView(ClientController controller, Stage primaryStage) {
 		super(controller);
 		this.primaryStage = primaryStage;
@@ -58,7 +59,7 @@ public class GameView extends View{
 	public void init(){
 
 		this.state = controller.getMystate();
-		questionLabel.setText("Waiting for enough players to connect.");
+		questionLabel.setText("");
 		ans1Label.setText("");
 		ans2Label.setText("");
 		ans3Label.setText("");
@@ -143,6 +144,9 @@ public class GameView extends View{
 		Platform.runLater(
 				() -> {
 					this.state = controller.getMystate();
+					if (popup != null) {
+						popup.hide();
+					}
 					updateButtons();
 					questionLabel.setText(state.getCurrentQuestion().getQuestion());
 					questionNumLabel.setText("Question " + state.getQuestionNumber() + " of " + state.getnQuestions());
@@ -267,6 +271,7 @@ public class GameView extends View{
 	}
 
 	private void chooseAnswer(int n) throws Exception {
+		popUp();
 		timerLabel.setText("WAITING");
 		ansBtn1.setOnMouseClicked(null);
 		ansBtn2.setOnMouseClicked(null);
@@ -323,36 +328,34 @@ public class GameView extends View{
 		}
 	}
 
-
-
 	public void popUp(){
-			JFXPopup popup = new JFXPopup();
-			AnchorPane anchorPane = new AnchorPane();
-			Image loading = new Image("resources/loading.gif");
-			ImageView viewLoading = new ImageView(loading);
-			Label words = new Label("Waiting for Others");
+		popup = new JFXPopup();
+		anchorPane = new AnchorPane();
+		Image loading = new Image("resources/loading.gif");
+		ImageView viewLoading = new ImageView(loading);
+		Label words = new Label("Waiting for Others");
 
-			gameAnchor.getStylesheets().add("theme.css");
-			anchorPane.getStyleClass().add("anchorpane-Pop");
-			words.getStyleClass().add("label-players");
+		gameAnchor.getStylesheets().add("theme.css");
+		anchorPane.getStyleClass().add("anchorpane-Pop");
+		words.getStyleClass().add("label-players");
 
-			viewLoading.setFitHeight(130);
-			viewLoading.setFitWidth(300);
+		viewLoading.setFitHeight(130);
+		viewLoading.setFitWidth(300);
 
-			anchorPane.setMinSize(300, 300);
-			anchorPane.setMaxSize(300, 300);
+		anchorPane.setMinSize(300, 300);
+		anchorPane.setMaxSize(300, 300);
 
-			words.setMaxWidth(Double.MAX_VALUE);
-			words.setAlignment(Pos.CENTER);
+		words.setMaxWidth(Double.MAX_VALUE);
+		words.setAlignment(Pos.CENTER);
 
-			AnchorPane.setTopAnchor(words, 50.0);
-			AnchorPane.setTopAnchor(viewLoading, 150.0);
-			AnchorPane.setLeftAnchor(words, 40.0);
+		AnchorPane.setTopAnchor(words, 50.0);
+		AnchorPane.setTopAnchor(viewLoading, 150.0);
+		AnchorPane.setLeftAnchor(words, 40.0);
 
-			anchorPane.getChildren().add(words);
-			anchorPane.getChildren().add(viewLoading);
-			popup.setPopupContent(anchorPane);
-			popup.show(gameAnchor, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 145.0, 40.0);
+		anchorPane.getChildren().add(words);
+		anchorPane.getChildren().add(viewLoading);
+		popup.setPopupContent(anchorPane);
+		popup.show(gameAnchor, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 145.0, 40.0);
 
 	}
 
