@@ -17,24 +17,24 @@
         </ImageView>
         <Label fx:id="enterNameLabel" layoutX="137.0" layoutY="202.0" text="Enter Username:" textFill="#c891f3">
             <font>
-                <Font name="BubbleGum" size="22.0" />
+                <Font name="Festival Jomfruer chunky " size="20.0" />
             </font>
         </Label>
         <JFXTextField fx:id="usernameField" focusColor="#f788c9" layoutX="196.0" layoutY="225.0" promptText="username" unFocusColor="#c891f3">
             <font>
-                <Font name="BubbleGum" size="22.0" />
+                <Font name="Festival Jomfruer chunky " size="20.0" />
             </font>
         </JFXTextField>
 
         <JFXButton fx:id="enterBtn" layoutX="494.0" layoutY="337.0" onAction="#joinGame" />
         <Label layoutX="137.0" layoutY="282.0" text="enter IP address:" textFill="#f78bc9">
             <font>
-                <Font name="BubbleGum" size="22.0" />
+                <Font name="Festival Jomfruer chunky " size="20.0" />
             </font>
         </Label>
         <JFXTextField fx:id="IPField" focusColor="#c891f3" layoutX="196.0" layoutY="305.0" promptText="IP Address" unFocusColor="#f78bc9">
             <font>
-                <Font name="BubbleGum" size="22.0" />
+                <Font name="Festival Jomfruer chunky " size="20.0" />
             </font>
         </JFXTextField>
     </children>

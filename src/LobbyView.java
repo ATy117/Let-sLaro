@@ -24,7 +24,7 @@ public class LobbyView extends View {
 	@FXML JFXTextField usernameField, IPField;
 	@FXML AnchorPane lobbyAnchor;
 	@FXML Label enterNameLabel;
-	Label connection;
+	ImageView connectedBtn;
 
 	public LobbyView(ClientController controller, Stage primaryStage) throws Exception {
 		super(controller);
@@ -67,16 +67,14 @@ public class LobbyView extends View {
 		enterView.setFitWidth(85);
 		enterBtn.setGraphic(enterView);
 
+		Image connected = new Image("resources/ansButton.png");
+		connectedBtn = new ImageView(connected);
+		connectedBtn.setFitHeight(35);
+		connectedBtn.setFitWidth(85);
 
 		lobbyAnchor.getStylesheets().add("theme.css");
 		usernameField.getStyleClass().add("text-field-username");
 		IPField.getStyleClass().add("text-field-address");
-
-		connection = new Label("Connected to Server!");
-		connection.getStyleClass().add("label-connected");
-
-		AnchorPane.setTopAnchor(connection,360.0);
-		AnchorPane.setLeftAnchor(connection, 180.0);
 
 	}
 
@@ -115,7 +113,7 @@ public class LobbyView extends View {
 	public void Update() {
 		Platform.runLater(
 				() -> {
-				    lobbyAnchor.getChildren().add(connection);
+					enterBtn.setGraphic(connectedBtn);
 					enterBtn.setOnMouseClicked(null);
 				}
 		);

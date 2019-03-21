@@ -13,13 +13,7 @@
 
 .label-players{
     -fx-text-fill: #cccccc;
-    -fx-font-family: BubbleGum;
-    -fx-font-size: 21;
-}
-
-.label-connected{
-    -fx-text-fill: #08f570;
-    -fx-font-family: BubbleGum;
+    -fx-font-family: Festival Jomfruer;
     -fx-font-size: 21;
 }
 
@@ -29,7 +23,7 @@
 
 .selected-player-list {
     -fx-text-fill: #F78BC9;
-    -fx-font-family: BubbleGum;
+    -fx-font-family: Festival Jomfruer;
     -fx-font-size: 21;
 }
 
