@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class ClientController {
 
 	// Maximum Segment Size - Quantity of data from the application layer in the segment
-	public static final int MSS = 4;
+	public static final int MSS = 128;
 	// Window size - Number of packets sent without acking
 	public static final int WINDOW_SIZE = 2;
 	//Buffer size

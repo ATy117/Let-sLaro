@@ -10,7 +10,7 @@ import java.util.*;
 public class ServerController {
 
 	// Maximum Segment Size - Quantity of data from the application layer in the segment
-	public static final int MSS = 4;
+	public static final int MSS = 128;
 	// Window size - Number of packets sent without acking
 	public static final int WINDOW_SIZE = 2;
 	// Time (ms) before REsending all the non-acked packets
