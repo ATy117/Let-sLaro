@@ -23,7 +23,7 @@
                         </ImageView>
                         <Text fx:id="playersText" fill="#cccccc" layoutX="35.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Players">
                             <font>
-                                <Font name="Festival Jomfruer chunky " size="28.0" />
+                                <Font name="BubbleGum" size="28.0" />
                             </font>
                         </Text>
                     </children>
@@ -33,7 +33,7 @@
         </VBox>
         <Label fx:id="usernameLabel" layoutX="228.0" layoutY="29.0" text="username" textFill="#f78bc9">
             <font>
-                <Font name="Festival Jomfruer chunky " size="28.0" />
+                <Font name="BubbleGum" size="28.0" />
             </font>
         </Label>
         <ImageView fitHeight="280.0" fitWidth="488.0" layoutX="309.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true">
@@ -43,7 +43,7 @@
         </ImageView>
         <Label fx:id="questionLabel" layoutX="484.0" layoutY="248.0" text="Question" textFill="#cccccc">
             <font>
-                <Font name="Festival Jomfruer chunky " size="33.0" />
+                <Font name="BubbleGum" size="33.0" />
             </font>
         </Label>
         <ImageView fitHeight="26.0" fitWidth="92.0" layoutX="268.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
@@ -53,12 +53,12 @@
         </ImageView>
         <Label fx:id="scoreLabel" layoutX="262.0" layoutY="65.0" text="score:" textFill="#cccccc">
             <font>
-                <Font name="Festival Jomfruer chunky " size="28.0" />
+                <Font name="BubbleGum" size="28.0" />
             </font>
         </Label>
         <Label fx:id="questionNumLabel" layoutX="484.0" layoutY="135.0" text="question 1" textFill="#cccccc">
             <font>
-                <Font name="Festival Jomfruer chunky " size="33.0" />
+                <Font name="BubbleGum" size="33.0" />
             </font>
         </Label>
         <ImageView fx:id="ansImageView1" fitHeight="35.0" fitWidth="149.0" layoutX="229.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
@@ -83,17 +83,17 @@
         </ImageView>
         <Label fx:id="ans1Label" layoutX="240.0" layoutY="465.0" text="Answer 1" textFill="#cccccc">
             <font>
-                <Font name="Festival Jomfruer chunky " size="18.0" />
+                <Font name="BubbleGum" size="18.0" />
             </font>
         </Label>
         <Label fx:id="ans2Label" layoutX="406.0" layoutY="465.0" text="Answer 2" textFill="#cccccc">
             <font>
-                <Font name="Festival Jomfruer chunky " size="18.0" />
+                <Font name="BubbleGum" size="18.0" />
             </font>
         </Label>
         <Label fx:id="ans4Label" layoutX="736.0" layoutY="467.0" text="Answer 4" textFill="#cccccc">
             <font>
-                <Font name="Festival Jomfruer chunky " size="18.0" />
+                <Font name="BubbleGum" size="18.0" />
             </font>
         </Label>
         <JFXButton fx:id="ansBtn1" layoutX="276.0" layoutY="502.0" />
@@ -102,12 +102,12 @@
         <JFXButton fx:id="ansBtn4" layoutX="788.0" layoutY="499.0" />
         <Label fx:id="ans3Label" layoutX="570.0" layoutY="465.0" text="Answer 3" textFill="#cccccc">
             <font>
-                <Font name="Festival Jomfruer chunky " size="18.0" />
+                <Font name="BubbleGum" size="18.0" />
             </font>
         </Label>
       <Label fx:id="timerLabel" layoutX="722.0" layoutY="27.0" text="TIME:" textFill="#cccccc">
          <font>
-            <Font name="Festival Jomfruer chunky " size="33.0" />
+            <Font name="BubbleGum" size="33.0" />
          </font>
       </Label>
     </children>
