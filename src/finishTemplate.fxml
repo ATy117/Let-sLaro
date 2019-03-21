@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #090f1d" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <ImageView fitHeight="115.0" fitWidth="252.0" layoutX="211.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
@@ -21,42 +20,42 @@
         </ImageView>
         <Label fx:id="remarksLabel" layoutX="134.0" layoutY="91.0" text="congratulations!" textFill="#cccccc">
             <font>
-                <Font name="Cartoonist Kooky" size="36.0" />
+                <Font name="Festival Jomfruer chunky " size="36.0" />
             </font>
         </Label>
         <Label layoutX="173.0" layoutY="211.0" text="ranking:" textFill="#c891f3">
             <font>
-                <Font name="Cartoonist Kooky" size="27.0" />
+                <Font name="Festival Jomfruer chunky " size="27.0" />
             </font>
         </Label>
         <Label fx:id="username1" layoutX="199.0" layoutY="249.0" text="1. username" textFill="#c891f3">
             <font>
-                <Font name="Cartoonist Kooky" size="27.0" />
+                <Font name="Festival Jomfruer chunky " size="27.0" />
             </font>
         </Label>
         <Label fx:id="username2" layoutX="199.0" layoutY="287.0" text="2. username" textFill="#c891f3">
             <font>
-                <Font name="Cartoonist Kooky" size="27.0" />
+                <Font name="Festival Jomfruer chunky " size="27.0" />
             </font>
         </Label>
         <Label fx:id="username3" layoutX="198.0" layoutY="325.0" text="3. username" textFill="#c891f3">
             <font>
-                <Font name="Cartoonist Kooky" size="27.0" />
+                <Font name="Festival Jomfruer chunky " size="27.0" />
             </font>
         </Label>
         <Label fx:id="score1" layoutX="453.0" layoutY="249.0" text="score" textFill="#c891f3">
             <font>
-                <Font name="Cartoonist Kooky" size="27.0" />
+                <Font name="Festival Jomfruer chunky " size="27.0" />
             </font>
         </Label>
         <Label fx:id="score2" layoutX="453.0" layoutY="287.0" text="score" textFill="#c891f3">
             <font>
-                <Font name="Cartoonist Kooky" size="27.0" />
+                <Font name="Festival Jomfruer chunky " size="27.0" />
             </font>
         </Label>
         <Label fx:id="score3" layoutX="453.0" layoutY="325.0" text="score" textFill="#c891f3">
             <font>
-                <Font name="Cartoonist Kooky" size="27.0" />
+                <Font name="Festival Jomfruer chunky " size="27.0" />
             </font>
         </Label>
     </children>

@@ -13,7 +13,7 @@
 
 .label-players{
     -fx-text-fill: #cccccc;
-    -fx-font-family: Cartoonist;
+    -fx-font-family: Festival Jomfruer;
     -fx-font-size: 21;
 }
 
@@ -23,6 +23,6 @@
 
 .selected-player-list {
     -fx-text-fill: #F78BC9;
-    -fx-font-family: Cartoonist;
+    -fx-font-family: Festival Jomfruer;
     -fx-font-size: 21;
 }
