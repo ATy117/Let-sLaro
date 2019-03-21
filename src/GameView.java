@@ -128,6 +128,15 @@ public class GameView extends View{
 		questionLabel.setMaxWidth(320);
 		questionLabel.setWrapText(true);
 
+		ans1Label.setMaxWidth(180);
+		ans1Label.setWrapText(true);
+		ans2Label.setMaxWidth(180);
+		ans2Label.setWrapText(true);
+		ans3Label.setMaxWidth(180);
+		ans3Label.setWrapText(true);
+		ans4Label.setMaxWidth(180);
+		ans4Label.setWrapText(true);
+
 		primaryStage.setOnCloseRequest(e -> {
 			try {
 				controller.disconnect();
