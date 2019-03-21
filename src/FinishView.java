@@ -86,6 +86,8 @@ public class FinishView extends View {
 		remarksLabel.setEffect(dropShadow);
 		*/
 
+
+
 		remarksLabel.setText("LOSER");
 		username1.setText("");
 		username2.setText("");

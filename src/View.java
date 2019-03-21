@@ -14,6 +14,8 @@ public abstract class View {
 	public GameState state;
 	public ClientController controller;
 	public StageManager sm;
+	public JFXPopup popup;
+	public AnchorPane anchorPane;
 
 
 	public View () {
