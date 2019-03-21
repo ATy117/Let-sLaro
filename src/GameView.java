@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -55,6 +56,7 @@ public class GameView extends View{
 	}
 
 	public void init(){
+
 		this.state = controller.getMystate();
 		questionLabel.setText("Waiting for enough players to connect.");
 		ans1Label.setText("");
@@ -77,6 +79,15 @@ public class GameView extends View{
 		ans3Label.setEffect(dropShadow);
 		ans4Label.setEffect(dropShadow);
 
+		ansImageView1.setFitWidth(149);
+		ansImageView1.setFitHeight(35);
+		ansImageView2.setFitWidth(149);
+		ansImageView2.setFitHeight(35);
+		ansImageView3.setFitWidth(149);
+		ansImageView3.setFitHeight(35);
+		ansImageView4.setFitWidth(149);
+		ansImageView4.setFitHeight(35);
+
 		ansGreenTri = new Image("resources/greenTriangle.png");
 		ansGreenButton = new Image("resources/greenButton.png");
 
@@ -88,6 +99,11 @@ public class GameView extends View{
 
 		ansGreenView = new ImageView(ansGreenButton);
 		ansRedView = new ImageView(ansRedButton);
+
+		ansGreenView.setFitWidth(70);
+		ansGreenView.setFitHeight(30);
+		ansRedView.setFitWidth(70);
+		ansRedView.setFitHeight(30);
 
 		Image ansTri = new Image("resources/ansButton.png");
 		Image ansTri2 = new Image("resources/ansButton2.png");
@@ -168,14 +184,16 @@ public class GameView extends View{
 
 	private void updateButtons() {
 
-		ansView.setImage(ansBack2);
-		ansView2.setImage(ansBack1);
-		ansView3.setImage(ansBack2);
-		ansView4.setImage(ansBack1);
+		ansImageView1.setImage(ansBack1);
+		ansImageView2.setImage(ansBack2);
+		ansImageView3.setImage(ansBack1);
+		ansImageView4.setImage(ansBack2);
+
 		ansBtn1.setGraphic(ansView2);
 		ansBtn2.setGraphic(ansView);
 		ansBtn3.setGraphic(ansView4);
 		ansBtn4.setGraphic(ansView3);
+
 		ans1Label.setText("");
 		ans2Label.setText("");
 		ans3Label.setText("");
@@ -190,6 +208,7 @@ public class GameView extends View{
 			ansBtn1.setOnMouseClicked(e -> {
 				try {
 					chooseAnswer(0);
+					setButtonConfirm(ansImageView1, ansBtn1, state.getCurrentQuestion().getAnswersList().get(0).isCorrect());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -201,6 +220,7 @@ public class GameView extends View{
 			ansBtn2.setOnMouseClicked(e -> {
 				try {
 					chooseAnswer(1);
+					setButtonConfirm(ansImageView2, ansBtn2, state.getCurrentQuestion().getAnswersList().get(1).isCorrect());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -212,6 +232,7 @@ public class GameView extends View{
 			ansBtn3.setOnMouseClicked(e -> {
 				try {
 					chooseAnswer(2);
+					setButtonConfirm(ansImageView3, ansBtn3, state.getCurrentQuestion().getAnswersList().get(2).isCorrect());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -223,10 +244,22 @@ public class GameView extends View{
 			ansBtn4.setOnMouseClicked(e -> {
 				try {
 					chooseAnswer(3);
+					setButtonConfirm(ansImageView4, ansBtn4, state.getCurrentQuestion().getAnswersList().get(3).isCorrect());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 			});
+		}
+	}
+
+	private void setButtonConfirm (ImageView iv, JFXButton btn, boolean ans) {
+		if (ans) {
+			iv.setImage(ansGreenTri);
+			btn.setGraphic(ansGreenView);
+		}
+		else {
+			iv.setImage(ansRedTri);
+			btn.setGraphic(ansRedView);
 		}
 	}
 
@@ -286,6 +319,8 @@ public class GameView extends View{
 			playersListView.getItems().add(playerAnchor);
 		}
 	}
+
+
 
 	public void popUp(){
 			JFXPopup popup = new JFXPopup();
