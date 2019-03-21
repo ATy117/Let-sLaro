@@ -2,6 +2,7 @@
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPopup;
 import com.jfoenix.controls.JFXTextField;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +24,7 @@ public class LobbyView extends View {
 	@FXML JFXTextField usernameField, IPField;
 	@FXML AnchorPane lobbyAnchor;
 	@FXML Label enterNameLabel;
+	ImageView connectedBtn;
 
 	public LobbyView(ClientController controller, Stage primaryStage) throws Exception {
 		super(controller);
@@ -65,6 +67,11 @@ public class LobbyView extends View {
 		enterView.setFitWidth(85);
 		enterBtn.setGraphic(enterView);
 
+		Image connected = new Image("resources/ansButton.png");
+		connectedBtn = new ImageView(connected);
+		connectedBtn.setFitHeight(35);
+		connectedBtn.setFitWidth(85);
+
 		lobbyAnchor.getStylesheets().add("theme.css");
 		usernameField.getStyleClass().add("text-field-username");
 		IPField.getStyleClass().add("text-field-address");
@@ -104,6 +111,11 @@ public class LobbyView extends View {
 
 	@Override
 	public void Update() {
-
+		Platform.runLater(
+				() -> {
+					enterBtn.setGraphic(connectedBtn);
+					enterBtn.setOnMouseClicked(null);
+				}
+		);
 	}
 }

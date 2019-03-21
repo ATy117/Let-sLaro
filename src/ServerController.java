@@ -178,7 +178,7 @@ public class ServerController {
 	}
 
 	private void sendConnectConfirmation (InetAddress address, int port) throws Exception {
-		String msg = "Connected to Game. Please wait until all players connect";
+		String msg = "CONNECTED";
 		byte buf[] = msg.getBytes();
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, address, port);
 		socket.send(packet);

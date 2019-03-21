@@ -48,13 +48,6 @@ public class ClientController {
 		Platform.runLater(
 				() -> {
 					currentView = new GameView(this, primaryStage);
-					primaryStage.setOnCloseRequest(e -> {
-						try {
-							disconnect();
-						} catch (Exception e1) {
-							e1.printStackTrace();
-						}
-					});
 					try {
 						waitForQuestion();
 					} catch (Exception e) {
@@ -130,12 +123,14 @@ public class ClientController {
 							e.printStackTrace();
 						}
 					}
-
 					else if (msg.equals("ERROR")) {
 						System.exit(0);
 					}
+					else if (msg.equals("CONNECTED")) {
+						System.out.println(msg);
+						Notify();
+					}
 
-					System.out.println(msg);
 				}
 			}
 		};
@@ -145,9 +140,13 @@ public class ClientController {
 	}
 
 	private void gameEnd() {
-		currentView = new FinishView(this, primaryStage);
-		this.mystate.getPlayersList().add(mystate.getCurrentPlayer());
-		Notify();
+		Platform.runLater(
+				() -> {
+					currentView = new FinishView(this, primaryStage);
+					this.mystate.getPlayersList().add(mystate.getCurrentPlayer());
+					Notify();
+				}
+		);
 	}
 
 	private boolean connectServer(String hostname, String username) throws Exception {

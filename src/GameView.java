@@ -107,6 +107,16 @@ public class GameView extends View{
 		ansView3.setFitHeight(30);
 		ansView4.setFitWidth(70);
 		ansView4.setFitHeight(30);
+
+		primaryStage.setOnCloseRequest(e -> {
+			try {
+				controller.disconnect();
+				timer.cancel();
+				timer.purge();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		});
 	}
 
 	@Override
@@ -222,6 +232,10 @@ public class GameView extends View{
 
 	private void chooseAnswer(int n) throws Exception {
 		timerLabel.setText("WAITING");
+		ansBtn1.setOnMouseClicked(null);
+		ansBtn2.setOnMouseClicked(null);
+		ansBtn3.setOnMouseClicked(null);
+		ansBtn4.setOnMouseClicked(null);
 		timer.cancel();
 		timer.purge();
 		controller.selectAnswer(n);
