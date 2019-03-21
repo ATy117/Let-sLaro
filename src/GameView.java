@@ -70,7 +70,7 @@ public class GameView extends View{
 		usernameLabel.setText("Username: " + controller.getUsername());
 		scoreLabel.setText("Score: 0");
 
-		usernameLabel.setMaxWidth(400);
+		usernameLabel.setMaxWidth(600);
 
 		DropShadow dropShadow = new DropShadow();
 		dropShadow.setRadius(7.0);
@@ -356,8 +356,9 @@ public class GameView extends View{
 		gameAnchor.getStylesheets().add("theme.css");
 		anchorPane.getStyleClass().add("anchorpane-Pop");
 		words.getStyleClass().add("label-pop");
-		words.setMaxWidth(250);
+		words.setMaxWidth(180);
 		words.setWrapText(true);
+		words.setAlignment(Pos.CENTER);
 
 		viewLoading.setFitHeight(130);
 		viewLoading.setFitWidth(300);
@@ -368,14 +369,14 @@ public class GameView extends View{
 		words.setMaxWidth(Double.MAX_VALUE);
 		words.setAlignment(Pos.CENTER);
 
-		AnchorPane.setTopAnchor(words, 50.0);
+		AnchorPane.setTopAnchor(words, 70.0);
 		AnchorPane.setTopAnchor(viewLoading, 150.0);
-		AnchorPane.setLeftAnchor(words, 40.0);
+		AnchorPane.setLeftAnchor(words, 20.0);
 
 		anchorPane.getChildren().add(words);
 		anchorPane.getChildren().add(viewLoading);
 		popup.setPopupContent(anchorPane);
-		popup.show(gameAnchor, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 145.0, 40.0);
+		popup.show(gameAnchor, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 405.0, 150.0);
 
 	}
 
