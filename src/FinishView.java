@@ -104,6 +104,10 @@ public class FinishView extends View {
 		score1.setText("");
 		score2.setText("");
 		score3.setText("");
+
+		username1.setMaxWidth(150);
+		username2.setMaxWidth(150);
+		username3.setMaxWidth(150);
 	}
 
 	@Override
