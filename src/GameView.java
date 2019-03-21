@@ -28,6 +28,7 @@ public class GameView extends View{
 	@FXML Label questionLabel;
 	@FXML Label questionNumLabel;
 	@FXML Label usernameLabel;
+	@FXML Label ptsLabel;
 	@FXML Label ans1Label, ans2Label, ans3Label, ans4Label;
 	@FXML JFXButton ansBtn1, ansBtn2, ansBtn3, ansBtn4;
 	@FXML ImageView ansImageView1, ansImageView2, ansImageView3, ansImageView4, ansGreenView, ansRedView;
@@ -68,6 +69,8 @@ public class GameView extends View{
 		timerLabel.setText("Timer: " + COUNTDOWN);
 		usernameLabel.setText("Username: " + controller.getUsername());
 		scoreLabel.setText("Score: 0");
+
+		usernameLabel.setMaxWidth(400);
 
 		DropShadow dropShadow = new DropShadow();
 		dropShadow.setRadius(7.0);
@@ -125,8 +128,9 @@ public class GameView extends View{
 		ansView4.setFitWidth(70);
 		ansView4.setFitHeight(30);
 
-		questionLabel.setMaxWidth(320);
+		questionLabel.setMaxWidth(330);
 		questionLabel.setWrapText(true);
+		questionLabel.setAlignment(Pos.CENTER);
 
 		ans1Label.setMaxWidth(180);
 		ans1Label.setWrapText(true);
@@ -136,6 +140,8 @@ public class GameView extends View{
 		ans3Label.setWrapText(true);
 		ans4Label.setMaxWidth(180);
 		ans4Label.setWrapText(true);
+
+		usernameLabel.setMaxWidth(120);
 
 		primaryStage.setOnCloseRequest(e -> {
 			try {
@@ -160,6 +166,7 @@ public class GameView extends View{
 					questionLabel.setText(state.getCurrentQuestion().getQuestion());
 					questionNumLabel.setText("Question " + state.getQuestionNumber() + " of " + state.getnQuestions());
 					scoreLabel.setText("Score: " + state.getCurrentPlayer().getScore());
+					ptsLabel.setText(state.getCurrentQuestion().getPoints() + " pts");
 					state.getPlayersList().add(state.getCurrentPlayer());
 					populatePlayers(state.getPlayersList());
 					startTimer();
@@ -318,6 +325,8 @@ public class GameView extends View{
 			AnchorPane playerAnchor = new AnchorPane();
 			Label playerName = new Label(p.getName());
 			Label playerScore = new Label(p.getScore()+"");
+
+			playerName.setMaxWidth(120);
 
 			if(p == state.getCurrentPlayer()) {
 				playerName.getStyleClass().add("selected-player-list");

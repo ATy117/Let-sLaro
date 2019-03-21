@@ -110,5 +110,10 @@
             <Font name="BubbleGum" size="33.0" />
          </font>
       </Label>
+      <Label fx:id="ptsLabel" layoutX="282.0" layoutY="287.0" text="10 pts" textFill="#03768b">
+         <font>
+            <Font name="BubbleGum" size="24.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>
