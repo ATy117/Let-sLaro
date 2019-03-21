@@ -44,27 +44,46 @@ public class ClientController {
 		currentView.Update();
 	}
 
-	private void gameProper() throws Exception {
-		currentView = new GameView(this, primaryStage);
-		primaryStage.setOnCloseRequest(e -> {
-			try {
-				disconnect();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		});
-		waitForQuestion();
+	private void gameProper() {
+		Platform.runLater(
+				() -> {
+					currentView = new GameView(this, primaryStage);
+					primaryStage.setOnCloseRequest(e -> {
+						try {
+							disconnect();
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+					});
+					try {
+						waitForQuestion();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+		);
+
 	}
 
 	private void waitForQuestion () throws Exception{
-		mystate = (GameState) Serializer.toObject(receivePacket());
+		Thread wait = new Thread() {
+			public void run () {
+				try {
+					mystate = (GameState) Serializer.toObject(receivePacket());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 
-		if (mystate.isDone()) {
-			gameEnd();
-		}
-		else {
-			Notify();
-		}
+				if (mystate.isDone()) {
+					gameEnd();
+				}
+				else {
+					Notify();
+				}
+			}
+		};
+		wait.setDaemon(true);
+		wait.start();
 	}
 
 	public void disconnect () throws  Exception{
@@ -86,28 +105,42 @@ public class ClientController {
 	}
 
 
-	private void gameLobby ()  throws Exception{
+	private void gameLobby () throws Exception{
 
-		while (waiting) {
-			byte[] receive = new byte[BUFFER];
-			DatagramPacket packet = new DatagramPacket(receive, receive.length);
+		Thread wait = new Thread() {
+			public void run() {
+				while (waiting) {
+					byte[] receive = new byte[BUFFER];
+					DatagramPacket packet = new DatagramPacket(receive, receive.length);
 
-			socket.receive(packet);
+					try {
+						socket.receive(packet);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 
-			String msg = new String(receive);
-			msg = msg.trim();
+					String msg = new String(receive);
+					msg = msg.trim();
 
-			if (msg.equals("START")) {
-				waiting = false;
-				gameProper();
+					if (msg.equals("START")) {
+						waiting = false;
+						try {
+							gameProper();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+
+					else if (msg.equals("ERROR")) {
+						System.exit(0);
+					}
+
+					System.out.println(msg);
+				}
 			}
-
-			else if (msg.equals("ERROR")) {
-				System.exit(0);
-			}
-
-			System.out.println(msg);
-		}
+		};
+		wait.setDaemon(true);
+		wait.start();
 
 	}
 

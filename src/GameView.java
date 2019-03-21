@@ -114,13 +114,17 @@ public class GameView extends View{
 
 	@Override
 	public void Update()  {
-		this.state = controller.getMystate();
-		updateButtons();
-		questionLabel.setText(state.getCurrentQuestion().getQuestion());
-		questionNumLabel.setText("Question " + state.getQuestionNumber() + " of " + state.getnQuestions());
-		scoreLabel.setText("Score: " + state.getCurrentPlayer().getScore());
-		populatePlayers(state.getPlayersList());
-		startTimer();
+		Platform.runLater(
+				() -> {
+					this.state = controller.getMystate();
+					updateButtons();
+					questionLabel.setText(state.getCurrentQuestion().getQuestion());
+					questionNumLabel.setText("Question " + state.getQuestionNumber() + " of " + state.getnQuestions());
+					scoreLabel.setText("Score: " + state.getCurrentPlayer().getScore());
+					populatePlayers(state.getPlayersList());
+					startTimer();
+				}
+		);
 	}
 
 	private void startTimer () {
@@ -135,15 +139,13 @@ public class GameView extends View{
 					public void run() {
 						if (seconds == 0) {
 							try {
-								timer.cancel();
-								timer.purge();
-								controller.selectAnswer(getWrongAnswer());
+								chooseAnswer(getWrongAnswer());
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
 						}
 						else {
-							System.out.println(decSeconds());
+							decSeconds();
 							timerLabel.setText("Timer: " + seconds);
 						}
 					}
@@ -155,7 +157,6 @@ public class GameView extends View{
 	private int decSeconds () {
 		return --seconds;
 	}
-
 
 	private void updateButtons() {
 
@@ -180,9 +181,7 @@ public class GameView extends View{
 			ans1Label.setText(state.getCurrentQuestion().getAnswersList().get(0).getAnswer());
 			ansBtn1.setOnMouseClicked(e -> {
 				try {
-					timer.cancel();
-					timer.purge();
-					controller.selectAnswer(0);
+					chooseAnswer(0);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -193,9 +192,7 @@ public class GameView extends View{
 			ans2Label.setText(state.getCurrentQuestion().getAnswersList().get(1).getAnswer());
 			ansBtn2.setOnMouseClicked(e -> {
 				try {
-					timer.cancel();
-					timer.purge();
-					controller.selectAnswer(1);
+					chooseAnswer(1);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -206,9 +203,7 @@ public class GameView extends View{
 			ans3Label.setText(state.getCurrentQuestion().getAnswersList().get(2).getAnswer());
 			ansBtn3.setOnMouseClicked(e -> {
 				try {
-					timer.cancel();
-					timer.purge();
-					controller.selectAnswer(2);
+					chooseAnswer(2);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -219,14 +214,18 @@ public class GameView extends View{
 			ans4Label.setText(state.getCurrentQuestion().getAnswersList().get(3).getAnswer());
 			ansBtn4.setOnMouseClicked(e -> {
 				try {
-					timer.cancel();
-					timer.purge();
-					controller.selectAnswer(3);
+					chooseAnswer(3);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 			});
 		}
+	}
+
+	private void chooseAnswer(int n) throws Exception {
+		timer.cancel();
+		timer.purge();
+		controller.selectAnswer(n);
 	}
 
 	private int getWrongAnswer () {

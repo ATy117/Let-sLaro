@@ -8,7 +8,6 @@ import java.io.IOException;
 
 public class StageManager {
 
-
 	Stage stage;
 
 	public StageManager(Stage stage){
