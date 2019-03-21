@@ -15,10 +15,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.util.List;
-import java.util.Scanner;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class GameView extends View{
 
@@ -121,6 +118,7 @@ public class GameView extends View{
 					questionLabel.setText(state.getCurrentQuestion().getQuestion());
 					questionNumLabel.setText("Question " + state.getQuestionNumber() + " of " + state.getnQuestions());
 					scoreLabel.setText("Score: " + state.getCurrentPlayer().getScore());
+					state.getPlayersList().add(state.getCurrentPlayer());
 					populatePlayers(state.getPlayersList());
 					startTimer();
 				}
@@ -223,6 +221,7 @@ public class GameView extends View{
 	}
 
 	private void chooseAnswer(int n) throws Exception {
+		timerLabel.setText("WAITING");
 		timer.cancel();
 		timer.purge();
 		controller.selectAnswer(n);
@@ -240,6 +239,14 @@ public class GameView extends View{
 
 
 	public void populatePlayers(List<Player> players){
+
+		Collections.sort(players, new Comparator<Player>() {
+			@Override
+			public int compare(Player o1, Player o2) {
+				return o2.getScore() - o1.getScore();
+			}
+		});
+
 		playersListView.getItems().clear();
 		playersListView.getStylesheets().add("theme.css");
 		playersListView.getStyleClass().add("jfx-list-cell");
@@ -248,8 +255,14 @@ public class GameView extends View{
 			Label playerName = new Label(p.getName());
 			Label playerScore = new Label(p.getScore()+"");
 
-			playerName.getStyleClass().add("label-players");
-			playerScore.getStyleClass().add("label-players");
+			if(p == state.getCurrentPlayer()) {
+				playerName.getStyleClass().add("selected-player-list");
+				playerScore.getStyleClass().add("selected-player-list");
+			}
+			else {
+				playerName.getStyleClass().add("label-players");
+				playerScore.getStyleClass().add("label-players");
+			}
 
 			AnchorPane.setLeftAnchor(playerScore, 130.0);
 
