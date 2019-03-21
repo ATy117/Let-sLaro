@@ -20,42 +20,42 @@
         </ImageView>
         <Label fx:id="remarksLabel" layoutX="134.0" layoutY="91.0" text="congratulations!" textFill="#cccccc">
             <font>
-                <Font name="Festival Jomfruer chunky " size="36.0" />
+                <Font name="BubbleGum" size="36.0" />
             </font>
         </Label>
         <Label layoutX="173.0" layoutY="211.0" text="ranking:" textFill="#c891f3">
             <font>
-                <Font name="Festival Jomfruer chunky " size="27.0" />
+                <Font name="BubbleGum" size="27.0" />
             </font>
         </Label>
         <Label fx:id="username1" layoutX="199.0" layoutY="249.0" text="1. username" textFill="#c891f3">
             <font>
-                <Font name="Festival Jomfruer chunky " size="27.0" />
+                <Font name="BubbleGum" size="27.0" />
             </font>
         </Label>
         <Label fx:id="username2" layoutX="199.0" layoutY="287.0" text="2. username" textFill="#c891f3">
             <font>
-                <Font name="Festival Jomfruer chunky " size="27.0" />
+                <Font name="BubbleGum" size="27.0" />
             </font>
         </Label>
         <Label fx:id="username3" layoutX="198.0" layoutY="325.0" text="3. username" textFill="#c891f3">
             <font>
-                <Font name="Festival Jomfruer chunky " size="27.0" />
+                <Font name="BubbleGum" size="27.0" />
             </font>
         </Label>
         <Label fx:id="score1" layoutX="453.0" layoutY="249.0" text="score" textFill="#c891f3">
             <font>
-                <Font name="Festival Jomfruer chunky " size="27.0" />
+                <Font name="BubbleGum" size="27.0" />
             </font>
         </Label>
         <Label fx:id="score2" layoutX="453.0" layoutY="287.0" text="score" textFill="#c891f3">
             <font>
-                <Font name="Festival Jomfruer chunky " size="27.0" />
+                <Font name="BubbleGum" size="27.0" />
             </font>
         </Label>
         <Label fx:id="score3" layoutX="453.0" layoutY="325.0" text="score" textFill="#c891f3">
             <font>
-                <Font name="Festival Jomfruer chunky " size="27.0" />
+                <Font name="BubbleGum" size="27.0" />
             </font>
         </Label>
     </children>
