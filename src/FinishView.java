@@ -100,4 +100,7 @@ public class FinishView extends View {
 		this.state = controller.getMystate();
 		printScores(this.state);
 	}
+
+	@Override
+	public void popUp() {}
 }

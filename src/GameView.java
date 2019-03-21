@@ -288,34 +288,36 @@ public class GameView extends View{
 	}
 
 	public void popUp(){
-		JFXPopup popup = new JFXPopup();
-		AnchorPane anchorPane = new AnchorPane();
-		Image loading = new Image("resources/loading.gif");
-		ImageView viewLoading = new ImageView(loading);
-		Label words = new Label("Waiting for Others");
+			JFXPopup popup = new JFXPopup();
+			AnchorPane anchorPane = new AnchorPane();
+			Image loading = new Image("resources/loading.gif");
+			ImageView viewLoading = new ImageView(loading);
+			Label words = new Label("Waiting for Others");
 
-		gameAnchor.getStylesheets().add("theme.css");
-		anchorPane.getStyleClass().add("anchorpane-Pop");
-		words.getStyleClass().add("label-players");
+			gameAnchor.getStylesheets().add("theme.css");
+			anchorPane.getStyleClass().add("anchorpane-Pop");
+			words.getStyleClass().add("label-players");
 
-		viewLoading.setFitHeight(130);
-		viewLoading.setFitWidth(300);
+			viewLoading.setFitHeight(130);
+			viewLoading.setFitWidth(300);
 
-		anchorPane.setMinSize(300,300);
-		anchorPane.setMaxSize(300, 300);
+			anchorPane.setMinSize(300, 300);
+			anchorPane.setMaxSize(300, 300);
 
-		words.setMaxWidth(Double.MAX_VALUE);
-		words.setAlignment(Pos.CENTER);
+			words.setMaxWidth(Double.MAX_VALUE);
+			words.setAlignment(Pos.CENTER);
 
-		AnchorPane.setTopAnchor(words, 50.0);
-		AnchorPane.setTopAnchor(viewLoading, 150.0);
-		AnchorPane.setLeftAnchor(words, 40.0);
+			AnchorPane.setTopAnchor(words, 50.0);
+			AnchorPane.setTopAnchor(viewLoading, 150.0);
+			AnchorPane.setLeftAnchor(words, 40.0);
 
-		anchorPane.getChildren().add(words);
-		anchorPane.getChildren().add(viewLoading);
-		popup.setPopupContent(anchorPane);
-		popup.show(gameAnchor, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 145.0, 40.0);
+			anchorPane.getChildren().add(words);
+			anchorPane.getChildren().add(viewLoading);
+			popup.setPopupContent(anchorPane);
+			popup.show(gameAnchor, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 145.0, 40.0);
+
 	}
+
 
 
 }
