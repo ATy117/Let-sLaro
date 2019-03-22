@@ -123,6 +123,7 @@ public class ClientController {
 			PlayerResponse response = new PlayerResponse(mystate.getCurrentPlayer(), myans);
 			byte[] state = Serializer.toBytes(response);
 			sendPacket(address, PORT, state);
+			currentView.popUp();
 			waitForQuestion();
 		}
 	}
