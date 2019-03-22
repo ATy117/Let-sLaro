@@ -70,7 +70,7 @@ public class GameView extends View{
 		usernameLabel.setText("Username: " + controller.getUsername());
 		scoreLabel.setText("Score: 0");
 
-		usernameLabel.setMaxWidth(600);
+		usernameLabel.setMaxWidth(400);
 
 		DropShadow dropShadow = new DropShadow();
 		dropShadow.setRadius(7.0);
@@ -140,8 +140,6 @@ public class GameView extends View{
 		ans3Label.setWrapText(true);
 		ans4Label.setMaxWidth(180);
 		ans4Label.setWrapText(true);
-
-		usernameLabel.setMaxWidth(120);
 
 		primaryStage.setOnCloseRequest(e -> {
 			try {

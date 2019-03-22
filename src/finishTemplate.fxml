@@ -18,7 +18,7 @@
                 <Image url="@resources/ansButton2.png" />
             </image>
         </ImageView>
-        <Label fx:id="remarksLabel" layoutX="134.0" layoutY="91.0" text="congratulations!" textFill="#cccccc">
+        <Label fx:id="remarksLabel" layoutX="192.0" layoutY="91.0" text="congratulations!" textFill="#cccccc">
             <font>
                 <Font name="BubbleGum" size="36.0" />
             </font>

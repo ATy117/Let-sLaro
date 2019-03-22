@@ -1,6 +1,7 @@
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
@@ -108,6 +109,9 @@ public class FinishView extends View {
 		username1.setMaxWidth(150);
 		username2.setMaxWidth(150);
 		username3.setMaxWidth(150);
+
+		//remarksLabel.setMaxWidth(Double.MAX_VALUE);
+		//remarksLabel.setAlignment(Pos.CENTER);
 	}
 
 	@Override
