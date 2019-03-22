@@ -1,6 +1,10 @@
 import javafx.application.Platform;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
@@ -34,6 +38,7 @@ public class ClientController {
 	public ClientController (Stage primaryStage) throws Exception {
 		this.primaryStage = primaryStage;
 		currentView = new LobbyView(this, primaryStage);
+		setAppIcon();
 	}
 
 	private void Notify() {
@@ -388,6 +393,14 @@ public class ClientController {
 	public String getUsername() {
 		return username;
 	}
+
+	private void setAppIcon () throws IOException {
+		Taskbar taskbar=Taskbar.getTaskbar();
+		BufferedImage image = ImageIO.read(getClass().getResource("/resources/logo.png"));
+		taskbar.setIconImage(image);
+		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("resources/logo.png")));
+	}
+
 
 
 }
