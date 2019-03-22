@@ -1,9 +1,5 @@
+import Model.GameState;
 import com.jfoenix.controls.JFXPopup;
-import javafx.application.Platform;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 

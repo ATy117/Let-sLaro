@@ -1,3 +1,6 @@
+import Model.Answer;
+import Model.GameState;
+import Model.PlayerResponse;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
@@ -5,7 +8,6 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class ClientController {
 
@@ -123,6 +125,7 @@ public class ClientController {
 			PlayerResponse response = new PlayerResponse(mystate.getCurrentPlayer(), myans);
 			byte[] state = Serializer.toBytes(response);
 			sendPacket(address, PORT, state);
+			currentView.popUp();
 			waitForQuestion();
 		}
 	}
