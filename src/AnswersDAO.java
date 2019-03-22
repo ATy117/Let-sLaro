@@ -1,7 +1,3 @@
-package Database;
-
-import Model.Answer;
-
 import java.util.List;
 
 public interface AnswersDAO {

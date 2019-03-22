@@ -1,4 +1,3 @@
-import Model.Player;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXPopup;
@@ -6,12 +5,14 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -163,7 +164,7 @@ public class GameView extends View{
 					selected = -1;
 					updateButtons();
 					questionLabel.setText(state.getCurrentQuestion().getQuestion());
-					questionNumLabel.setText("Model.Question " + state.getQuestionNumber() + " of " + state.getnQuestions());
+					questionNumLabel.setText("Question " + state.getQuestionNumber() + " of " + state.getnQuestions());
 					scoreLabel.setText("Score: " + state.getCurrentPlayer().getScore());
 					ptsLabel.setText(state.getCurrentQuestion().getPoints() + " pts");
 					state.getPlayersList().add(state.getCurrentPlayer());
@@ -192,6 +193,7 @@ public class GameView extends View{
 							}
 							timer.purge();
 							timer.cancel();
+							popUp();
 						}
 
 						else {
@@ -322,40 +324,37 @@ public class GameView extends View{
 	}
 
 	public void popUp(){
-		Platform.runLater(
-				() -> {
+		popup = new JFXPopup();
+		anchorPane = new AnchorPane();
+		Image loading = new Image("resources/loading.gif");
+		ImageView viewLoading = new ImageView(loading);
+		Label words = new Label("Waiting for Others");
 
-					popup = new JFXPopup();
-					anchorPane = new AnchorPane();
-					Image loading = new Image("resources/loading.gif");
-					ImageView viewLoading = new ImageView(loading);
-					Label words = new Label("Waiting for Others");
+		gameAnchor.getStylesheets().add("theme.css");
+		anchorPane.getStyleClass().add("anchorpane-Pop");
+		words.getStyleClass().add("label-pop");
+		words.setMaxWidth(180);
+		words.setWrapText(true);
+		words.setAlignment(Pos.CENTER);
 
-					gameAnchor.getStylesheets().add("theme.css");
-					anchorPane.getStyleClass().add("anchorpane-Pop");
-					words.getStyleClass().add("label-pop");
-					words.setMaxWidth(180);
-					words.setWrapText(true);
-					words.setAlignment(Pos.CENTER);
+		viewLoading.setFitHeight(130);
+		viewLoading.setFitWidth(300);
 
-					viewLoading.setFitHeight(130);
-					viewLoading.setFitWidth(300);
+		anchorPane.setMinSize(300, 300);
+		anchorPane.setMaxSize(300, 300);
 
-					anchorPane.setMinSize(300, 300);
-					anchorPane.setMaxSize(300, 300);
+		words.setMaxWidth(Double.MAX_VALUE);
+		words.setAlignment(Pos.CENTER);
 
-					words.setMaxWidth(Double.MAX_VALUE);
-					words.setAlignment(Pos.CENTER);
+		AnchorPane.setTopAnchor(words, 70.0);
+		AnchorPane.setTopAnchor(viewLoading, 150.0);
+		AnchorPane.setLeftAnchor(words, 20.0);
 
-					AnchorPane.setTopAnchor(words, 70.0);
-					AnchorPane.setTopAnchor(viewLoading, 150.0);
-					AnchorPane.setLeftAnchor(words, 20.0);
+		anchorPane.getChildren().add(words);
+		anchorPane.getChildren().add(viewLoading);
+		popup.setPopupContent(anchorPane);
+		popup.show(gameAnchor, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 405.0, 150.0);
 
-					anchorPane.getChildren().add(words);
-					anchorPane.getChildren().add(viewLoading);
-					popup.setPopupContent(anchorPane);
-					popup.show(gameAnchor, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 405.0, 150.0);
-				});
 	}
 
 

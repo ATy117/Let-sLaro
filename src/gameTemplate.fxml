@@ -41,7 +41,7 @@
                 <Image url="@resources/questionsTriangle.png" />
             </image>
         </ImageView>
-        <Label fx:id="questionLabel" layoutX="415.0" layoutY="219.0" text="Model.Question" textFill="#cccccc">
+        <Label fx:id="questionLabel" layoutX="415.0" layoutY="219.0" text="Question" textFill="#cccccc">
             <font>
                 <Font name="BubbleGum" size="33.0" />
             </font>
@@ -81,17 +81,17 @@
                 <Image url="@resources/Answer2Triangle.png" />
             </image>
         </ImageView>
-        <Label fx:id="ans1Label" layoutX="240.0" layoutY="465.0" text="Model.Answer 1" textFill="#cccccc">
+        <Label fx:id="ans1Label" layoutX="240.0" layoutY="465.0" text="Answer 1" textFill="#cccccc">
             <font>
                 <Font name="BubbleGum" size="18.0" />
             </font>
         </Label>
-        <Label fx:id="ans2Label" layoutX="406.0" layoutY="465.0" text="Model.Answer 2" textFill="#cccccc">
+        <Label fx:id="ans2Label" layoutX="406.0" layoutY="465.0" text="Answer 2" textFill="#cccccc">
             <font>
                 <Font name="BubbleGum" size="18.0" />
             </font>
         </Label>
-        <Label fx:id="ans4Label" layoutX="736.0" layoutY="467.0" text="Model.Answer 4" textFill="#cccccc">
+        <Label fx:id="ans4Label" layoutX="736.0" layoutY="467.0" text="Answer 4" textFill="#cccccc">
             <font>
                 <Font name="BubbleGum" size="18.0" />
             </font>
@@ -100,7 +100,7 @@
         <JFXButton fx:id="ansBtn2" layoutX="453.0" layoutY="502.0" />
         <JFXButton fx:id="ansBtn3" layoutX="623.0" layoutY="501.0" />
         <JFXButton fx:id="ansBtn4" layoutX="788.0" layoutY="499.0" />
-        <Label fx:id="ans3Label" layoutX="570.0" layoutY="465.0" text="Model.Answer 3" textFill="#cccccc">
+        <Label fx:id="ans3Label" layoutX="570.0" layoutY="465.0" text="Answer 3" textFill="#cccccc">
             <font>
                 <Font name="BubbleGum" size="18.0" />
             </font>

@@ -1,8 +1,4 @@
-package Model;
 
-import Database.AnswersDAODB;
-import Database.QuestionDAODB;
-import Database.dbConnection;
 
 import java.sql.Connection;
 import java.util.ArrayList;
