@@ -131,7 +131,7 @@ public class GameView extends View{
 		ansView4.setFitWidth(70);
 		ansView4.setFitHeight(30);
 
-		questionLabel.setMaxWidth(330);
+		questionLabel.setMaxWidth(500);
 		questionLabel.setWrapText(true);
 		questionLabel.setAlignment(Pos.CENTER);
 

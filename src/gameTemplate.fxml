@@ -41,7 +41,7 @@
                 <Image url="@resources/questionsTriangle.png" />
             </image>
         </ImageView>
-        <Label fx:id="questionLabel" layoutX="415.0" layoutY="219.0" text="Question" textFill="#cccccc">
+        <Label fx:id="questionLabel" layoutX="401.0" layoutY="206.0" text="Question" textFill="#cccccc">
             <font>
                 <Font name="BubbleGum" size="33.0" />
             </font>
