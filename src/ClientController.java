@@ -26,14 +26,9 @@ public class ClientController {
 	private InetAddress address;
 	private Stage primaryStage;
 	private int selectedAns;
-
-
-
 	private String username;
-
 	private boolean waiting=true;
-	private boolean error=false;
-	private volatile boolean answered=false;
+
 	private View currentView;
 
 	public ClientController (Stage primaryStage) throws Exception {
@@ -112,7 +107,6 @@ public class ClientController {
 		PlayerResponse response = new PlayerResponse(mystate.getCurrentPlayer(), myans);
 		byte[] state = Serializer.toBytes(response);
 		sendPacket(address, PORT, state);
-		answered = true;
 	}
 
 	public void selectAnswer(int answer){
@@ -124,7 +118,6 @@ public class ClientController {
 		PlayerResponse response = new PlayerResponse(mystate.getCurrentPlayer(), myans);
 		byte[] state = Serializer.toBytes(response);
 		sendPacket(address, PORT, state);
-		answered = true;
 		waitForQuestion();
 	}
 

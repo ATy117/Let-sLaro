@@ -31,7 +31,6 @@ public class ServerController {
 	private List<Player> playerList;
 	private HashSet<String> existingClients;
 	private TriviaGame game;
-	Timer timer;
 
 	public ServerController() throws Exception {
 
@@ -126,7 +125,6 @@ public class ServerController {
 				byte[] state = Serializer.toBytes(playerstate);
 				sendPacket(clientAddresses.get(i), clientPorts.get(i), state);
 			}
-
 
 
 			if (!game.isGameDone()) {
