@@ -21,6 +21,7 @@ import java.util.*;
 public class GameView extends View{
 
 	private final int COUNTDOWN = 10;
+	private final int RESULTTIME = 3;
 	private int seconds;
 	private Timer timer;
 	private int selected;
@@ -177,7 +178,7 @@ public class GameView extends View{
 	private void startTimer () {
 
 		timer = new Timer();
-		seconds = COUNTDOWN;
+		seconds = COUNTDOWN + RESULTTIME;
 		timerLabel.setText("Timer: " + COUNTDOWN);
 
 		timer.schedule(new TimerTask() {
@@ -194,10 +195,18 @@ public class GameView extends View{
 							timer.purge();
 							timer.cancel();
 						}
-
+						else if (seconds == RESULTTIME) {
+							timerLabel.setText("Time's Up!");
+							showIfAnswerCorrect(selected);
+							disableButtons();
+							decSeconds();
+						}
 						else {
 							decSeconds();
-							timerLabel.setText("Timer: " + seconds);
+							if (seconds >= RESULTTIME) {
+								int updatedtime = seconds - RESULTTIME;
+								timerLabel.setText("Timer: " + updatedtime);
+							}
 						}
 					}
 				});
@@ -209,6 +218,13 @@ public class GameView extends View{
 		return --seconds;
 	}
 
+	private void disableButtons() {
+		ansBtn1.setOnMouseClicked(null);
+		ansBtn2.setOnMouseClicked(null);
+		ansBtn3.setOnMouseClicked(null);
+		ansBtn4.setOnMouseClicked(null);
+	}
+
 	private void updateButtons() {
 
 		resetButtonImages();
@@ -217,10 +233,7 @@ public class GameView extends View{
 		ans2Label.setText("");
 		ans3Label.setText("");
 		ans4Label.setText("");
-		ans1Label.setOnMouseClicked(e -> {});
-		ans2Label.setOnMouseClicked(e -> {});
-		ans3Label.setOnMouseClicked(e -> {});
-		ans4Label.setOnMouseClicked(e -> {});
+		disableButtons();
 
 		if (state.getCurrentQuestion().getAnswersList().size() > 0) {
 			ans1Label.setText(state.getCurrentQuestion().getAnswersList().get(0).getAnswer());
@@ -254,6 +267,53 @@ public class GameView extends View{
 				setButtonSelect(ansImageView4, ansBtn4);
 			});
 		}
+	}
+
+	private void showIfAnswerCorrect (int chosen) {
+		resetButtonImages();
+
+
+		if (chosen == 0) {
+			if (state.getCurrentQuestion().getAnswersList().get(chosen).isCorrect()) {
+				ansImageView1.setImage(ansGreenTri);
+				ansBtn1.setGraphic(ansGreenView);
+			}
+			else {
+				ansImageView1.setImage(ansRedTri);
+				ansBtn1.setGraphic(ansRedView);
+			}
+		}
+		else if (chosen == 1) {
+			if (state.getCurrentQuestion().getAnswersList().get(chosen).isCorrect()) {
+				ansImageView2.setImage(ansGreenTri);
+				ansBtn2.setGraphic(ansGreenView);
+			}
+			else {
+				ansImageView2.setImage(ansRedTri);
+				ansBtn2.setGraphic(ansRedView);
+			}
+		}
+		else if (chosen == 2) {
+			if (state.getCurrentQuestion().getAnswersList().get(chosen).isCorrect()) {
+				ansImageView3.setImage(ansGreenTri);
+				ansBtn3.setGraphic(ansGreenView);
+			}
+			else {
+				ansImageView3.setImage(ansRedTri);
+				ansBtn3.setGraphic(ansRedView);
+			}
+		}
+		else if (chosen == 3) {
+			if (state.getCurrentQuestion().getAnswersList().get(chosen).isCorrect()) {
+				ansImageView4.setImage(ansGreenTri);
+				ansBtn4.setGraphic(ansGreenView);
+			}
+			else {
+				ansImageView4.setImage(ansRedTri);
+				ansBtn4.setGraphic(ansRedView);
+			}
+		}
+
 	}
 
 	private void setButtonSelect (ImageView iv, JFXButton btn) {
