@@ -17,6 +17,10 @@ public class FinishView extends View {
 	public FinishView(ClientController controller, Stage primaryStage){
 		super(controller);
 		this.primaryStage = primaryStage;
+		this.primaryStage.setOnCloseRequest(e -> {
+			Platform.exit();
+			System.exit(0);
+		});
 		System.out.println("You are in finish view");
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("finishTemplate.fxml"));
 		loader.setController(this);

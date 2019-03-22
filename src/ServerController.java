@@ -23,7 +23,7 @@ public class ServerController {
 	// MAX players
 	private int MAXPLAYER;
 
-	private static final int COUNTDOWN = 10;
+	private static final int COUNTDOWN = 12;
 
 	private DatagramSocket socket;
 	private ArrayList<InetAddress> clientAddresses;
@@ -127,15 +127,22 @@ public class ServerController {
 				sendPacket(clientAddresses.get(i), clientPorts.get(i), state);
 			}
 
-			TimeUnit.SECONDS.sleep(COUNTDOWN);
+
 
 			if (!game.isGameDone()) {
+				TimeUnit.SECONDS.sleep(COUNTDOWN);
 				for (int i = 0; i < playerList.size(); i++) {
 					requestAnswer(clientAddresses.get(i), clientPorts.get(i), playerList.get(i).getName());
 					PlayerResponse response = (PlayerResponse) Serializer.toObject(receivePacket());
 					recordScore(response);
 				}
 			}
+			else {
+				break;
+			}
+
+
+			System.out.println("\n---------------------------------------------------------------------\n");
 		}
 	}
 
@@ -144,13 +151,8 @@ public class ServerController {
 		sendPacket(address, port, dude);
 	}
 
-	private void castGameEnd () throws  Exception{
+	private void castGameEnd () {
 		game.endGame();
-		for (int i = 0; i < playerList.size(); i++) {
-			GameState playerstate = game.getGameState(playerList.get(i));
-			byte[] state = Serializer.toBytes(playerstate);
-			sendPacket(clientAddresses.get(i), clientPorts.get(i), state);
-		}
 		System.out.println("Game has ended");
 	}
 

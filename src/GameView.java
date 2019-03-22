@@ -271,18 +271,6 @@ public class GameView extends View{
 		ansBtn4.setGraphic(ansView3);
 	}
 
-	private void chooseAnswer(int n) throws Exception {
-		popUp();
-		timerLabel.setText("WAITING");
-		ansBtn1.setOnMouseClicked(null);
-		ansBtn2.setOnMouseClicked(null);
-		ansBtn3.setOnMouseClicked(null);
-		ansBtn4.setOnMouseClicked(null);
-		timer.cancel();
-		timer.purge();
-		controller.selectAnswer(n);
-	}
-
 	private int getWrongAnswer () {
 
 		for (int i=0; i< state.getCurrentQuestion().getAnswersList().size(); i++) {
