@@ -409,18 +409,28 @@ public class ServerController {
 
 	public void startServer(ActionEvent actionEvent) {
 
-		MAXPLAYER = Integer.parseInt(playerTF.getText());
-		int nQuestions = Integer.parseInt(questionTF.getText());
-		try {
-			initServer(nQuestions);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
-		playerTF.setEditable(false);
-		questionTF.setEditable(false);
-		startBtn.setText("SERVER IS RUNNING");
-		startBtn.setDisable(true);
+		try {
+
+			MAXPLAYER = Integer.parseInt(playerTF.getText());
+			int nQuestions = Integer.parseInt(questionTF.getText());
+
+			if (MAXPLAYER > 0 && nQuestions > 0) {
+				try {
+					initServer(nQuestions);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				playerTF.setEditable(false);
+				questionTF.setEditable(false);
+				startBtn.setText("SERVER IS RUNNING");
+				startBtn.setDisable(true);
+			}
+		}
+		catch (Exception e) {
+			System.out.println("Invalid input");
+		}
 
 	}
 }

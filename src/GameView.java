@@ -189,9 +189,6 @@ public class GameView extends View{
 							if (selected == -1) {
 								controller.selectAnswer(getWrongAnswer());
 							}
-							else {
-								controller.selectAnswer(selected);
-							}
 							timer.purge();
 							timer.cancel();
 						}
@@ -238,35 +235,36 @@ public class GameView extends View{
 		if (state.getCurrentQuestion().getAnswersList().size() > 0) {
 			ans1Label.setText(state.getCurrentQuestion().getAnswersList().get(0).getAnswer());
 			ansBtn1.setOnMouseClicked(e -> {
-				selected = 0;
-				setButtonSelect(ansImageView1, ansBtn1);
-
+				selectAnswer(ansImageView1, ansBtn1, 0);
 			});
 		}
 
 		if (state.getCurrentQuestion().getAnswersList().size() > 1) {
 			ans2Label.setText(state.getCurrentQuestion().getAnswersList().get(1).getAnswer());
 			ansBtn2.setOnMouseClicked(e -> {
-				selected = 1;
-				setButtonSelect(ansImageView2, ansBtn2);
+				selectAnswer(ansImageView2, ansBtn2, 1);
 			});
 		}
 
 		if (state.getCurrentQuestion().getAnswersList().size() > 2) {
 			ans3Label.setText(state.getCurrentQuestion().getAnswersList().get(2).getAnswer());
 			ansBtn3.setOnMouseClicked(e -> {
-				selected = 2;
-				setButtonSelect(ansImageView3, ansBtn3);
+				selectAnswer(ansImageView3, ansBtn3, 2);
 			});
 		}
 
 		if (state.getCurrentQuestion().getAnswersList().size() > 3) {
 			ans4Label.setText(state.getCurrentQuestion().getAnswersList().get(3).getAnswer());
 			ansBtn4.setOnMouseClicked(e -> {
-				selected = 3;
-				setButtonSelect(ansImageView4, ansBtn4);
+				selectAnswer(ansImageView4, ansBtn4, 3);
 			});
 		}
+	}
+
+	public void selectAnswer (ImageView iv, JFXButton btn, int answer) {
+		selected = answer;
+		controller.selectAnswer(answer);
+		setButtonSelect(iv, btn);
 	}
 
 	private void showIfAnswerCorrect (int chosen) {

@@ -50,7 +50,7 @@ public class FinishView extends View {
 		for (int i = 0; i < n; i++){
 			top3.add(state.getPlayersList().get(i));
 
-			if (state.getPlayersList().get(i).getName().equals(state.getCurrentPlayer().getName())) {
+			if (state.getPlayersList().get(i).getName().equals(state.getCurrentPlayer().getName()) && state.getCurrentPlayer().getScore() > 0) {
 				remarksLabel.setText("WINNER");
 			}
 		}
