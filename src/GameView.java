@@ -190,11 +190,14 @@ public class GameView extends View{
 							}
 							else {
 								controller.selectAnswer(selected);
-								timerLabel.setText("Timer: " + seconds);
 							}
+							timer.purge();
+							timer.cancel();
 						}
+
 						else {
 							decSeconds();
+							timerLabel.setText("Timer: " + seconds);
 						}
 					}
 				});
