@@ -102,11 +102,7 @@ public class ClientController {
 
 
 	public void disconnect () throws  Exception{
-		Answer myans = new Answer();
-		myans.setAnswer(null);
-		PlayerResponse response = new PlayerResponse(mystate.getCurrentPlayer(), myans);
-		byte[] state = Serializer.toBytes(response);
-		sendPacket(address, PORT, state);
+		selectedAns= -1;
 	}
 
 	public void selectAnswer(int answer){
@@ -114,11 +110,21 @@ public class ClientController {
 	}
 
 	public void submitAnswer () throws Exception{
-		Answer myans = mystate.getCurrentQuestion().getAnswersList().get(selectedAns);
-		PlayerResponse response = new PlayerResponse(mystate.getCurrentPlayer(), myans);
-		byte[] state = Serializer.toBytes(response);
-		sendPacket(address, PORT, state);
-		waitForQuestion();
+		Answer myans;
+		if (selectedAns == -1) {
+			myans = null;
+			PlayerResponse response = new PlayerResponse(mystate.getCurrentPlayer(), myans);
+			byte[] state = Serializer.toBytes(response);
+			sendPacket(address, PORT, state);
+			System.exit(0);
+		}
+		else {
+			myans = mystate.getCurrentQuestion().getAnswersList().get(selectedAns);
+			PlayerResponse response = new PlayerResponse(mystate.getCurrentPlayer(), myans);
+			byte[] state = Serializer.toBytes(response);
+			sendPacket(address, PORT, state);
+			waitForQuestion();
+		}
 	}
 
 

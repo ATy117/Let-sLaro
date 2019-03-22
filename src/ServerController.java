@@ -23,7 +23,7 @@ public class ServerController {
 	// MAX players
 	private int MAXPLAYER;
 
-	private static final int COUNTDOWN = 12;
+	private static final int COUNTDOWN = 11;
 
 	private DatagramSocket socket;
 	private ArrayList<InetAddress> clientAddresses;
@@ -116,6 +116,8 @@ public class ServerController {
 
 	private void castGameProper() throws Exception {
 
+
+
 		while (playerList.size() > 0) {
 
 			game.askQuestion();
@@ -173,7 +175,7 @@ public class ServerController {
 
 	private void recordScore(PlayerResponse response) throws Exception{
 
-		if (response.getAnswer().getAnswer() != null) {
+		if (response.getAnswer()!= null) {
 			game.checkAnswer(response.getAnswer(), response.getPlayer());
 		}
 		else {

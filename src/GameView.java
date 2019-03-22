@@ -146,8 +146,7 @@ public class GameView extends View{
 		primaryStage.setOnCloseRequest(e -> {
 			try {
 				controller.disconnect();
-				timer.cancel();
-				timer.purge();
+				Platform.exit();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -179,7 +178,7 @@ public class GameView extends View{
 
 		timer = new Timer();
 		seconds = COUNTDOWN;
-		timerLabel.setText("Timer: DISABLED");
+		timerLabel.setText("Timer: " + COUNTDOWN);
 
 		timer.schedule(new TimerTask() {
 			public void run() {
@@ -191,6 +190,7 @@ public class GameView extends View{
 							}
 							else {
 								controller.selectAnswer(selected);
+								timerLabel.setText("Timer: " + seconds);
 							}
 						}
 						else {
