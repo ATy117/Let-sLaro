@@ -25,6 +25,7 @@ public class ClientController {
 	private GameState mystate;
 	private InetAddress address;
 	private Stage primaryStage;
+	private int selectedAns;
 
 
 
@@ -72,12 +73,38 @@ public class ClientController {
 				}
 				else {
 					Notify();
+					waitToSendAnswer();
 				}
 			}
 		};
 		wait.setDaemon(true);
 		wait.start();
 	}
+
+	private void waitToSendAnswer() {
+		Thread wait = new Thread() {
+			public void run () {
+				String name = null;
+				try {
+					name  = (String) Serializer.toObject(receivePacket());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				if (name.equals(mystate.getCurrentPlayer().getName())) {
+					try {
+						submitAnswer();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+
+		wait.setDaemon(true);
+		wait.start();
+	}
+
 
 	public void disconnect () throws  Exception{
 		Answer myans = new Answer();
@@ -88,8 +115,12 @@ public class ClientController {
 		answered = true;
 	}
 
-	public void selectAnswer(int answer) throws Exception{
-		Answer myans = mystate.getCurrentQuestion().getAnswersList().get(answer);
+	public void selectAnswer(int answer){
+		selectedAns = answer;
+	}
+
+	public void submitAnswer () throws Exception{
+		Answer myans = mystate.getCurrentQuestion().getAnswersList().get(selectedAns);
 		PlayerResponse response = new PlayerResponse(mystate.getCurrentPlayer(), myans);
 		byte[] state = Serializer.toBytes(response);
 		sendPacket(address, PORT, state);

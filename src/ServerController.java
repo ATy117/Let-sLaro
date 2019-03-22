@@ -5,6 +5,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketTimeoutException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 
 public class ServerController {
@@ -22,12 +23,15 @@ public class ServerController {
 	// MAX players
 	private int MAXPLAYER;
 
+	private static final int COUNTDOWN = 10;
+
 	private DatagramSocket socket;
 	private ArrayList<InetAddress> clientAddresses;
 	private ArrayList<Integer> clientPorts;
 	private List<Player> playerList;
 	private HashSet<String> existingClients;
 	private TriviaGame game;
+	Timer timer;
 
 	public ServerController() throws Exception {
 
@@ -123,12 +127,21 @@ public class ServerController {
 				sendPacket(clientAddresses.get(i), clientPorts.get(i), state);
 			}
 
-			while (playerList.size() > 0 && !game.questionDone()) {
-				PlayerResponse response = (PlayerResponse) Serializer.toObject(receivePacket());
-				recordScore(response);
+			TimeUnit.SECONDS.sleep(COUNTDOWN);
+
+			if (!game.isGameDone()) {
+				for (int i = 0; i < playerList.size(); i++) {
+					requestAnswer(clientAddresses.get(i), clientPorts.get(i), playerList.get(i).getName());
+					PlayerResponse response = (PlayerResponse) Serializer.toObject(receivePacket());
+					recordScore(response);
+				}
 			}
 		}
+	}
 
+	private void requestAnswer(InetAddress address, int port, String username)  throws Exception{
+		byte[] dude = Serializer.toBytes(username);
+		sendPacket(address, port, dude);
 	}
 
 	private void castGameEnd () throws  Exception{

@@ -179,22 +179,22 @@ public class GameView extends View{
 
 		timer = new Timer();
 		seconds = COUNTDOWN;
-		timerLabel.setText("Timer: " + seconds);
+		timerLabel.setText("Timer: DISABLED");
 
 		timer.schedule(new TimerTask() {
 			public void run() {
 				Platform.runLater(new Runnable() {
 					public void run() {
 						if (seconds == 0) {
-							try {
-								chooseAnswer(getWrongAnswer());
-							} catch (Exception e) {
-								e.printStackTrace();
+							if (selected == -1) {
+								controller.selectAnswer(getWrongAnswer());
+							}
+							else {
+								controller.selectAnswer(selected);
 							}
 						}
 						else {
 							decSeconds();
-							timerLabel.setText("Timer: " + seconds);
 						}
 					}
 				});
