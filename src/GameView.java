@@ -23,6 +23,7 @@ public class GameView extends View{
 	private final int COUNTDOWN = 10;
 	private int seconds;
 	private Timer timer;
+	private int selected;
 
 	@FXML Text playersText;
 	@FXML Label questionLabel;
@@ -38,6 +39,7 @@ public class GameView extends View{
 	@FXML AnchorPane gameAnchor;
 	Image ansGreenTri, ansRedTri, ansGreenButton, ansRedButton, ansBack1, ansBack2;
 	ImageView ansView, ansView2, ansView3, ansView4;
+
 
 
 
@@ -160,6 +162,7 @@ public class GameView extends View{
 					if (popup != null) {
 						popup.hide();
 					}
+					selected = -1;
 					updateButtons();
 					questionLabel.setText(state.getCurrentQuestion().getQuestion());
 					questionNumLabel.setText("Question " + state.getQuestionNumber() + " of " + state.getnQuestions());
@@ -205,15 +208,7 @@ public class GameView extends View{
 
 	private void updateButtons() {
 
-		ansImageView1.setImage(ansBack1);
-		ansImageView2.setImage(ansBack2);
-		ansImageView3.setImage(ansBack1);
-		ansImageView4.setImage(ansBack2);
-
-		ansBtn1.setGraphic(ansView2);
-		ansBtn2.setGraphic(ansView);
-		ansBtn3.setGraphic(ansView4);
-		ansBtn4.setGraphic(ansView3);
+		resetButtonImages();
 
 		ans1Label.setText("");
 		ans2Label.setText("");
@@ -227,61 +222,53 @@ public class GameView extends View{
 		if (state.getCurrentQuestion().getAnswersList().size() > 0) {
 			ans1Label.setText(state.getCurrentQuestion().getAnswersList().get(0).getAnswer());
 			ansBtn1.setOnMouseClicked(e -> {
-				try {
-					chooseAnswer(0);
-					setButtonConfirm(ansImageView1, ansBtn1, state.getCurrentQuestion().getAnswersList().get(0).isCorrect());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
+				selected = 0;
+				setButtonSelect(ansImageView1, ansBtn1);
+
 			});
 		}
 
 		if (state.getCurrentQuestion().getAnswersList().size() > 1) {
 			ans2Label.setText(state.getCurrentQuestion().getAnswersList().get(1).getAnswer());
 			ansBtn2.setOnMouseClicked(e -> {
-				try {
-					chooseAnswer(1);
-					setButtonConfirm(ansImageView2, ansBtn2, state.getCurrentQuestion().getAnswersList().get(1).isCorrect());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
+				selected = 1;
+				setButtonSelect(ansImageView2, ansBtn2);
 			});
 		}
 
 		if (state.getCurrentQuestion().getAnswersList().size() > 2) {
 			ans3Label.setText(state.getCurrentQuestion().getAnswersList().get(2).getAnswer());
 			ansBtn3.setOnMouseClicked(e -> {
-				try {
-					chooseAnswer(2);
-					setButtonConfirm(ansImageView3, ansBtn3, state.getCurrentQuestion().getAnswersList().get(2).isCorrect());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
+				selected = 2;
+				setButtonSelect(ansImageView3, ansBtn3);
 			});
 		}
 
 		if (state.getCurrentQuestion().getAnswersList().size() > 3) {
 			ans4Label.setText(state.getCurrentQuestion().getAnswersList().get(3).getAnswer());
 			ansBtn4.setOnMouseClicked(e -> {
-				try {
-					chooseAnswer(3);
-					setButtonConfirm(ansImageView4, ansBtn4, state.getCurrentQuestion().getAnswersList().get(3).isCorrect());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
+				selected = 3;
+				setButtonSelect(ansImageView4, ansBtn4);
 			});
 		}
 	}
 
-	private void setButtonConfirm (ImageView iv, JFXButton btn, boolean ans) {
-		if (ans) {
-			iv.setImage(ansGreenTri);
-			btn.setGraphic(ansGreenView);
-		}
-		else {
-			iv.setImage(ansRedTri);
-			btn.setGraphic(ansRedView);
-		}
+	private void setButtonSelect (ImageView iv, JFXButton btn) {
+		resetButtonImages();
+		iv.setImage(ansGreenTri);
+		btn.setGraphic(ansGreenView);
+	}
+
+	private void resetButtonImages() {
+		ansImageView1.setImage(ansBack1);
+		ansImageView2.setImage(ansBack2);
+		ansImageView3.setImage(ansBack1);
+		ansImageView4.setImage(ansBack2);
+
+		ansBtn1.setGraphic(ansView2);
+		ansBtn2.setGraphic(ansView);
+		ansBtn3.setGraphic(ansView4);
+		ansBtn4.setGraphic(ansView3);
 	}
 
 	private void chooseAnswer(int n) throws Exception {
