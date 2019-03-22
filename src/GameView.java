@@ -38,8 +38,8 @@ public class GameView extends View{
 	@FXML Label scoreLabel;
 	@FXML Label timerLabel;
 	@FXML AnchorPane gameAnchor;
-	Image ansGreenTri, ansRedTri, ansGreenButton, ansRedButton, ansBack1, ansBack2;
-	ImageView ansView, ansView2, ansView3, ansView4;
+	Image ansGreenTri, ansRedTri, ansGreenButton, ansRedButton, ansBack1, ansBack2, blueButton;
+	ImageView ansView, ansView2, ansView3, ansView4, blueView;
 
 
 
@@ -107,10 +107,15 @@ public class GameView extends View{
 		ansGreenView = new ImageView(ansGreenButton);
 		ansRedView = new ImageView(ansRedButton);
 
+		blueButton = new Image("resources/blueButton.png");
+		blueView = new ImageView(blueButton);
+
 		ansGreenView.setFitWidth(70);
 		ansGreenView.setFitHeight(30);
 		ansRedView.setFitWidth(70);
 		ansRedView.setFitHeight(30);
+		blueView.setFitWidth(70);
+		blueView.setFitHeight(30);
 
 		Image ansTri = new Image("resources/ansButton.png");
 		Image ansTri2 = new Image("resources/ansButton2.png");
@@ -235,36 +240,36 @@ public class GameView extends View{
 		if (state.getCurrentQuestion().getAnswersList().size() > 0) {
 			ans1Label.setText(state.getCurrentQuestion().getAnswersList().get(0).getAnswer());
 			ansBtn1.setOnMouseClicked(e -> {
-				selectAnswer(ansImageView1, ansBtn1, 0);
+				selectAnswer(ansBtn1, 0);
 			});
 		}
 
 		if (state.getCurrentQuestion().getAnswersList().size() > 1) {
 			ans2Label.setText(state.getCurrentQuestion().getAnswersList().get(1).getAnswer());
 			ansBtn2.setOnMouseClicked(e -> {
-				selectAnswer(ansImageView2, ansBtn2, 1);
+				selectAnswer(ansBtn2, 1);
 			});
 		}
 
 		if (state.getCurrentQuestion().getAnswersList().size() > 2) {
 			ans3Label.setText(state.getCurrentQuestion().getAnswersList().get(2).getAnswer());
 			ansBtn3.setOnMouseClicked(e -> {
-				selectAnswer(ansImageView3, ansBtn3, 2);
+				selectAnswer(ansBtn3, 2);
 			});
 		}
 
 		if (state.getCurrentQuestion().getAnswersList().size() > 3) {
 			ans4Label.setText(state.getCurrentQuestion().getAnswersList().get(3).getAnswer());
 			ansBtn4.setOnMouseClicked(e -> {
-				selectAnswer(ansImageView4, ansBtn4, 3);
+				selectAnswer(ansBtn4, 3);
 			});
 		}
 	}
 
-	public void selectAnswer (ImageView iv, JFXButton btn, int answer) {
+	public void selectAnswer (JFXButton btn, int answer) {
 		selected = answer;
 		controller.selectAnswer(answer);
-		setButtonSelect(iv, btn);
+		setButtonSelect(btn);
 	}
 
 	private void showIfAnswerCorrect (int chosen) {
@@ -314,10 +319,9 @@ public class GameView extends View{
 
 	}
 
-	private void setButtonSelect (ImageView iv, JFXButton btn) {
+	private void setButtonSelect (JFXButton btn) {
 		resetButtonImages();
-		iv.setImage(ansGreenTri);
-		btn.setGraphic(ansGreenView);
+		btn.setGraphic(blueView);
 	}
 
 	private void resetButtonImages() {
