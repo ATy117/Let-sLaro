@@ -36,7 +36,8 @@ public class ServerController {
 	private int MAXPLAYER;
 
 	private static final int COUNTDOWN = 10;
-	private static final int PROCESSRESULT = 4;
+	private static final int WAITRESULT = 3;
+	private static final int PROCESSINGTIME = 1;
 
 	private DatagramSocket socket;
 	private ArrayList<InetAddress> clientAddresses;
@@ -151,7 +152,7 @@ public class ServerController {
 
 
 			if (!game.isGameDone()) {
-				TimeUnit.SECONDS.sleep(COUNTDOWN+PROCESSRESULT);
+				TimeUnit.SECONDS.sleep(COUNTDOWN+WAITRESULT+PROCESSINGTIME);
 				for (int i = 0; i < playerList.size(); i++) {
 					requestAnswer(clientAddresses.get(i), clientPorts.get(i), playerList.get(i).getName());
 					PlayerResponse response = (PlayerResponse) Serializer.toObject(receivePacket());
