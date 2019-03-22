@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class ClientController {
 
 	// Maximum Segment Size - Quantity of data from the application layer in the segment
-	public static final int MSS = 128;
+	public static final int MSS = 4;
 	// Window size - Number of packets sent without acking
 	public static final int WINDOW_SIZE = 2;
 	//Buffer size
@@ -103,16 +103,13 @@ public class ClientController {
 		Thread wait = new Thread() {
 			public void run() {
 				while (waiting) {
-					byte[] receive = new byte[BUFFER];
-					DatagramPacket packet = new DatagramPacket(receive, receive.length);
 
+					String msg = null;
 					try {
-						socket.receive(packet);
-					} catch (IOException e) {
+						msg = (String) Serializer.toObject(receivePacket());
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
-
-					String msg = new String(receive);
 					msg = msg.trim();
 
 					if (msg.equals("START")) {

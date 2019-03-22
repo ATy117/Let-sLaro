@@ -10,7 +10,7 @@ import java.util.*;
 public class ServerController {
 
 	// Maximum Segment Size - Quantity of data from the application layer in the segment
-	public static final int MSS = 128;
+	public static final int MSS = 4;
 	// Window size - Number of packets sent without acking
 	public static final int WINDOW_SIZE = 2;
 	// Time (ms) before REsending all the non-acked packets
@@ -105,9 +105,8 @@ public class ServerController {
 
 		for (int i = 0; i<existingClients.size(); i++) {
 			String start = "START";
-			byte buf[] = start.getBytes();
-			DatagramPacket packet = new DatagramPacket(buf, buf.length, clientAddresses.get(i), clientPorts.get(i));
-			socket.send(packet);
+			byte buf[] = Serializer.toBytes(start);
+			sendPacket(clientAddresses.get(i), clientPorts.get(i), buf);
 		}
 
 	}
@@ -179,16 +178,14 @@ public class ServerController {
 
 	private void sendConnectConfirmation (InetAddress address, int port) throws Exception {
 		String msg = "CONNECTED";
-		byte buf[] = msg.getBytes();
-		DatagramPacket packet = new DatagramPacket(buf, buf.length, address, port);
-		socket.send(packet);
+		byte buf[] = Serializer.toBytes(msg);
+		sendPacket(address, port, buf);
 	}
 
 	private void sendConnectionError (InetAddress address, int port) throws Exception {
 		String msg = "ERROR";
-		byte buf[] = msg.getBytes();
-		DatagramPacket packet = new DatagramPacket(buf, buf.length, address, port);
-		socket.send(packet);
+		byte buf[] = Serializer.toBytes(msg);
+		sendPacket(address, port, buf);
 	}
 
 	private byte[] receivePacket () throws Exception{
