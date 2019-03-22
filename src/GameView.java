@@ -193,6 +193,7 @@ public class GameView extends View{
 							}
 							timer.purge();
 							timer.cancel();
+							popUp();
 						}
 
 						else {

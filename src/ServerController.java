@@ -181,12 +181,20 @@ public class ServerController {
 		else {
 			if (game.disconnectPlayer(response.getPlayer().getName())) {
 
+				for(int i= 0; i<playerList.size(); i++) {
+					if (playerList.get(i).getName().equals(response.getPlayer().getName())) {
+						clientAddresses.remove(i);
+						clientPorts.remove(i);
+					}
+				}
 				playerList = game.getPlayersList();
 
 				if (playerList.size() == 0) {
 					castGameEnd();
 					System.exit(0);
 				}
+
+
 			}
 		}
 	}
