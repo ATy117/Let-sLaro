@@ -1,3 +1,10 @@
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -20,6 +27,11 @@ public class ServerController {
 	public final static int PORT = 7331;
 	// Buffer size
 	private final static int BUFFER = 1024;
+
+
+	public Button startBtn;
+	public TextField playerTF;
+	public TextField questionTF;
 	// MAX players
 	private int MAXPLAYER;
 
@@ -32,16 +44,17 @@ public class ServerController {
 	private HashSet<String> existingClients;
 	private TriviaGame game;
 
-	public ServerController() throws Exception {
+	public ServerController(Stage primaryStage) throws Exception {
 
-		Scanner sc = new Scanner(System.in);
-		System.out.print("Enter player count: ");
-		MAXPLAYER = sc.nextInt();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("serverTemplate.fxml"));
+		loader.setController(this);
 
-		initServer();
+		StageManager sm = new StageManager(primaryStage);
+		sm.loadScene(loader);
+		sm.setWindowName("Let's Laro Server");
 	}
 
-	private void initServer () throws Exception {
+	private void initServer (int nQuestions) throws Exception {
 
 		socket = new DatagramSocket(PORT);
 		clientAddresses = new ArrayList();
@@ -49,56 +62,63 @@ public class ServerController {
 		existingClients = new HashSet();
 		playerList = new ArrayList<>();
 
-		Scanner sc = new Scanner(System.in);
-		System.out.print("Enter number of questions: ");
-		int n = sc.nextInt();
-		game = new TriviaGame(n);
+		game = new TriviaGame(nQuestions);
 
 		initLobby();
-		castGameStart();
-		castGameProper();
-		castGameEnd();
 	}
 
-	private void initLobby() {
-		System.out.println("Waiting for enough players to connect.");
+	private void initLobby()  {
 
-		while (existingClients.size() < MAXPLAYER) {
+		Thread t = new Thread() {
+			public void run () {
+				System.out.println("Waiting for enough players to connect.");
 
-			byte[] buf = new byte[BUFFER];
+				while (existingClients.size() < MAXPLAYER) {
 
-			try {
-				DatagramPacket packet = new DatagramPacket(buf, buf.length);
-				socket.receive(packet);
+					byte[] buf = new byte[BUFFER];
 
-				Player noob = registerPlayer(buf);
+					try {
+						DatagramPacket packet = new DatagramPacket(buf, buf.length);
+						socket.receive(packet);
 
-				InetAddress clientAddress = packet.getAddress();
-				int clientPort = packet.getPort();
+						Player noob = registerPlayer(buf);
 
-				if (noob != null) {
-					String id = clientAddress.toString() + "," + clientPort;
-					if (!existingClients.contains(id)) {
-						existingClients.add(id);
-						clientPorts.add(clientPort);
-						clientAddresses.add(clientAddress);
-						playerList.add(noob);
-						game.connectPlayer(noob);
-						sendConnectConfirmation(clientAddress, clientPort);
+						InetAddress clientAddress = packet.getAddress();
+						int clientPort = packet.getPort();
+
+						if (noob != null) {
+							String id = clientAddress.toString() + "," + clientPort;
+							if (!existingClients.contains(id)) {
+								existingClients.add(id);
+								clientPorts.add(clientPort);
+								clientAddresses.add(clientAddress);
+								playerList.add(noob);
+								game.connectPlayer(noob);
+								sendConnectConfirmation(clientAddress, clientPort);
+							}
+						}
+						else {
+							sendConnectionError(clientAddress, clientPort);
+						}
+
+					} catch (Exception e) {
+						System.err.println(e);
 					}
 				}
-				else {
-					sendConnectionError(clientAddress, clientPort);
+				try {
+					castGameStart();
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-
-			} catch (Exception e) {
-				System.err.println(e);
 			}
-		}
+		};
+
+		t.setDaemon(true);
+		t.start();
+
 	}
 
 	private void castGameStart() throws Exception {
-
 
 		System.out.println("Game will begin\n\n");
 
@@ -112,11 +132,11 @@ public class ServerController {
 			sendPacket(clientAddresses.get(i), clientPorts.get(i), buf);
 		}
 
+		castGameProper();
+
 	}
 
 	private void castGameProper() throws Exception {
-
-
 
 		while (playerList.size() > 0) {
 
@@ -144,6 +164,10 @@ public class ServerController {
 
 			System.out.println("\n---------------------------------------------------------------------\n");
 		}
+
+		castGameEnd();
+		Platform.exit();
+		System.exit(0);
 	}
 
 	private void requestAnswer(InetAddress address, int port, String username)  throws Exception{
@@ -380,5 +404,21 @@ public class ServerController {
 		System.out.println("Finished transmission");
 
 	}
-	
+
+	public void startServer(ActionEvent actionEvent) {
+
+		MAXPLAYER = Integer.parseInt(playerTF.getText());
+		int nQuestions = Integer.parseInt(questionTF.getText());
+		try {
+			initServer(nQuestions);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		playerTF.setEditable(false);
+		questionTF.setEditable(false);
+		startBtn.setText("SERVER IS RUNNING");
+		startBtn.setDisable(true);
+
+	}
 }

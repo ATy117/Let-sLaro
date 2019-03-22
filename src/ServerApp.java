@@ -1,8 +1,14 @@
-import java.util.Scanner;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
-public class ServerApp {
+public class ServerApp extends Application {
 
-	public static void main (String[] args) throws Exception{
-		ServerController controller = new ServerController();
+	@Override
+	public void start(Stage primaryStage) throws Exception{
+		ServerController controller = new ServerController(primaryStage);
+	}
+
+	public static void main(String[] args) {
+		launch(args);
 	}
 }
