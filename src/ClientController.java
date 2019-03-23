@@ -1,5 +1,6 @@
 import javafx.application.Platform;
 import javafx.scene.image.Image;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
@@ -39,6 +40,7 @@ public class ClientController {
 		this.primaryStage = primaryStage;
 		currentView = new LobbyView(this, primaryStage);
 		setAppIcon();
+		Font.loadFont(getClass().getResource("/fonts/Bubblegum.ttf").toExternalForm(), 10);
 	}
 
 	private void Notify() {

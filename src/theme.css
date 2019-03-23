@@ -1,9 +1,13 @@
 .text-field-username{
     -fx-text-fill: #CB91F3;
+    -fx-font-family: BubbleGum;
+    -fx-font-size: 22;
 }
 
 .text-field-address{
     -fx-text-fill: #F78BC9;
+    -fx-font-family: BubbleGum;
+    -fx-font-size: 22;
 }
 
 .jfx-list-cell{
@@ -42,4 +46,5 @@
 
 .selected-finish-list {
     -fx-text-fill: #00BCB4;
+    -fx-font-family: BubbleGum;
 }

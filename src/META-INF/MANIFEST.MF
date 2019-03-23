@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
-Class-Path: jfoenix-9.0.8.jar mysql-connector-java-8.0.15.jar
+Class-Path: jfoenix-9.0.8.jar
 Main-Class: ClientApp
 
