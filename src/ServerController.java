@@ -39,7 +39,7 @@ public class ServerController {
 	// MAX players
 	private int MAXPLAYER;
 
-	private static final int COUNTDOWN = 10;
+	private static final int COUNTDOWN = 15;
 	private static final int WAITRESULT = 3;
 	private static final int PROCESSINGTIME = 1;
 

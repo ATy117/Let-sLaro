@@ -20,7 +20,7 @@ import java.util.*;
 
 public class GameView extends View{
 
-	private final int COUNTDOWN = 10;
+	private final int COUNTDOWN = 15;
 	private final int RESULTTIME = 3;
 	private int seconds;
 	private Timer timer;
