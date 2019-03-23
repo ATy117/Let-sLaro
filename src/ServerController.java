@@ -2,7 +2,10 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.ByteArrayOutputStream;
@@ -32,6 +35,7 @@ public class ServerController {
 	public Button startBtn;
 	public TextField playerTF;
 	public TextField questionTF;
+	public ListView pListView;
 	// MAX players
 	private int MAXPLAYER;
 
@@ -96,6 +100,7 @@ public class ServerController {
 								clientAddresses.add(clientAddress);
 								playerList.add(noob);
 								game.connectPlayer(noob);
+								updatePlayerList();
 								sendConnectConfirmation(clientAddress, clientPort);
 							}
 						}
@@ -214,6 +219,8 @@ public class ServerController {
 					}
 				}
 				playerList = game.getPlayersList();
+
+				updatePlayerList();
 
 				if (playerList.size() == 0) {
 					castGameEnd();
@@ -433,4 +440,24 @@ public class ServerController {
 		}
 
 	}
+
+	private void updatePlayerList () {
+
+		pListView.getItems().clear();
+
+		for (int i = 0; i<playerList.size(); i++) {
+			HBox entry = new HBox();
+
+			Label name = new Label(playerList.get(i).getName());
+			Label ip = new Label(clientAddresses.get(i).getHostAddress() + ":" + clientPorts.get(i));
+
+			name.setPrefWidth(100);
+			ip.setPrefWidth(130);
+
+			entry.getChildren().addAll(name, ip);
+
+			pListView.getItems().add(entry);
+		}
+	}
+
 }
