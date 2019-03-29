@@ -397,10 +397,16 @@ public class ClientController {
 	}
 
 	private void setAppIcon () throws IOException {
-		Taskbar taskbar=Taskbar.getTaskbar();
-		BufferedImage image = ImageIO.read(getClass().getResource("/resources/logo.png"));
-		taskbar.setIconImage(image);
-		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("resources/logo.png")));
+
+		try {
+			Taskbar taskbar = Taskbar.getTaskbar();
+			BufferedImage image = ImageIO.read(getClass().getResource("/resources/logo.png"));
+			taskbar.setIconImage(image);
+			primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("resources/logo.png")));
+		}
+		catch (Exception e) {
+
+		}
 	}
 
 
